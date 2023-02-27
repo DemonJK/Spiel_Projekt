@@ -2,7 +2,7 @@ class Scene2 extends Phaser.Scene {
     constructor() {
         super("playGame");
     }
-
+    
     //PRELOAD VON HINTERGRUND
     preload() {
 
@@ -14,17 +14,20 @@ class Scene2 extends Phaser.Scene {
         /*this.load.image("boden", "assets/images/HillsLayer05.png");*/
         this.load.image("background6", "assets/images/HillsLayer06.png");
         console.log("Scene2 Background loaded");
+        this.load.image("boden", "assets/images/HillsLayer05.png");
+        this.load.spritesheet("playermodel", "/assets/SpriteSheet_P.Model/Warrior_Sheet-Effect.png", {frameWidth: 32, frameHeight: 48});
+        console.log("playermodel LOADED");
 
     }
 
     //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT"
     create() {
-        console.log("TEXT LOAD"),
+        console.log("TEXT LOAD");
         this.add.text(35, 35, "Das Spiel wird gespielt", {
             font: "30px Arial",
-            fill: "yellow",
+            fill: "black",
         });
-        console.log("TEXT LOADED AND APPERED")
+        console.log("TEXT LOADED");
 
         this.background = this.add.image(0, 0, "background");
         this.background.setOrigin(0, 0);
@@ -50,14 +53,26 @@ class Scene2 extends Phaser.Scene {
         this.background6.setOrigin(0, 0);
         this.background6.setScale(4.5);
 
-        /* PROBE PLATFORM
+        console.log("TEXT LOAD");
+        this.add.text(35, 35, "Das Spiel wird gespielt", {
+            font: "30px Arial",
+            fill: "black",
+        });
+        console.log("TEXT LOADED");
+
+
         platforms = this.physics.add.staticGroup();
+        platforms.create(400, 568, "boden").setScale(2).refreshBody();
+        console.log("platforms LOADED");
 
-        platforms.create(400, 568, "boden").setScale().refreshBody();
-        document.styleSheets[0].href = "gameStyle.css";
-        console.log("boden generated");
-        */
+        platforms.create(600, 400, "boden");
+        platforms.create(50, 250, "boden");
+        platforms.create(750, 220, "boden");
 
-    }
+        this.player = this.physics.add.sprite(100, 450, "playermodel");
+
+        console.log("ENDE DES CODES VON SCENE2");
+        
+    }   
 }
 
