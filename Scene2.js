@@ -2,7 +2,7 @@ class Scene2 extends Phaser.Scene {
     constructor() {
         super("playGame");
     }
-    
+
     //PRELOAD VON HINTERGRUND
     preload() {
 
@@ -60,19 +60,17 @@ class Scene2 extends Phaser.Scene {
         });
         console.log("TEXT LOADED");
 
+        this.platforms = this.physics.add.group();
+        this.ground = this.physics.add.staticImage(100, 400, "boden");
+        this.ground.refreshBody();
 
-        platforms = this.physics.add.staticGroup();
-        platforms.create(400, 568, "boden").setScale(2).refreshBody();
-        console.log("platforms LOADED");
-
-        platforms.create(600, 400, "boden");
-        platforms.create(50, 250, "boden");
-        platforms.create(750, 220, "boden");
 
         this.player = this.physics.add.sprite(100, 450, "playermodel");
 
         console.log("ENDE DES CODES VON SCENE2");
         
     }   
+
+
 }
 
