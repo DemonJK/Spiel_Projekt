@@ -4,6 +4,7 @@ class Scene2 extends Phaser.Scene {
     }
 
     //PRELOAD VON HINTERGRUND
+
     preload() {
 
         this.load.image("background", "assets/images/HillsLayer01.png");
@@ -11,7 +12,6 @@ class Scene2 extends Phaser.Scene {
         this.load.image("background3", "assets/images/HillsLayer03.png");
         this.load.image("background4", "assets/images/HillsLayer04.png");
         this.load.image("background5", "assets/images/HillsLayer05.png");
-        /*this.load.image("boden", "assets/images/HillsLayer05.png");*/
         this.load.image("background6", "assets/images/HillsLayer06.png");
         console.log("Scene2 Background loaded");
         this.load.image("boden", "assets/ground/boden_welt_part1.png");
@@ -21,7 +21,9 @@ class Scene2 extends Phaser.Scene {
     }
 
     //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT"
+
     create() {
+
         console.log("TEXT LOAD");
         this.add.text(35, 35, "Das Spiel wird gespielt", {
             font: "30px Arial",
@@ -105,7 +107,7 @@ class Scene2 extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: "up",
+            key: "spacebar",
             frames: this.anims.generateFrameNumbers("playermodel", { start: 96, end: 100 }),
             frameRate: 6,
             repeat: -1,
@@ -118,7 +120,6 @@ class Scene2 extends Phaser.Scene {
         if (cursors.left.isDown) {
             this.player.setVelocityX(-160).setFlipX(-1,);
             this.player.anims.play("left", true);
-
         } else if (cursors.right.isDown) {
             this.player.setVelocityX(160).setFlipX(0,);
             this.player.anims.play("right", true);
@@ -126,10 +127,9 @@ class Scene2 extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
         }
-
-        if (cursors.up.isDown && this.player.body.touching.down) {
+        if (cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-350);
-            this.player.anims.play("up", true);
+            this.player.anims.play("spacebar", true);
         }
     }
 }
