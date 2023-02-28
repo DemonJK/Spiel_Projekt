@@ -51,9 +51,9 @@ class Scene2 extends Phaser.Scene {
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
         console.log("PLAYER SPAWNING");
-        this.player = this.physics.add.sprite(100, 1000, "playermodel");
-
-        this.player.setScale(1.7);
+        this.player = this.physics.add.sprite(100, 900, "playermodel")
+        this.player.body.setSize(30, 45, 1);
+        this.player.setScale(5);
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
@@ -76,20 +76,37 @@ class Scene2 extends Phaser.Scene {
 
         //ANIMATIONEN DES SPIELS
 
+        //0 - 8 (22)
+        //23 - 28 (45)
+        //46 - 57 (68)
+        //69 - 73 (91)
+        //92 - 114 (114)
+
+        console.log("ANIMS LOADING")
+
         this.anims.create({
             key: "idle",
             frames: this.anims.generateFrameNumbers("playermodel", { start: 0, end: 8 }),
             frameRate: 8,
-        })
+        });
+
         this.anims.create({
             key: "right",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 23, end: 28, }),
+            frames: this.anims.generateFrameNumbers("playermodel", { start: 23, end: 28 }),
             frameRate: 6,
             repeat: -1,
-        })
+        });
+
         this.anims.create({
             key: "left",
             frames: this.anims.generateFrameNumbers("playermodel", { start: 23, end: 28 }),
+            frameRate: 6,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: "up",
+            frames: this.anims.generateFrameNumbers("playermodel", { start: 96, end: 100 }),
             frameRate: 6,
             repeat: -1,
         });
@@ -109,5 +126,10 @@ class Scene2 extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
         }
+
+        if (cursors.up.isDown && this.player.body.touching.down) {
+            this.player.setVelocityY(-350);
+            this.player.anims.play("up", true);
+        }
     }
-} 
+}
