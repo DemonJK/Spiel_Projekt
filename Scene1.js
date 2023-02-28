@@ -11,11 +11,6 @@ class Scene1 extends Phaser.Scene {
         this.load.image("background5", "assets/images/HillsLayer05.png");
         this.load.image("background6", "assets/images/HillsLayer06.png");
         console.log("Scene1 Background loaded");
-        this.load.spritesheet("playermodel", "/assets/SpriteSheet_P.Model/Warrior_Sheet-Effect.png", {
-            frameWidth: 32,
-            frameHeight: 48,
-        });
-        console.log("playermodel LOADED");
     }
 
     create() {
