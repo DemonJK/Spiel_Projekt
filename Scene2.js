@@ -171,19 +171,13 @@ class Scene2 extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
         }
-        if (cursors.space.isDown) {
-            this.player.setVelocityY(-100);
-            this.player.anims.play("space", true);
-        }
         if (cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-350);
             this.player.anims.play("up", true);
         }
-
-
-
-
-
-
+        if (cursors.space.isDown) {
+            this.player.setGravityY(100)
+            this.player.anims.play("space", true);
+        }
     }
 }
