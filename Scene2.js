@@ -110,7 +110,23 @@ class Scene2 extends Phaser.Scene {
         //92 - 114 (114)
         //PLAYER
 
+        //ENEMY STAND
+        //0 - 11 (12)
+        //ENEMY STAND
+
         console.log("ANIMS LOADING")
+
+        this.anims.create({
+            key: "space",
+            frames: this.anims.generateFrameNumbers("playermodel", { start: 46, end: 57 }),
+            frameRate: 8,
+        });
+
+        this.anims.create({
+            key: "up",
+            frames: this.anims.generateFrameNumbers("playermodel", { start: 96, end: 100 }),
+            frameRate: 6,
+        });
 
         this.anims.create({
             key: "idle",
@@ -133,19 +149,6 @@ class Scene2 extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: "up",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 96, end: 100 }),
-            frameRate: 6,
-            repeat: -1,
-        });
-
-        this.anims.create({
-            key: "space",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 46, end: 57 }),
-            frameRate: 6,
-        });
-
-        this.anims.create({
             key: "stand",
             frames: this.anims.generateFrameNumbers("enemy1", { start: 0, end: 11 }),
             frameRate: 8,
@@ -159,15 +162,17 @@ class Scene2 extends Phaser.Scene {
 
         const cursors = this.input.keyboard.createCursorKeys();
         if (cursors.left.isDown) {
-            this.player.setVelocityX(-160).setFlipX(-1,);
+            this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
         } else if (cursors.right.isDown) {
-            this.player.setVelocityX(160).setFlipX(0,);
+            this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
-        } if (cursors.space.isDown) {
+        }
+        if (cursors.space.isDown) {
+            this.player.setVelocityY(-100);
             this.player.anims.play("space", true);
         }
         if (cursors.up.isDown && this.player.body.touching.down) {
