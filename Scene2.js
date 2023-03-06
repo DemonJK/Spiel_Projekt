@@ -27,9 +27,11 @@ class Scene2 extends Phaser.Scene {
         console.log("playermodel LOADED");
 
         //PRELOAD ENEMY
-        this.load.spritesheet("enemy1", "/assets/enemy/idle/Idle.png", { frameWidth: 256, frameHeight: 256, });
-        console.log("enemy1 LOADED");
-
+        this.load.spritesheet("enemy1", "/assets/enemy/idle/Idle.png", { frameWidth: 256, frameHeight: 256 });
+        console.log("enemy1 IDLE LOADED");
+        this.load.spritesheet("enemy_lose_hp", "/assets/enemy/death/Die.png", { frameWidth: 256, frameHeight: 256 });
+        console.log("enemy_lose_hp LOADED ");
+        
     }
 
     //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT
@@ -59,6 +61,8 @@ class Scene2 extends Phaser.Scene {
         const platforms = this.physics.add.staticGroup();
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
+
+
         //ENEMY SPAWNING
 
         console.log("ENEMY SPAWNING");
@@ -74,7 +78,8 @@ class Scene2 extends Phaser.Scene {
 
         console.log("PLAYER SPAWNING");
         this.player = this.physics.add.sprite(100, 900, "playermodel");
-        this.player.body.setSize(30, 45, 1);
+        this.player.body.setSize(30, 30, 1);
+        this.player.body.setOffset(25, 33)
         this.player.setScale(5);
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
@@ -119,7 +124,7 @@ class Scene2 extends Phaser.Scene {
         this.anims.create({
             key: "space",
             frames: this.anims.generateFrameNumbers("playermodel", { start: 46, end: 57 }),
-            frameRate: 8,
+            frameRate: 14,
         });
 
         this.anims.create({
@@ -150,7 +155,13 @@ class Scene2 extends Phaser.Scene {
 
         this.anims.create({
             key: "stand",
-            frames: this.anims.generateFrameNumbers("enemy1", { start: 0, end: 11 }),
+            frames: this.anims.generateFrameNumbers("enemy1", { start: 0, end: 10 }),
+            frameRate: 8,
+        });
+
+        this.anims.create({
+            key: "hp_lose",
+            frames: this.anims.generateFrameNumbers("enemy_lose_hp", { start: 0, end: 8 }),
             frameRate: 8,
         });
         console.log("ENDE VON CREATE ANIMS");
@@ -167,17 +178,45 @@ class Scene2 extends Phaser.Scene {
         } else if (cursors.right.isDown) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
+        } else if (cursors.up.isDown && this.player.body.touching.down) {
+            this.player.setVelocityY(-350);
+            this.player.anims.play("up", true);
+        } else if (cursors.space.isDown) {
+            this.player.anims.play("space", true);
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
         }
-        if (cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-350);
-            this.player.anims.play("up", true);
-        }
-        if (cursors.space.isDown) {
-            this.player.setGravityY(100)
-            this.player.anims.play("space", true);
-        }
+        this.enemy.anims.play("stand", true);
     }
+
+    /*
+
+    attackCalulation() {
+        console.log("FUNCTION attackCalculation IS WORKING")
+        // calcutating hitbox by atack
+        // var animation_progress = this.player1.anims.getProgress();
+        this.colliderPunch = this.scene.add.rectangle(
+            this.x - 192,
+            this.y + 70,
+            80,
+            80,
+        );
+
+        this.scene.physics.add.existing(this.colliderPunch);
+        this.colliderPunch.body.setImmovable(true);
+
+        this.colliderPunch.setVisible(true);
+        console.log("LOADED");
+
+        if (this.scene.physics.overlap(this.scene.player, this.colliderPunch)) {
+            this.scene.update_hp_shield_player1();
+
+            if (this.colliderPunch) this.colliderPunch.destroy();
+        }
+        console.log("LOADED");
+    }
+
+    */
+   
 }
