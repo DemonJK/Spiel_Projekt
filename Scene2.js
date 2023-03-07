@@ -31,7 +31,7 @@ class Scene2 extends Phaser.Scene {
         console.log("enemy1 IDLE LOADED");
         this.load.spritesheet("enemy_lose_hp", "/assets/enemy/death/Die.png", { frameWidth: 256, frameHeight: 256 });
         console.log("enemy_lose_hp LOADED ");
-        
+
     }
 
     //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT
@@ -67,7 +67,8 @@ class Scene2 extends Phaser.Scene {
 
         console.log("ENEMY SPAWNING");
         this.enemy = this.physics.add.sprite(500, 900, "enemy1");
-        this.enemy.body.setSize(100, 150, 1);
+        this.enemy.body.setSize(90, 137, 1);
+        this.enemy.body.setOffset(73, 67);
         this.enemy.setScale(2);
         this.enemy.setBounce(0.2);
         this.enemy.setCollideWorldBounds(true);
@@ -79,11 +80,12 @@ class Scene2 extends Phaser.Scene {
         console.log("PLAYER SPAWNING");
         this.player = this.physics.add.sprite(100, 900, "playermodel");
         this.player.body.setSize(30, 30, 1);
-        this.player.body.setOffset(25, 33)
+        this.player.body.setOffset(25, 33);
         this.player.setScale(5);
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
+        this.physics.add.collider(this.player, this.enemy);
         console.log("PLAYER SPAWNED");
 
         //CREATE BACKGROUND
@@ -167,31 +169,7 @@ class Scene2 extends Phaser.Scene {
         console.log("ENDE VON CREATE ANIMS");
     }
 
-    update() {
-
-        //CONTROLS OF PLAYERMODEL
-
-        const cursors = this.input.keyboard.createCursorKeys();
-        if (cursors.left.isDown) {
-            this.player.setVelocityX(-160).setFlipX(-1);
-            this.player.anims.play("left", true);
-        } else if (cursors.right.isDown) {
-            this.player.setVelocityX(160).setFlipX(0);
-            this.player.anims.play("right", true);
-        } else if (cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-350);
-            this.player.anims.play("up", true);
-        } else if (cursors.space.isDown) {
-            this.player.anims.play("space", true);
-        } else {
-            this.player.setVelocityX(0);
-            this.player.anims.play("idle", true);
-        }
-        this.enemy.anims.play("stand", true);
-    }
-
     /*
-
     attackCalulation() {
         console.log("FUNCTION attackCalculation IS WORKING")
         // calcutating hitbox by atack
@@ -216,7 +194,29 @@ class Scene2 extends Phaser.Scene {
         }
         console.log("LOADED");
     }
-
     */
-   
+
+    update() {
+
+        //CONTROLS OF PLAYERMODEL
+
+        const cursors = this.input.keyboard.createCursorKeys();
+        if (cursors.left.isDown) {
+            this.player.setVelocityX(-160).setFlipX(-1);
+            this.player.anims.play("left", true);
+        } else if (cursors.right.isDown) {
+            this.player.setVelocityX(160).setFlipX(0);
+            this.player.anims.play("right", true);
+        } else if (cursors.up.isDown && this.player.body.touching.down) {
+            this.player.setVelocityY(-350);
+            this.player.anims.play("up", true);
+        } else if (cursors.space.isDown && this.player.body.touching.down) {
+            this.player.anims.play("space", true);
+            this.player.setVelocityX(0);
+        } else {
+            this.player.setVelocityX(0);
+            this.player.anims.play("idle", true);
+        }
+        this.enemy.anims.play("stand", true);
+    }
 }
