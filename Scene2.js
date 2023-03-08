@@ -64,7 +64,7 @@ class Scene2 extends Phaser.Scene {
         //ENEMY SPAWNING
 
         console.log("ENEMY SPAWNING");
-        this.enemy = this.physics.add.sprite(500, 900, "enemy1");
+        this.enemy = this.physics.add.sprite(1000, 900, "enemy1").setFlipX(0);
         this.enemy.body.setSize(90, 137, 1);
         this.enemy.body.setOffset(73, 67);
         this.enemy.setScale(2);
@@ -91,6 +91,10 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.player, platforms);
         this.physics.add.collider(this.player, this.enemy, collideObjects, null, this);
         console.log("PLAYER SPAWNED");
+
+        this.cameras.main.startFollow(this.player);
+        this.cameras.main.followOffset.set(-300, 0)
+
 
         //CREATE BACKGROUND
 
@@ -179,9 +183,11 @@ class Scene2 extends Phaser.Scene {
         if (cursors.left.isDown && !touching.left) {
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
+            this.cameras.main.followOffset.x = -300
         } else if (cursors.right.isDown && !touching.right) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
+            this.cameras.main.followOffset.x = -300;
         } else if (cursors.up.isDown && this.player.body.touching.down && !touching.up) {
             this.player.setVelocityY(-495);
             this.player.anims.play("up", true);
@@ -196,25 +202,20 @@ class Scene2 extends Phaser.Scene {
         this.enemy.anims.play("stand", true);
 
         if (!this.player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
-            // The distance `player` would move in one physics step:
+
             delta.copy(this.player.body.velocity).scale(1 / this.physics.world.fps);
 
-            // For drawing
             rect.setTo(
                 this.player.body.x + delta.x,
                 this.player.body.y + delta.y,
                 this.player.body.width,
                 this.player.body.height
-            );
+            )
 
-            // Check for overlaps.
             var bodies = this.physics.overlapRect(rect.x, rect.y, rect.width, rect.height, true, true);
 
-            // Ignore player body.
             Phaser.Utils.Array.Remove(bodies, this.player.body);
 
-            // At least one overlap.
-            // Block on the affected axis.
             if (bodies.length) {
                 if (delta.x) this.player.setVelocityX(0);
                 if (delta.y) this.player.setVelocityY(0);
