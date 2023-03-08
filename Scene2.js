@@ -29,8 +29,6 @@ class Scene2 extends Phaser.Scene {
         //PRELOAD ENEMY
         this.load.spritesheet("enemy1", "/assets/enemy/idle/Idle.png", { frameWidth: 256, frameHeight: 256 });
         console.log("enemy1 IDLE LOADED");
-        this.load.spritesheet("enemy_lose_hp", "/assets/enemy/death/Die.png", { frameWidth: 256, frameHeight: 256 });
-        console.log("enemy_lose_hp LOADED ");
 
     }
 
@@ -73,9 +71,15 @@ class Scene2 extends Phaser.Scene {
         this.enemy.setBounce(0.2);
         this.enemy.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy, platforms);
+        this.enemy.setBounce(0.0);
         console.log("ENEMY SPAWNED");
 
         //PLAYER SPAWNING
+
+        function collideObjects() {
+            this.enemy.setVelocityX(0);
+            this.player.setVelocityX(0);
+        }
 
         console.log("PLAYER SPAWNING");
         this.player = this.physics.add.sprite(100, 900, "playermodel");
@@ -85,7 +89,7 @@ class Scene2 extends Phaser.Scene {
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
-        this.physics.add.collider(this.player, this.enemy);
+        this.physics.add.collider(this.player, this.enemy, collideObjects, null, this);
         console.log("PLAYER SPAWNED");
 
         //CREATE BACKGROUND
@@ -161,62 +165,60 @@ class Scene2 extends Phaser.Scene {
             frameRate: 8,
         });
 
-        this.anims.create({
-            key: "hp_lose",
-            frames: this.anims.generateFrameNumbers("enemy_lose_hp", { start: 0, end: 8 }),
-            frameRate: 8,
-        });
         console.log("ENDE VON CREATE ANIMS");
     }
-
-    /*
-    attackCalulation() {
-        console.log("FUNCTION attackCalculation IS WORKING")
-        // calcutating hitbox by atack
-        // var animation_progress = this.player1.anims.getProgress();
-        this.colliderPunch = this.scene.add.rectangle(
-            this.x - 192,
-            this.y + 70,
-            80,
-            80,
-        );
-
-        this.scene.physics.add.existing(this.colliderPunch);
-        this.colliderPunch.body.setImmovable(true);
-
-        this.colliderPunch.setVisible(true);
-        console.log("LOADED");
-
-        if (this.scene.physics.overlap(this.scene.player, this.colliderPunch)) {
-            this.scene.update_hp_shield_player1();
-
-            if (this.colliderPunch) this.colliderPunch.destroy();
-        }
-        console.log("LOADED");
-    }
-    */
 
     update() {
 
         //CONTROLS OF PLAYERMODEL
+        var touching = this.player.body.touching;
+        var delta = new Phaser.Math.Vector2();
+        var rect = new Phaser.Geom.Rectangle();
 
         const cursors = this.input.keyboard.createCursorKeys();
-        if (cursors.left.isDown) {
+        if (cursors.left.isDown && !touching.left) {
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
-        } else if (cursors.right.isDown) {
+        } else if (cursors.right.isDown && !touching.right) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
-        } else if (cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-350);
+        } else if (cursors.up.isDown && this.player.body.touching.down && !touching.up) {
+            this.player.setVelocityY(-495);
             this.player.anims.play("up", true);
-        } else if (cursors.space.isDown && this.player.body.touching.down) {
+        } else if (cursors.space.isDown && this.player.body.touching.down && !touching.down) {
             this.player.anims.play("space", true);
             this.player.setVelocityX(0);
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
         }
+
         this.enemy.anims.play("stand", true);
+
+        if (!this.player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
+            // The distance `player` would move in one physics step:
+            delta.copy(this.player.body.velocity).scale(1 / this.physics.world.fps);
+
+            // For drawing
+            rect.setTo(
+                this.player.body.x + delta.x,
+                this.player.body.y + delta.y,
+                this.player.body.width,
+                this.player.body.height
+            );
+
+            // Check for overlaps.
+            var bodies = this.physics.overlapRect(rect.x, rect.y, rect.width, rect.height, true, true);
+
+            // Ignore player body.
+            Phaser.Utils.Array.Remove(bodies, this.player.body);
+
+            // At least one overlap.
+            // Block on the affected axis.
+            if (bodies.length) {
+                if (delta.x) this.player.setVelocityX(0);
+                if (delta.y) this.player.setVelocityY(0);
+            }
+        }
     }
 }
