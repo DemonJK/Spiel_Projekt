@@ -82,7 +82,7 @@ class Scene2 extends Phaser.Scene {
         }
 
         console.log("PLAYER SPAWNING");
-        this.player = this.physics.add.sprite(100, 900, "playermodel");
+        this.player = this.physics.add.sprite(150, 900, "playermodel");
         this.player.body.setSize(30, 30, 1);
         this.player.body.setOffset(25, 33);
         this.player.setScale(5);
