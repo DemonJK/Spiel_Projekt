@@ -93,7 +93,7 @@ class Scene2 extends Phaser.Scene {
         console.log("PLAYER SPAWNED");
 
         this.cameras.main.startFollow(this.player);
-        this.cameras.main.followOffset.set(-300, 0)
+        this.cameras.main.followOffset.set(-250, 0)
 
 
         //CREATE BACKGROUND
@@ -183,15 +183,15 @@ class Scene2 extends Phaser.Scene {
         if (cursors.left.isDown && !touching.left) {
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
-            this.cameras.main.followOffset.x = -300
+            this.cameras.main.followOffset.x = -250
         } else if (cursors.right.isDown && !touching.right) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
-            this.cameras.main.followOffset.x = -300;
+            this.cameras.main.followOffset.x = -250;
         } else if (cursors.up.isDown && this.player.body.touching.down && !touching.up) {
             this.player.setVelocityY(-495);
             this.player.anims.play("up", true);
-        } else if (cursors.space.isDown && this.player.body.touching.down && !touching.down) {
+        } else if (cursors.space.isDown && this.player.body.touching.down) {
             this.player.anims.play("space", true);
             this.player.setVelocityX(0);
         } else {
