@@ -36,6 +36,8 @@ class Scene2 extends Phaser.Scene {
 
     create() {
 
+        this.player_is_touching_enemy = false;
+
         //CREATE BACKGROUND
 
         this.background = this.add.image(0, 0, "background");
@@ -59,20 +61,17 @@ class Scene2 extends Phaser.Scene {
         const platforms = this.physics.add.staticGroup();
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
-
-
         //ENEMY SPAWNING
 
         console.log("ENEMY SPAWNING");
-        this.enemy = this.physics.add.sprite(1000, 900, "enemy1").setFlipX(0);
+        this.enemy = this.physics.add.sprite(1000, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
         this.enemy.body.setOffset(73, 67);
         this.enemy.setScale(2);
         this.enemy.setBounce(0.2);
+        this.physics.add.existing(this.enemy);
         this.enemy.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy, platforms);
-        this.enemy.setBounce(0.0);
-        console.log("ENEMY SPAWNED");
 
         //PLAYER SPAWNING
 
@@ -86,7 +85,6 @@ class Scene2 extends Phaser.Scene {
         this.player.body.setSize(30, 30, 1);
         this.player.body.setOffset(25, 33);
         this.player.setScale(5);
-        this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
         this.physics.add.collider(this.player, this.enemy, collideObjects, null, this);
@@ -94,7 +92,6 @@ class Scene2 extends Phaser.Scene {
 
         this.cameras.main.startFollow(this.player);
         this.cameras.main.followOffset.set(-250, 0)
-
 
         //CREATE BACKGROUND
 
@@ -174,52 +171,31 @@ class Scene2 extends Phaser.Scene {
 
     update() {
 
+        console.log("Player X: " + Math.round(this.player.x) + " Enemy X:" + (Math.round(this.enemy.x - 185)));
+
         //CONTROLS OF PLAYERMODEL
-        var touching = this.player.body.touching;
-        var delta = new Phaser.Math.Vector2();
-        var rect = new Phaser.Geom.Rectangle();
 
         const cursors = this.input.keyboard.createCursorKeys();
-        if (cursors.left.isDown && !touching.left) {
+
+        if (cursors.left.isDown) {
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
             this.cameras.main.followOffset.x = -250
-        } else if (cursors.right.isDown && !touching.right) {
+        } else if (cursors.right.isDown && !(Math.round(this.player.x) === Math.round(this.enemy.x - 185))) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
             this.cameras.main.followOffset.x = -250;
-        } else if (cursors.up.isDown && this.player.body.touching.down && !touching.up) {
+        } else if (cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-495);
             this.player.anims.play("up", true);
         } else if (cursors.space.isDown && this.player.body.touching.down) {
             this.player.anims.play("space", true);
-            this.player.setVelocityX(0);
+            this.player.setVelocityX(0);     
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
         }
 
         this.enemy.anims.play("stand", true);
-
-        if (!this.player.body.velocity.equals(Phaser.Math.Vector2.ZERO)) {
-
-            delta.copy(this.player.body.velocity).scale(1 / this.physics.world.fps);
-
-            rect.setTo(
-                this.player.body.x + delta.x,
-                this.player.body.y + delta.y,
-                this.player.body.width,
-                this.player.body.height
-            )
-
-            var bodies = this.physics.overlapRect(rect.x, rect.y, rect.width, rect.height, true, true);
-
-            Phaser.Utils.Array.Remove(bodies, this.player.body);
-
-            if (bodies.length) {
-                if (delta.x) this.player.setVelocityX(0);
-                if (delta.y) this.player.setVelocityY(0);
-            }
-        }
     }
 }
