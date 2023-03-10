@@ -64,7 +64,7 @@ class Scene2 extends Phaser.Scene {
         //ENEMY SPAWNING
 
         console.log("ENEMY SPAWNING");
-        this.enemy = this.physics.add.sprite(1000, 3000, "enemy1").setFlipX(true);
+        this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
         this.enemy.body.setOffset(93, 67);
         this.enemy.setScale(2);
@@ -215,5 +215,12 @@ class Scene2 extends Phaser.Scene {
         }
 
         this.enemy.anims.play("stand", true);
+        let Speed = 0;
+        for (let i = 1; i <= 5; i++) {
+            Speed = this.enemy.setAccelerationX(0 - i);
+            this.enemy.setMaxVelocity(20)
+            console.log(Speed);
+        }
+        //this.enemy.setAccelerationX(-10)
     }
 }
