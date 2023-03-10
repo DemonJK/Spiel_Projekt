@@ -207,7 +207,11 @@ class Scene2 extends Phaser.Scene {
         }
 
         if ((Math.round(this.player.y + 237) === Math.round(this.enemy.y)) && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
-            (this.player.setPosition(this.enemy.x + 220, this.player.y) || this.player.setPosition(this.enemy.x - 220, this.player.y))
+            if (cursors.left.isDown) {
+                this.player.setPosition(this.enemy.x - 220, this.player.y)
+            } else if (cursors.right.isDown) {
+                this.player.setPosition(this.enemy.x + 220, this.player.y)
+            }
         }
 
         this.enemy.anims.play("stand", true);
