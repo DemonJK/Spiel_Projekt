@@ -66,7 +66,7 @@ class Scene2 extends Phaser.Scene {
         console.log("ENEMY SPAWNING");
         this.enemy = this.physics.add.sprite(1000, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
-        this.enemy.body.setOffset(73, 67);
+        this.enemy.body.setOffset(93, 67);
         this.enemy.setScale(2);
         this.enemy.setBounce(0.2);
         this.physics.add.existing(this.enemy);
@@ -171,29 +171,43 @@ class Scene2 extends Phaser.Scene {
 
     update() {
 
-        console.log("Player X: " + Math.round(this.player.x) + " Enemy X:" + (Math.round(this.enemy.x - 185)));
+        //ÜBERPRÜFT DIE X UND Y KORDINATEN ZWICHEN GEGNER UND SPIELER SODASS DER GEGNER NICHT BEWEGBAR IST
+        //NUR AN MACHEN UM ETWAS ZU ÜBERPRÜFEN
+
+        //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 145)));
+        //console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 185)));
+        //console.log("Player Y: " + Math.round(this.player.y + 237) + " Enemy Y; " + (Math.round(this.enemy.y)));
+
 
         //CONTROLS OF PLAYERMODEL
 
         const cursors = this.input.keyboard.createCursorKeys();
 
-        if (cursors.left.isDown) {
+        if (cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
             this.cameras.main.followOffset.x = -250
-        } else if (cursors.right.isDown && !(Math.round(this.player.x) === Math.round(this.enemy.x - 185))) {
+
+        } else if (cursors.right.isDown && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
             this.cameras.main.followOffset.x = -250;
+
         } else if (cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-495);
             this.player.anims.play("up", true);
+
         } else if (cursors.space.isDown && this.player.body.touching.down) {
             this.player.anims.play("space", true);
-            this.player.setVelocityX(0);     
+            this.player.setVelocityX(0);
+
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
+        }
+
+        if ((Math.round(this.player.y + 237) === Math.round(this.enemy.y)) && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
+            (this.player.setPosition(this.enemy.x + 220, this.player.y) || this.player.setPosition(this.enemy.x - 220, this.player.y))
         }
 
         this.enemy.anims.play("stand", true);
