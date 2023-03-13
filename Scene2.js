@@ -30,6 +30,7 @@ class Scene2 extends Phaser.Scene {
         this.load.spritesheet("enemy1", "/assets/enemy/idle/Idle.png", { frameWidth: 256, frameHeight: 256 });
         console.log("enemy1 IDLE LOADED");
         this.load.spritesheet("enemyrun", "/assets/enemy/run/Run.png", { frameWidth: 256, frameHeight: 256 });
+        console.log("enemyrun RUN LOADED")
 
     }
 
@@ -169,8 +170,8 @@ class Scene2 extends Phaser.Scene {
 
         this.anims.create({
             key: "run-left",
-            frames: this.anims.generateFrameNumbers("enemyrun", { start: 0, end: 7 }),
-            frameRate: 8,
+            frames: this.anims.generateFrameNumbers("enemyrun", { start: 0, end: 6 }),
+            frameRate: 6,
             repeat: -1,
         });
 
@@ -222,25 +223,17 @@ class Scene2 extends Phaser.Scene {
             };
         }
 
-        this.enemy.anims.play("stand", true);
-
-        /*function SpeedSet(Speed) {
-            //let Speed = 0;
-            for (let i = 0; i <= Speed; i++) {
-                let Speed = 20;
-                this.enemy.setAccelerationX(0);
-
-                Speed = this.enemy.setAccelerationX(0 - i);
-
-                if () {
-                    this.enemy.anims.play("run-left", true); 
-                } else {
-                    this.enemy.anims.play("stand", true)
-                };
-
+        if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
+            if (this.enemy.body.touching.down) {
+                this.enemy.body.setOffset(67, 65);
+                this.enemy.setVelocityX(-45);
+                this.enemy.anims.play("run-left", true);
+                console.log("ENEMY X: ", this.enemy.x, "PLAYER X: ", this.player.x)
+            } else if (this.enemy.body.touching.down) {
+                this.enemy.anims.play("stand", true);
             }
-            let speedset = SpeedSet()
-        }*/
-
+        } else {
+            this.enemy.anims.play("stand", true);
+        }
     }
 }
