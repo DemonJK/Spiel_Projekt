@@ -223,17 +223,62 @@ class Scene2 extends Phaser.Scene {
             };
         }
 
-        if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
-            if (this.enemy.body.touching.down) {
-                this.enemy.body.setOffset(67, 65);
-                this.enemy.setVelocityX(-45);
-                this.enemy.anims.play("run-left", true);
-                console.log("ENEMY X: ", this.enemy.x, "PLAYER X: ", this.player.x)
-            } else if (this.enemy.body.touching.down) {
-                this.enemy.anims.play("stand", true);
+        //
+        //
+        // PROBLEM BEREICH
+        //
+        //
+
+        /*
+        if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 197))) {
+            if (this.player.x < this.enemy.x) {
+                if (this.enemy.body.touching.down) {
+                    this.enemy.body.setOffset(67, 65);
+                    this.enemy.setVelocityX(-55);
+                    console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
+                    this.enemy.anims.play("run-left", true);
+                }
             }
         } else {
-            this.enemy.anims.play("stand", true);
+            this.enemy.body.setOffset(97, 67);
+            this.enemy.anims.play("stand", true)
+        }
+
+        if (!(Math.round(this.enemy.x) === Math.round(this.player.x - 193))) {
+            if (this.player.x > this.enemy.x) {
+                if (this.enemy.body.touching.down) {
+                    this.enemy.body.setOffset(97, 65);
+                    this.enemy.setVelocityX(55).setFlipX(0);
+                    console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 193)));
+                    this.enemy.anims.play("run-left", true);
+                }
+            }
+        } else {
+            this.enemy.body.setOffset(97, 67);
+            this.enemy.anims.play("stand", true)
+        }
+        */
+
+        if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 197))) {
+            if (this.player.x < this.enemy.x && this.enemy.body.touching.down || this.player.x > this.enemy.x && this.enemy.body.touching.down) {
+                if (this.player.x < this.enemy.x && this.enemy.body.touching.down) {
+                    this.enemy.body.setOffset(67, 65);
+                    this.enemy.setVelocityX(-55).setFlipX(-1);
+                    console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
+                    this.enemy.anims.play("run-left", true);
+                } else if (this.player.x > this.enemy.x && this.enemy.body.touching.down) {
+                    this.enemy.body.setOffset(97, 65);
+                    this.enemy.setVelocityX(55).setFlipX(0);
+                    console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 193)));
+                    this.enemy.anims.play("run-left", true);
+                } else {
+                    this.enemy.body.setOffset(97, 67);
+                    this.enemy.anims.play("stand", true)
+                }
+            }
+        } else {
+            this.enemy.body.setOffset(97, 67);
+            this.enemy.anims.play("stand", true)
         }
     }
 }
