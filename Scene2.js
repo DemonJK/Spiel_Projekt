@@ -191,25 +191,20 @@ class Scene2 extends Phaser.Scene {
         //CONTROLS OF PLAYERMODEL
 
         const cursors = this.input.keyboard.createCursorKeys();
-
-        if (cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
+        if (cursors.up.isDown && this.player.body.touching.down) {
+            this.player.setVelocityY(-495);
+            this.player.anims.play("up", true);
+        } else if (cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
             this.cameras.main.followOffset.x = -250
-
         } else if (cursors.right.isDown && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
             this.cameras.main.followOffset.x = -250;
-
-        } else if (cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-495);
-            this.player.anims.play("up", true);
-
         } else if (cursors.space.isDown && this.player.body.touching.down) {
             this.player.anims.play("space", true);
             this.player.setVelocityX(0);
-
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
