@@ -64,11 +64,19 @@ class Scene2 extends Phaser.Scene {
         const platforms = this.physics.add.staticGroup();
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
-        //PLATFORM (LUFT)
+        //PLATFORM (LUFT) 1
 
         const platforms2 = this.physics.add.staticGroup();
-        platforms.create(0, 295, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
-        this.bodengrass = this.add.image(0, 630, "boden-grass");
+        platforms.create(0, 276, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
+        this.bodengrass = this.add.image(0, 650, "boden-grass");
+        this.bodengrass.setOrigin(0, 0);
+        this.bodengrass.setScale(1.5);
+
+        //PLATFORM (LUFT) 2
+
+        const platforms3 = this.physics.add.staticGroup();
+        platforms.create(1300, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
+        this.bodengrass = this.add.image(1300, 650, "boden-grass");
         this.bodengrass.setOrigin(0, 0);
         this.bodengrass.setScale(1.5);
 
@@ -84,6 +92,7 @@ class Scene2 extends Phaser.Scene {
         this.enemy.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy, platforms);
         this.physics.add.collider(this.enemy, platforms2);
+        this.physics.add.collider(this.enemy, platforms3);
 
         //PLAYER SPAWNING
 
@@ -100,6 +109,7 @@ class Scene2 extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
         this.physics.add.collider(this.player, platforms2);
+        this.physics.add.collider(this.player, platforms3);
         this.physics.add.collider(this.player, this.enemy, collideObjects, null, this);
         console.log("PLAYER SPAWNED");
 
@@ -240,12 +250,12 @@ class Scene2 extends Phaser.Scene {
                 if (this.player.x < this.enemy.x && this.enemy.body.touching.down) {
                     this.enemy.body.setOffset(67, 65);
                     this.enemy.setVelocityX(-55).setFlipX(-1);
-                    console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
+                    //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
                     this.enemy.anims.play("run-left", true);
                 } else if (this.player.x > this.enemy.x && this.enemy.body.touching.down) {
                     this.enemy.body.setOffset(97, 65);
                     this.enemy.setVelocityX(55).setFlipX(0);
-                    console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 193)));
+                    //console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 193)));
                     this.enemy.anims.play("run-left", true);
                 } else {
                     this.enemy.body.setOffset(97, 67);
