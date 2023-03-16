@@ -20,6 +20,7 @@ class Scene2 extends Phaser.Scene {
         //PRELOAD GROUND
 
         this.load.image("boden", "/assets/ground/boden_welt_part1.png");
+        this.load.image("boden-grass", "assets/ground/boden_welt_part2.png");
 
         //PRELOAD PLAYER
 
@@ -63,6 +64,14 @@ class Scene2 extends Phaser.Scene {
         const platforms = this.physics.add.staticGroup();
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
+        //PLATFORM (LUFT)
+
+        const platforms2 = this.physics.add.staticGroup();
+        platforms.create(0, 295, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
+        this.bodengrass = this.add.image(0, 630, "boden-grass");
+        this.bodengrass.setOrigin(0, 0);
+        this.bodengrass.setScale(1.5);
+
         //ENEMY SPAWNING
 
         console.log("ENEMY SPAWNING");
@@ -74,6 +83,7 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.existing(this.enemy);
         this.enemy.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy, platforms);
+        this.physics.add.collider(this.enemy, platforms2);
 
         //PLAYER SPAWNING
 
@@ -89,6 +99,7 @@ class Scene2 extends Phaser.Scene {
         this.player.setScale(5);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
+        this.physics.add.collider(this.player, platforms2);
         this.physics.add.collider(this.player, this.enemy, collideObjects, null, this);
         console.log("PLAYER SPAWNED");
 
