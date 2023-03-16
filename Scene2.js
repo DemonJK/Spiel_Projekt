@@ -59,23 +59,23 @@ class Scene2 extends Phaser.Scene {
         this.background4.setOrigin(0, 0);
         this.background4.setScale(4.5);
 
-        //PLATFORM (BODEN)
+        //PLATFORM (BODEN) 1
 
         const platforms = this.physics.add.staticGroup();
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
-        //PLATFORM (LUFT) 1
+        //PLATFORM (LUFT) 2
 
         const platforms2 = this.physics.add.staticGroup();
-        platforms.create(0, 276, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
+        platforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
         this.bodengrass = this.add.image(0, 650, "boden-grass");
         this.bodengrass.setOrigin(0, 0);
         this.bodengrass.setScale(1.5);
 
-        //PLATFORM (LUFT) 2
+        //PLATFORM (LUFT) 3
 
         const platforms3 = this.physics.add.staticGroup();
-        platforms.create(1300, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
+        platforms.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
         this.bodengrass = this.add.image(1300, 650, "boden-grass");
         this.bodengrass.setOrigin(0, 0);
         this.bodengrass.setScale(1.5);
