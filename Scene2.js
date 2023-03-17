@@ -64,6 +64,9 @@ class Scene2 extends Phaser.Scene {
         const platforms = this.physics.add.staticGroup();
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
+        const platforms4 = this.physics.add.staticGroup();
+        platforms.create(0, -5, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
+
         //PLATFORM (LUFT) 2
 
         const platforms2 = this.physics.add.staticGroup();
@@ -93,6 +96,7 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, platforms);
         this.physics.add.collider(this.enemy, platforms2);
         this.physics.add.collider(this.enemy, platforms3);
+        this.physics.add.collider(this.enemy, platforms4);
 
         //PLAYER SPAWNING
 
@@ -110,6 +114,7 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.player, platforms);
         this.physics.add.collider(this.player, platforms2);
         this.physics.add.collider(this.player, platforms3);
+        this.physics.add.collider(this.player, platforms4);
         this.physics.add.collider(this.player, this.enemy, collideObjects, null, this);
         console.log("PLAYER SPAWNED");
 
@@ -248,10 +253,17 @@ class Scene2 extends Phaser.Scene {
         if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 197))) {
             if (this.player.x < this.enemy.x && this.enemy.body.touching.down || this.player.x > this.enemy.x && this.enemy.body.touching.down) {
                 if (this.player.x < this.enemy.x && this.enemy.body.touching.down) {
-                    this.enemy.body.setOffset(67, 65);
-                    this.enemy.setVelocityX(-55).setFlipX(-1);
-                    //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
-                    this.enemy.anims.play("run-left", true);
+                    if ((this.player.x + 25) > (this.enemy.x - 170) && this.player.y < this.enemy.y + 200) {
+                        
+                        this.player.x = this.player.x - 4;
+                        this.enemy.setVelocityX(0);
+                        this.enemy.anims.play("stand", true)
+                    } else {
+                        this.enemy.body.setOffset(67, 65);
+                        this.enemy.setVelocityX(-55).setFlipX(-1);
+                        //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
+                        this.enemy.anims.play("run-left", true);
+                    }
                 } else if (this.player.x > this.enemy.x && this.enemy.body.touching.down) {
                     this.enemy.body.setOffset(97, 65);
                     this.enemy.setVelocityX(55).setFlipX(0);
