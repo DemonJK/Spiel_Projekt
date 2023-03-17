@@ -1,6 +1,7 @@
 class Scene2 extends Phaser.Scene {
     constructor() {
         super("playGame");
+        this.is_coliding = false
     }
 
     //PRELOAD VON HINTERGRUND
@@ -36,6 +37,11 @@ class Scene2 extends Phaser.Scene {
     }
 
     //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT
+
+    collideObjects(){
+        this.is_coliding = true
+        
+    }
 
     create() {
 
@@ -97,13 +103,10 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, platforms2);
         this.physics.add.collider(this.enemy, platforms3);
         this.physics.add.collider(this.enemy, platforms4);
+        this.enemy.setPushable(false)
 
         //PLAYER SPAWNING
 
-        function collideObjects() {
-            this.enemy.setVelocityX(0);
-            this.player.setVelocityX(0);
-        }
 
         console.log("PLAYER SPAWNING");
         this.player = this.physics.add.sprite(150, 900, "playermodel");
@@ -115,7 +118,7 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.player, platforms2);
         this.physics.add.collider(this.player, platforms3);
         this.physics.add.collider(this.player, platforms4);
-        this.physics.add.collider(this.player, this.enemy, collideObjects, null, this);
+        this.physics.add.collider(this.player, this.enemy, this.collideObjects, null, this);
         console.log("PLAYER SPAWNED");
 
         this.cameras.main.startFollow(this.player);
@@ -204,7 +207,10 @@ class Scene2 extends Phaser.Scene {
         console.log("ENDE VON CREATE ANIMS");
     }
 
+
+
     update() {
+
 
         //ÜBERPRÜFT DIE X UND Y KORDINATEN ZWICHEN GEGNER UND SPIELER SODASS DER GEGNER NICHT BEWEGBAR IST
         //NUR AN MACHEN UM ETWAS ZU ÜBERPRÜFEN
@@ -215,22 +221,25 @@ class Scene2 extends Phaser.Scene {
 
 
         //CONTROLS OF PLAYERMODEL
-
         const cursors = this.input.keyboard.createCursorKeys();
         if (cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-495);
             this.player.anims.play("up", true);
+
         } else if (cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
             this.cameras.main.followOffset.x = -250
-        } else if (cursors.right.isDown && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
+
+        } else if (cursors.right.isDown) {
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
             this.cameras.main.followOffset.x = -250;
+
         } else if (cursors.space.isDown && this.player.body.touching.down) {
             this.player.anims.play("space", true);
             this.player.setVelocityX(0);
+
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
@@ -253,16 +262,19 @@ class Scene2 extends Phaser.Scene {
         if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 197))) {
             if (this.player.x < this.enemy.x && this.enemy.body.touching.down || this.player.x > this.enemy.x && this.enemy.body.touching.down) {
                 if (this.player.x < this.enemy.x && this.enemy.body.touching.down) {
-                    if ((this.player.x + 25) > (this.enemy.x - 170) && this.player.y < this.enemy.y + 200) {
-                        
-                        this.player.x = this.player.x - 4;
+                    if ((this.player.x + 25) > (this.enemy.x - 170) && this.player.y < this.enemy.y + 500) {
                         this.enemy.setVelocityX(0);
                         this.enemy.anims.play("stand", true)
                     } else {
-                        this.enemy.body.setOffset(67, 65);
-                        this.enemy.setVelocityX(-55).setFlipX(-1);
-                        //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
-                        this.enemy.anims.play("run-left", true);
+                        this.left_point = this.enemy.body.x - 200
+                        if (this.player.x < this.left_point) {
+                            this.enemy.body.setOffset(67, 65);
+                            this.enemy.setVelocityX(-55).setFlipX(-1);
+                            //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
+                            this.enemy.anims.play("run-left", true);
+                        }
+
+
                     }
                 } else if (this.player.x > this.enemy.x && this.enemy.body.touching.down) {
                     this.enemy.body.setOffset(97, 65);
@@ -278,5 +290,8 @@ class Scene2 extends Phaser.Scene {
             this.enemy.body.setOffset(97, 67);
             this.enemy.anims.play("stand", true)
         }
+
+
+
     }
 }
