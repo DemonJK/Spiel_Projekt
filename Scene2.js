@@ -73,7 +73,6 @@ class Scene2 extends Phaser.Scene {
         platforms.create(0, -5, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
         //PLATFORM (LUFT) 2
-        //BEARBEITUNG
 
         this.passThruPlatforms = this.physics.add.staticGroup();
         this.passThruPlatforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
@@ -83,7 +82,6 @@ class Scene2 extends Phaser.Scene {
         this.bodengrass.setScale(1.5);
 
         //PLATFORM (LUFT) 3
-        //BEARBEITUNG
 
         this.passThruPlatforms2 = this.physics.add.staticGroup();
         this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
@@ -109,7 +107,6 @@ class Scene2 extends Phaser.Scene {
         this.enemy.setPushable(false)
 
         //PLAYER SPAWNING
-
 
         console.log("PLAYER SPAWNING");
         this.player = this.physics.add.sprite(150, 900, "playermodel");
@@ -217,7 +214,6 @@ class Scene2 extends Phaser.Scene {
 
     update() {
 
-
         //ÜBERPRÜFT DIE X UND Y KORDINATEN ZWICHEN GEGNER UND SPIELER SODASS DER GEGNER NICHT BEWEGBAR IST
         //NUR AN MACHEN UM ETWAS ZU ÜBERPRÜFEN
 
@@ -225,12 +221,11 @@ class Scene2 extends Phaser.Scene {
         //console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 185)));
         //console.log("Player Y: " + Math.round(this.player.y + 237) + " Enemy Y; " + (Math.round(this.enemy.y)));
 
-
         //CONTROLS OF PLAYERMODEL
         this.cursors = this.input.keyboard.createCursorKeys();
         if ((this.cursors.up.isDown && this.player.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
-            this.player.setVelocityY(-800);
+            this.player.setVelocityY(-600);
             this.player.anims.play("up", true);
             if (this.isOnPlatform) {
                 this.onPlatform.body.checkCollision.up = true;
@@ -268,14 +263,9 @@ class Scene2 extends Phaser.Scene {
                     .body.checkCollision.down = false;
                 this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
                     .body.checkCollision.down = false;
-
             }
                 , 3000);
-
-
-
         }
-
 
         if ((Math.round(this.player.y + 237) === Math.round(this.enemy.y)) && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
             if (this.cursors.left.isDown) {
@@ -285,40 +275,65 @@ class Scene2 extends Phaser.Scene {
             };
         }
 
-        //
-        //
-        // PROBLEM BEREICH
-        //
-        //
-
         if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 197))) {
-            if (this.player.x < this.enemy.x && this.enemy.body.touching.down || this.player.x > this.enemy.x && this.enemy.body.touching.down) {
-                if (this.player.x < this.enemy.x && this.enemy.body.touching.down) {
-                    if ((this.player.x + 25) > (this.enemy.x - 170) && this.player.y < this.enemy.y + 500) {
+            if (this.is_player_left() || this.is_player_right()) {
+                if (this.is_player_left()) {
+                    if (this.is_hitting_from_left() && this.is_player_over_enemy()) {
                         this.enemy.setVelocityX(0);
                         this.enemy.anims.play("stand", true)
                     } else {
-                        this.left_point = this.enemy.body.x - 200
-                        if (this.player.x < this.left_point) {
+                        if (this.player_is_not_in_left_area()) {
                             this.enemy.body.setOffset(67, 65);
                             this.enemy.setVelocityX(-55).setFlipX(-1);
-                            //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
                             this.enemy.anims.play("run-left", true);
                         }
                     }
-                } else if (this.player.x > this.enemy.x && this.enemy.body.touching.down) {
-                    this.enemy.body.setOffset(97, 65);
-                    this.enemy.setVelocityX(55).setFlipX(0);
-                    //console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 193)));
-                    this.enemy.anims.play("run-left", true);
-                } else {
-                    this.enemy.body.setOffset(97, 67);
-                    this.enemy.anims.play("stand", true)
+                } else if (this.is_player_right()) {
+                    if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
+                        console.log(this.is_hitting_from_right());
+                        this.enemy.setVelocityX(0);
+                        this.enemy.anims.play("stand", true)
+                    } else {
+                        if (this.player_is_not_in_right_area()) {
+                            this.enemy.body.setOffset(67, 65);
+                            this.enemy.setVelocityX(55).setFlipX(0);
+                            this.enemy.anims.play("run-left", true);
+                        }
+                    }
                 }
             }
         } else {
             this.enemy.body.setOffset(97, 67);
             this.enemy.anims.play("stand", true)
         }
+    }
+    is_player_left() {
+        return this.player.x < this.enemy.x && this.enemy.body.touching.down
+    }
+
+    is_player_right() {
+        return this.player.x > this.enemy.x && this.enemy.body.touching.down
+    }
+
+    is_hitting_from_left() {
+        return (this.player.x + 25) > (this.enemy.x - 170)
+    }
+
+    is_hitting_from_right() {
+        return (this.player.x - 25) < (this.enemy.x + 170)
+    }
+
+    is_player_over_enemy() {
+        return this.player.y < this.enemy.y + 500
+    }
+
+    player_is_not_in_left_area() {
+        this.left_point = this.enemy.body.x - 200
+        return this.player.x < this.left_point
+    }
+
+    player_is_not_in_right_area() {
+        this.left_point = this.enemy.body.x + 200
+        return this.player.x > this.left_point
     }
 }
