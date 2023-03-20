@@ -88,7 +88,7 @@ class Scene2 extends Phaser.Scene {
         this.passThruPlatforms2 = this.physics.add.staticGroup();
         this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
             .body.checkCollision.down = false;
-        this.bodengrass = this.add.image(1300, 650, "boden-grass");
+        this.bodengrass = this.add.image(1350, 615, "boden-grass");
         this.bodengrass.setOrigin(0, 0);
         this.bodengrass.setScale(1.5);
 
@@ -230,7 +230,7 @@ class Scene2 extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         if ((this.cursors.up.isDown && this.player.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
-            this.player.setVelocityY(-495);
+            this.player.setVelocityY(-800);
             this.player.anims.play("up", true);
             if (this.isOnPlatform) {
                 this.onPlatform.body.checkCollision.up = true;
@@ -259,10 +259,23 @@ class Scene2 extends Phaser.Scene {
             this.player.anims.play("idle", true);
         }
 
-        if ((this.cursors.down.isDown && this.isOnPlatform)) {
-            this.onPlatform.body.checkCollision.up = false;
-            console.log(this.cursors.down.isDown, "HERE")
+        if ((this.cursors.down.isDown)) {
+            console.log("DOWN CURSOR IS ACTIVE")
+            this.passThruPlatforms.clear()
+            this.passThruPlatforms2.clear()
+            setTimeout(() => {
+                this.passThruPlatforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+                    .body.checkCollision.down = false;
+                this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+                    .body.checkCollision.down = false;
+
+            }
+                , 3000);
+
+
+
         }
+
 
         if ((Math.round(this.player.y + 237) === Math.round(this.enemy.y)) && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
             if (this.cursors.left.isDown) {
