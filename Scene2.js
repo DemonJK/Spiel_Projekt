@@ -1,6 +1,7 @@
 class Scene2 extends Phaser.Scene {
     constructor() {
         super("playGame");
+        this.is_coliding = false
     }
 
     //PRELOAD VON HINTERGRUND
@@ -20,6 +21,7 @@ class Scene2 extends Phaser.Scene {
         //PRELOAD GROUND
 
         this.load.image("boden", "/assets/ground/boden_welt_part1.png");
+        this.load.image("boden-grass", "assets/ground/boden_welt_part2.png");
 
         //PRELOAD PLAYER
 
@@ -29,14 +31,20 @@ class Scene2 extends Phaser.Scene {
         //PRELOAD ENEMY
         this.load.spritesheet("enemy1", "/assets/enemy/idle/Idle.png", { frameWidth: 256, frameHeight: 256 });
         console.log("enemy1 IDLE LOADED");
-        this.load.spritesheet("enemy_lose_hp", "/assets/enemy/death/Die.png", { frameWidth: 256, frameHeight: 256 });
-        console.log("enemy_lose_hp LOADED ");
-        
+        this.load.spritesheet("enemyrun", "/assets/enemy/run/Run.png", { frameWidth: 256, frameHeight: 256 });
+        console.log("enemyrun RUN LOADED")
+
     }
 
     //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT
 
+    collideObjects() {
+        this.is_coliding = true
+    }
+
     create() {
+
+        this.player_is_touching_enemy = false;
 
         //CREATE BACKGROUND
 
@@ -56,35 +64,68 @@ class Scene2 extends Phaser.Scene {
         this.background4.setOrigin(0, 0);
         this.background4.setScale(4.5);
 
-        //PLATFORM (BODEN)
+        //PLATFORM (BODEN) 1
 
         const platforms = this.physics.add.staticGroup();
         platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
+        const platforms4 = this.physics.add.staticGroup();
+        platforms.create(0, -5, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
+        //PLATFORM (LUFT) 2
+        //BEARBEITUNG
+
+        this.passThruPlatforms = this.physics.add.staticGroup();
+        this.passThruPlatforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+            .body.checkCollision.down = false;
+        this.bodengrass = this.add.image(0, 650, "boden-grass");
+        this.bodengrass.setOrigin(0, 0);
+        this.bodengrass.setScale(1.5);
+
+        //PLATFORM (LUFT) 3
+        //BEARBEITUNG
+
+        this.passThruPlatforms2 = this.physics.add.staticGroup();
+        this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+            .body.checkCollision.down = false;
+        this.bodengrass = this.add.image(1350, 615, "boden-grass");
+        this.bodengrass.setOrigin(0, 0);
+        this.bodengrass.setScale(1.5);
 
         //ENEMY SPAWNING
 
         console.log("ENEMY SPAWNING");
-        this.enemy = this.physics.add.sprite(500, 900, "enemy1");
-        this.enemy.body.setSize(100, 150, 1);
+        this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
+        this.enemy.body.setSize(90, 137, 1);
+        this.enemy.body.setOffset(93, 67);
         this.enemy.setScale(2);
         this.enemy.setBounce(0.2);
+        this.physics.add.existing(this.enemy);
         this.enemy.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy, platforms);
-        console.log("ENEMY SPAWNED");
+        this.physics.add.collider(this.enemy, this.passThruPlatforms, this.onPlatform);
+        this.physics.add.collider(this.enemy, this.passThruPlatforms2, this.onPlatform);
+        this.physics.add.collider(this.enemy, platforms4);
+        this.enemy.setPushable(false)
 
         //PLAYER SPAWNING
 
+
         console.log("PLAYER SPAWNING");
-        this.player = this.physics.add.sprite(100, 900, "playermodel");
+        this.player = this.physics.add.sprite(150, 900, "playermodel");
         this.player.body.setSize(30, 30, 1);
-        this.player.body.setOffset(25, 33)
+        this.player.body.setOffset(25, 33);
         this.player.setScale(5);
-        this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
+        this.physics.add.collider(this.player, this.passThruPlatforms, this.onPlatform);
+        this.physics.add.collider(this.player, this.passThruPlatforms2, this.onPlatform);
+        this.physics.add.collider(this.player, platforms4);
+        this.physics.add.collider(this.player, this.enemy, this.collideObjects, null, this);
         console.log("PLAYER SPAWNED");
+
+        this.cameras.main.startFollow(this.player);
+        this.cameras.main.followOffset.set(-250, 0)
 
         //CREATE BACKGROUND
 
@@ -160,63 +201,124 @@ class Scene2 extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: "hp_lose",
-            frames: this.anims.generateFrameNumbers("enemy_lose_hp", { start: 0, end: 8 }),
-            frameRate: 8,
+            key: "run-left",
+            frames: this.anims.generateFrameNumbers("enemyrun", { start: 0, end: 6 }),
+            frameRate: 6,
+            repeat: -1,
         });
+
         console.log("ENDE VON CREATE ANIMS");
+    }
+
+    onPlatform(player, platform) {
+        player.isOnPlatform = true;
+        player.onPlatform = platform;
     }
 
     update() {
 
-        //CONTROLS OF PLAYERMODEL
 
-        const cursors = this.input.keyboard.createCursorKeys();
-        if (cursors.left.isDown) {
+        //ÜBERPRÜFT DIE X UND Y KORDINATEN ZWICHEN GEGNER UND SPIELER SODASS DER GEGNER NICHT BEWEGBAR IST
+        //NUR AN MACHEN UM ETWAS ZU ÜBERPRÜFEN
+
+        //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 145)));
+        //console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 185)));
+        //console.log("Player Y: " + Math.round(this.player.y + 237) + " Enemy Y; " + (Math.round(this.enemy.y)));
+
+
+        //CONTROLS OF PLAYERMODEL
+        this.cursors = this.input.keyboard.createCursorKeys();
+        if ((this.cursors.up.isDown && this.player.body.touching.down)) {
+            console.log("UP CURSOR IS ACTIVE");
+            this.player.setVelocityY(-800);
+            this.player.anims.play("up", true);
+            if (this.isOnPlatform) {
+                this.onPlatform.body.checkCollision.up = true;
+                this.isOnPlatform = false;
+                this.onPlatform = null;
+            }
+        } else if (this.cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
+            console.log("LEFT CURSOR IS ACTIVE");
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
-        } else if (cursors.right.isDown) {
+            this.cameras.main.followOffset.x = -250
+
+        } else if (this.cursors.right.isDown) {
+            console.log("RIGHT CURSOR IS ACTIVE");
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
-        } else if (cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-350);
-            this.player.anims.play("up", true);
-        } else if (cursors.space.isDown) {
+            this.cameras.main.followOffset.x = -250;
+
+        } else if (this.cursors.space.isDown && this.player.body.touching.down) {
+            console.log("SPACEBAR IS ACTIVE");
             this.player.anims.play("space", true);
+            this.player.setVelocityX(0);
+
         } else {
             this.player.setVelocityX(0);
             this.player.anims.play("idle", true);
         }
-        this.enemy.anims.play("stand", true);
-    }
 
-    /*
+        if ((this.cursors.down.isDown)) {
+            console.log("DOWN CURSOR IS ACTIVE")
+            this.passThruPlatforms.clear()
+            this.passThruPlatforms2.clear()
+            setTimeout(() => {
+                this.passThruPlatforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+                    .body.checkCollision.down = false;
+                this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+                    .body.checkCollision.down = false;
 
-    attackCalulation() {
-        console.log("FUNCTION attackCalculation IS WORKING")
-        // calcutating hitbox by atack
-        // var animation_progress = this.player1.anims.getProgress();
-        this.colliderPunch = this.scene.add.rectangle(
-            this.x - 192,
-            this.y + 70,
-            80,
-            80,
-        );
+            }
+                , 3000);
 
-        this.scene.physics.add.existing(this.colliderPunch);
-        this.colliderPunch.body.setImmovable(true);
 
-        this.colliderPunch.setVisible(true);
-        console.log("LOADED");
 
-        if (this.scene.physics.overlap(this.scene.player, this.colliderPunch)) {
-            this.scene.update_hp_shield_player1();
-
-            if (this.colliderPunch) this.colliderPunch.destroy();
         }
-        console.log("LOADED");
-    }
 
-    */
-   
+
+        if ((Math.round(this.player.y + 237) === Math.round(this.enemy.y)) && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
+            if (this.cursors.left.isDown) {
+                this.player.setPosition(this.enemy.x - 220, this.player.y)
+            } else if (this.cursors.right.isDown) {
+                this.player.setPosition(this.enemy.x + 220, this.player.y)
+            };
+        }
+
+        //
+        //
+        // PROBLEM BEREICH
+        //
+        //
+
+        if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 197))) {
+            if (this.player.x < this.enemy.x && this.enemy.body.touching.down || this.player.x > this.enemy.x && this.enemy.body.touching.down) {
+                if (this.player.x < this.enemy.x && this.enemy.body.touching.down) {
+                    if ((this.player.x + 25) > (this.enemy.x - 170) && this.player.y < this.enemy.y + 500) {
+                        this.enemy.setVelocityX(0);
+                        this.enemy.anims.play("stand", true)
+                    } else {
+                        this.left_point = this.enemy.body.x - 200
+                        if (this.player.x < this.left_point) {
+                            this.enemy.body.setOffset(67, 65);
+                            this.enemy.setVelocityX(-55).setFlipX(-1);
+                            //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
+                            this.enemy.anims.play("run-left", true);
+                        }
+                    }
+                } else if (this.player.x > this.enemy.x && this.enemy.body.touching.down) {
+                    this.enemy.body.setOffset(97, 65);
+                    this.enemy.setVelocityX(55).setFlipX(0);
+                    //console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 193)));
+                    this.enemy.anims.play("run-left", true);
+                } else {
+                    this.enemy.body.setOffset(97, 67);
+                    this.enemy.anims.play("stand", true)
+                }
+            }
+        } else {
+            this.enemy.body.setOffset(97, 67);
+            this.enemy.anims.play("stand", true)
+        }
+    }
 }
