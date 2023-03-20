@@ -38,9 +38,8 @@ class Scene2 extends Phaser.Scene {
 
     //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT
 
-    collideObjects(){
+    collideObjects() {
         this.is_coliding = true
-        
     }
 
     create() {
@@ -74,17 +73,21 @@ class Scene2 extends Phaser.Scene {
         platforms.create(0, -5, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
         //PLATFORM (LUFT) 2
+        //BEARBEITUNG
 
-        const platforms2 = this.physics.add.staticGroup();
-        platforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
+        this.passThruPlatforms = this.physics.add.staticGroup();
+        this.passThruPlatforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+            .body.checkCollision.down = false;
         this.bodengrass = this.add.image(0, 650, "boden-grass");
         this.bodengrass.setOrigin(0, 0);
         this.bodengrass.setScale(1.5);
 
         //PLATFORM (LUFT) 3
+        //BEARBEITUNG
 
-        const platforms3 = this.physics.add.staticGroup();
-        platforms.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody();
+        this.passThruPlatforms2 = this.physics.add.staticGroup();
+        this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
+            .body.checkCollision.down = false;
         this.bodengrass = this.add.image(1300, 650, "boden-grass");
         this.bodengrass.setOrigin(0, 0);
         this.bodengrass.setScale(1.5);
@@ -100,8 +103,8 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.existing(this.enemy);
         this.enemy.setCollideWorldBounds(true);
         this.physics.add.collider(this.enemy, platforms);
-        this.physics.add.collider(this.enemy, platforms2);
-        this.physics.add.collider(this.enemy, platforms3);
+        this.physics.add.collider(this.enemy, this.passThruPlatforms, this.onPlatform);
+        this.physics.add.collider(this.enemy, this.passThruPlatforms2, this.onPlatform);
         this.physics.add.collider(this.enemy, platforms4);
         this.enemy.setPushable(false)
 
@@ -115,8 +118,8 @@ class Scene2 extends Phaser.Scene {
         this.player.setScale(5);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
-        this.physics.add.collider(this.player, platforms2);
-        this.physics.add.collider(this.player, platforms3);
+        this.physics.add.collider(this.player, this.passThruPlatforms, this.onPlatform);
+        this.physics.add.collider(this.player, this.passThruPlatforms2, this.onPlatform);
         this.physics.add.collider(this.player, platforms4);
         this.physics.add.collider(this.player, this.enemy, this.collideObjects, null, this);
         console.log("PLAYER SPAWNED");
@@ -207,7 +210,10 @@ class Scene2 extends Phaser.Scene {
         console.log("ENDE VON CREATE ANIMS");
     }
 
-
+    onPlatform(player, platform) {
+        player.isOnPlatform = true;
+        player.onPlatform = platform;
+    }
 
     update() {
 
@@ -221,22 +227,30 @@ class Scene2 extends Phaser.Scene {
 
 
         //CONTROLS OF PLAYERMODEL
-        const cursors = this.input.keyboard.createCursorKeys();
-        if (cursors.up.isDown && this.player.body.touching.down) {
+        this.cursors = this.input.keyboard.createCursorKeys();
+        if ((this.cursors.up.isDown && this.player.body.touching.down)) {
+            console.log("UP CURSOR IS ACTIVE");
             this.player.setVelocityY(-495);
             this.player.anims.play("up", true);
-
-        } else if (cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
+            if (this.isOnPlatform) {
+                this.onPlatform.body.checkCollision.up = true;
+                this.isOnPlatform = false;
+                this.onPlatform = null;
+            }
+        } else if (this.cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
+            console.log("LEFT CURSOR IS ACTIVE");
             this.player.setVelocityX(-160).setFlipX(-1);
             this.player.anims.play("left", true);
             this.cameras.main.followOffset.x = -250
 
-        } else if (cursors.right.isDown) {
+        } else if (this.cursors.right.isDown) {
+            console.log("RIGHT CURSOR IS ACTIVE");
             this.player.setVelocityX(160).setFlipX(0);
             this.player.anims.play("right", true);
             this.cameras.main.followOffset.x = -250;
 
-        } else if (cursors.space.isDown && this.player.body.touching.down) {
+        } else if (this.cursors.space.isDown && this.player.body.touching.down) {
+            console.log("SPACEBAR IS ACTIVE");
             this.player.anims.play("space", true);
             this.player.setVelocityX(0);
 
@@ -245,10 +259,15 @@ class Scene2 extends Phaser.Scene {
             this.player.anims.play("idle", true);
         }
 
+        if ((this.cursors.down.isDown && this.isOnPlatform)) {
+            this.onPlatform.body.checkCollision.up = false;
+            console.log(this.cursors.down.isDown, "HERE")
+        }
+
         if ((Math.round(this.player.y + 237) === Math.round(this.enemy.y)) && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
-            if (cursors.left.isDown) {
+            if (this.cursors.left.isDown) {
                 this.player.setPosition(this.enemy.x - 220, this.player.y)
-            } else if (cursors.right.isDown) {
+            } else if (this.cursors.right.isDown) {
                 this.player.setPosition(this.enemy.x + 220, this.player.y)
             };
         }
@@ -273,8 +292,6 @@ class Scene2 extends Phaser.Scene {
                             //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 197)));
                             this.enemy.anims.play("run-left", true);
                         }
-
-
                     }
                 } else if (this.player.x > this.enemy.x && this.enemy.body.touching.down) {
                     this.enemy.body.setOffset(97, 65);
@@ -290,8 +307,5 @@ class Scene2 extends Phaser.Scene {
             this.enemy.body.setOffset(97, 67);
             this.enemy.anims.play("stand", true)
         }
-
-
-
     }
 }
