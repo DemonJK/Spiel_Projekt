@@ -11,10 +11,15 @@ class Scene1 extends Phaser.Scene {
         this.load.image("background5", "assets/images/HillsLayer05.png");
         this.load.image("background6", "assets/images/HillsLayer06.png");
         console.log("Scene1 Background loaded");
+
+        
+        
     }
 
     create() {
         this.add.text(35, 35, "Das Spiel wird geladen...");
+
+        
         this.scene.start("playGame");
     }
 }

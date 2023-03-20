@@ -92,6 +92,7 @@ class Scene2 extends Phaser.Scene {
 
         //ENEMY SPAWNING
 
+        
         console.log("ENEMY SPAWNING");
         this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
@@ -105,6 +106,8 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.passThruPlatforms2, this.onPlatform);
         this.physics.add.collider(this.enemy, platforms4);
         this.enemy.setPushable(false)
+        this.enemy_hp = new HealthBar(this, 0, 0)
+
 
         //PLAYER SPAWNING
 
@@ -213,7 +216,9 @@ class Scene2 extends Phaser.Scene {
     }
 
     update() {
-
+        this.enemy_hp.x = this.enemy.body.x + 50
+        this.enemy_hp.y = this.enemy.y - 150
+        this.enemy_hp.draw()
         //ÜBERPRÜFT DIE X UND Y KORDINATEN ZWICHEN GEGNER UND SPIELER SODASS DER GEGNER NICHT BEWEGBAR IST
         //NUR AN MACHEN UM ETWAS ZU ÜBERPRÜFEN
 
@@ -226,6 +231,7 @@ class Scene2 extends Phaser.Scene {
         if ((this.cursors.up.isDown && this.player.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
             this.player.setVelocityY(-600);
+            this.enemy_hp.decrease(5)
             this.player.anims.play("up", true);
             if (this.isOnPlatform) {
                 this.onPlatform.body.checkCollision.up = true;
