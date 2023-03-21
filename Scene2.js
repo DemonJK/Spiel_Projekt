@@ -99,11 +99,6 @@ class Scene2 extends Phaser.Scene {
         this.background6.setOrigin(0, 0);
         this.background6.setScale(4.5);
 
-
-        //ENEMY STAND
-        //0 - 11 (12)
-        //ENEMY STAND
-
         this.anims.create({
             key: "space",
             frames: this.anims.generateFrameNumbers("playermodel", { start: 46, end: 57 }),
@@ -192,6 +187,7 @@ class Scene2 extends Phaser.Scene {
 
         } else if (this.cursors.space.isDown && this.player.body.touching.down) {
             console.log("SPACEBAR IS ACTIVE");
+            this.physics.add.existing(this.attackHitBox);
             this.player.anims.play("space", true);
             this.player.setVelocityX(0);
 
