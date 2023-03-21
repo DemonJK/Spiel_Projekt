@@ -57,7 +57,7 @@ class Scene2 extends Phaser.Scene {
         this.bodengrass.setScale(1.5);
 
         //ENEMY SPAWNING
-        
+
         this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
         this.enemy.body.setOffset(93, 67);
@@ -141,6 +141,12 @@ class Scene2 extends Phaser.Scene {
             frameRate: 6,
             repeat: -1,
         });
+
+        this.anims.create({
+            key: "death",
+            frames: this.anims.generateFrameNumbers("enemydie", { start: 0, end: 13 }),
+            frameRate: 8,
+        })
     }
 
     onPlatform(player, platform) {
@@ -164,7 +170,6 @@ class Scene2 extends Phaser.Scene {
         if ((this.cursors.up.isDown && this.player.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
             this.player.setVelocityY(-600);
-            this.enemy.hp.decrease(5)
             this.player.anims.play("up", true);
             if (this.isOnPlatform) {
                 this.onPlatform.body.checkCollision.up = true;
@@ -185,7 +190,9 @@ class Scene2 extends Phaser.Scene {
 
         } else if (this.cursors.space.isDown && this.player.body.touching.down) {
             console.log("SPACEBAR IS ACTIVE");
-            this.physics.add.existing(this.attackHitBox);
+            if (this.cursors.space.once && this.player.body.touching.down) {
+                this.enemy.hp.decrease(5)
+            }
             this.player.anims.play("space", true);
             this.player.setVelocityX(0);
 
@@ -226,6 +233,11 @@ class Scene2 extends Phaser.Scene {
                             this.enemy.body.setOffset(67, 65);
                             this.enemy.setVelocityX(-55).setFlipX(-1);
                             this.enemy.anims.play("run-left", true);
+                            if (this.enemy.hp.value === 0) {
+                                console.log(this.enemy.hp.value)
+                                this.enemy.setVelocityX(0)
+                                this.enemy.anims.play("death", true)
+                            }
                         }
                     }
                 } else if (this.is_player_right()) {
@@ -245,6 +257,9 @@ class Scene2 extends Phaser.Scene {
             this.enemy.body.setOffset(97, 67);
             this.enemy.anims.play("stand", true)
         }
+
+
+
     }
     is_player_left() {
         return this.player.x < this.enemy.x && this.enemy.body.touching.down

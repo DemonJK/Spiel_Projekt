@@ -33,6 +33,10 @@ class Preload extends Phaser.Scene {
             frameWidth: 256,
             frameHeight: 256
         });
+        this.load.spritesheet("enemydie", "/assets/enemy/death/Die.png", {
+            frameWidth: 256,
+            frameHeight: 256
+        });
     }
 
     create() {
