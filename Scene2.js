@@ -58,7 +58,6 @@ class Scene2 extends Phaser.Scene {
 
         //ENEMY SPAWNING
 
-        
         console.log("ENEMY SPAWNING");
         this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
@@ -87,8 +86,6 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.passThruPlatforms2, this.onPlatform);
         this.physics.add.collider(this.player, platforms4);
         this.physics.add.collider(this.player, this.enemy, this.collideObjects, null, this);
-        console.log("PLAYER SPAWNED");
-
         this.cameras.main.startFollow(this.player);
         this.cameras.main.followOffset.set(-250, 0)
 
@@ -101,15 +98,6 @@ class Scene2 extends Phaser.Scene {
         this.background6 = this.add.image(0, 0, "background6");
         this.background6.setOrigin(0, 0);
         this.background6.setScale(4.5);
-
-        //CREATE TEXT
-
-        console.log("TEXT LOAD");
-        this.add.text(35, 35, "Das Spiel wird gespielt", {
-            font: "30px Arial",
-            fill: "black",
-        });
-        console.log("TEXT LOADED");
 
         //ANIMATIONEN DES SPIELS
 
