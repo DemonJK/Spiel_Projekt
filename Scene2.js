@@ -108,7 +108,6 @@ class Scene2 extends Phaser.Scene {
         this.enemy.setPushable(false)
         this.enemy_hp = new HealthBar(this, 0, 0)
 
-
         //PLAYER SPAWNING
 
         console.log("PLAYER SPAWNING");
