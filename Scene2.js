@@ -4,40 +4,6 @@ class Scene2 extends Phaser.Scene {
         this.is_coliding = false
     }
 
-    //PRELOAD VON HINTERGRUND
-
-    preload() {
-
-        //PRELOAD BACKGROUND
-
-        this.load.image("background", "/assets/images/HillsLayer01.png");
-        this.load.image("background2", "/assets/images/HillsLayer02.png");
-        this.load.image("background3", "/assets/images/HillsLayer03.png");
-        this.load.image("background4", "/assets/images/HillsLayer04.png");
-        this.load.image("background5", "/assets/images/HillsLayer05.png");
-        this.load.image("background6", "/assets/images/HillsLayer06.png");
-        console.log("Scene2 Background LOADED");
-
-        //PRELOAD GROUND
-
-        this.load.image("boden", "/assets/ground/boden_welt_part1.png");
-        this.load.image("boden-grass", "assets/ground/boden_welt_part2.png");
-
-        //PRELOAD PLAYER
-
-        this.load.spritesheet("playermodel", "/assets/player_model/NightBorne.png", { frameWidth: 80, frameHeight: 80 });
-        console.log("playermodel LOADED");
-
-        //PRELOAD ENEMY
-        this.load.spritesheet("enemy1", "/assets/enemy/idle/Idle.png", { frameWidth: 256, frameHeight: 256 });
-        console.log("enemy1 IDLE LOADED");
-        this.load.spritesheet("enemyrun", "/assets/enemy/run/Run.png", { frameWidth: 256, frameHeight: 256 });
-        console.log("enemyrun RUN LOADED")
-
-    }
-
-    //CREATE VON HINTERGRUND UND TEXT "DAS SPIEl WIRD GESPIELT
-
     collideObjects() {
         this.is_coliding = true
     }
@@ -106,7 +72,7 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.passThruPlatforms2, this.onPlatform);
         this.physics.add.collider(this.enemy, platforms4);
         this.enemy.setPushable(false)
-        this.enemy_hp = new HealthBar(this, 0, 0)
+        this.enemy.hp = new HealthBar(this, 0, 0)
 
         //PLAYER SPAWNING
 
@@ -215,9 +181,9 @@ class Scene2 extends Phaser.Scene {
     }
 
     update() {
-        this.enemy_hp.x = this.enemy.body.x + 50
-        this.enemy_hp.y = this.enemy.y - 150
-        this.enemy_hp.draw()
+        this.enemy.hp.x = this.enemy.body.x + 50
+        this.enemy.hp.y = this.enemy.y - 150
+        this.enemy.hp.draw()
         //ÜBERPRÜFT DIE X UND Y KORDINATEN ZWICHEN GEGNER UND SPIELER SODASS DER GEGNER NICHT BEWEGBAR IST
         //NUR AN MACHEN UM ETWAS ZU ÜBERPRÜFEN
 

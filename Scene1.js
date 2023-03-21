@@ -37,8 +37,7 @@ class Preload extends Phaser.Scene {
 
     create() {
         this.add.text(35, 35, "Das Spiel wird geladen...");
-
-
+        
         this.scene.start("playGame");
     }
 }
