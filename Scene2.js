@@ -57,8 +57,7 @@ class Scene2 extends Phaser.Scene {
         this.bodengrass.setScale(1.5);
 
         //ENEMY SPAWNING
-
-        console.log("ENEMY SPAWNING");
+        
         this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
         this.enemy.body.setOffset(93, 67);
@@ -75,7 +74,6 @@ class Scene2 extends Phaser.Scene {
 
         //PLAYER SPAWNING
 
-        console.log("PLAYER SPAWNING");
         this.player = this.physics.add.sprite(150, 900, "playermodel");
         this.player.body.setSize(30, 30, 1);
         this.player.body.setOffset(25, 33);
@@ -232,7 +230,6 @@ class Scene2 extends Phaser.Scene {
                     }
                 } else if (this.is_player_right()) {
                     if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
-                        console.log(this.is_hitting_from_right());
                         this.enemy.setVelocityX(0);
                         this.enemy.anims.play("stand", true)
                     } else {
