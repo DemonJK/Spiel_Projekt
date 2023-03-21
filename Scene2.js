@@ -99,21 +99,10 @@ class Scene2 extends Phaser.Scene {
         this.background6.setOrigin(0, 0);
         this.background6.setScale(4.5);
 
-        //ANIMATIONEN DES SPIELS
-
-        //PLAYER
-        //0 - 8 (22)
-        //23 - 28 (45)
-        //46 - 57 (68)
-        //69 - 73 (91)
-        //92 - 114 (114)
-        //PLAYER
 
         //ENEMY STAND
         //0 - 11 (12)
         //ENEMY STAND
-
-        console.log("ANIMS LOADING")
 
         this.anims.create({
             key: "space",
@@ -159,8 +148,6 @@ class Scene2 extends Phaser.Scene {
             frameRate: 6,
             repeat: -1,
         });
-
-        console.log("ENDE VON CREATE ANIMS");
     }
 
     onPlatform(player, platform) {
@@ -184,7 +171,7 @@ class Scene2 extends Phaser.Scene {
         if ((this.cursors.up.isDown && this.player.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
             this.player.setVelocityY(-600);
-            this.enemy_hp.decrease(5)
+            this.enemy.hp.decrease(5)
             this.player.anims.play("up", true);
             if (this.isOnPlatform) {
                 this.onPlatform.body.checkCollision.up = true;

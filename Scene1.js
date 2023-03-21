@@ -1,5 +1,5 @@
 class Preload extends Phaser.Scene {
-    constructor() {
+    constructor () {
         super("bootGame");
     }
 
