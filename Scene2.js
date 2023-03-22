@@ -32,11 +32,11 @@ class Scene2 extends Phaser.Scene {
 
         //PLATFORM (BODEN) 1
 
-        const platforms = this.physics.add.staticGroup();
-        platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
+        this.platforms = this.physics.add.staticGroup();
+        this.platforms.create(0, 0, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
-        const platforms4 = this.physics.add.staticGroup();
-        platforms.create(0, -5, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
+        this.platforms4 = this.physics.add.staticGroup();
+        this.platforms.create(0, -5, "boden").setOrigin(0, -15).setScale(4.5).refreshBody();
 
         //PLATFORM (LUFT) 2
 
@@ -57,18 +57,18 @@ class Scene2 extends Phaser.Scene {
         this.bodengrass.setScale(1.5);
 
         //ENEMY SPAWNING
-
         this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
         this.enemy.body.setSize(90, 137, 1);
         this.enemy.body.setOffset(93, 67);
         this.enemy.setScale(2);
         this.enemy.setBounce(0.2);
         this.physics.add.existing(this.enemy);
+
         this.enemy.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemy, platforms);
+        this.physics.add.collider(this.enemy, this.platforms);
         this.physics.add.collider(this.enemy, this.passThruPlatforms, this.onPlatform);
         this.physics.add.collider(this.enemy, this.passThruPlatforms2, this.onPlatform);
-        this.physics.add.collider(this.enemy, platforms4);
+        this.physics.add.collider(this.enemy, this.platforms4);
         this.enemy.setPushable(false)
         this.enemy.hp = new HealthBar(this, 0, 0)
 
@@ -79,10 +79,10 @@ class Scene2 extends Phaser.Scene {
         this.player.body.setOffset(25, 33);
         this.player.setScale(5);
         this.player.setCollideWorldBounds(true);
-        this.physics.add.collider(this.player, platforms);
+        this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.player, this.passThruPlatforms, this.onPlatform);
         this.physics.add.collider(this.player, this.passThruPlatforms2, this.onPlatform);
-        this.physics.add.collider(this.player, platforms4);
+        this.physics.add.collider(this.player, this.platforms4);
         this.physics.add.collider(this.player, this.enemy, this.collideObjects, null, this);
         this.cameras.main.startFollow(this.player);
         this.cameras.main.followOffset.set(-250, 0)
@@ -97,56 +97,12 @@ class Scene2 extends Phaser.Scene {
         this.background6.setOrigin(0, 0);
         this.background6.setScale(4.5);
 
-        this.anims.create({
-            key: "space",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 46, end: 57 }),
-            frameRate: 14,
-        });
+        this.enemy2 = new Enemy(this, 100, 0, "enemy1")
+        this.enemy3 = new Enemy(this, 200, 0, "enemy1")
 
-        this.anims.create({
-            key: "up",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 96, end: 100 }),
-            frameRate: 6,
-        });
 
-        this.anims.create({
-            key: "idle",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 0, end: 8 }),
-            frameRate: 8,
-        });
 
-        this.anims.create({
-            key: "right",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 23, end: 28 }),
-            frameRate: 6,
-            repeat: -1,
-        });
 
-        this.anims.create({
-            key: "left",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 23, end: 28 }),
-            frameRate: 6,
-            repeat: -1,
-        });
-
-        this.anims.create({
-            key: "stand",
-            frames: this.anims.generateFrameNumbers("enemy1", { start: 0, end: 10 }),
-            frameRate: 8,
-        });
-
-        this.anims.create({
-            key: "run-left",
-            frames: this.anims.generateFrameNumbers("enemyrun", { start: 0, end: 6 }),
-            frameRate: 8,
-            repeat: -1,
-        });
-
-        this.anims.create({
-            key: "death-anim",
-            frames: this.anims.generateFrameNumbers("enemydie", { start: 0, end: 13 }),
-            frameRate: 8,
-        })
     }
 
     onPlatform(player, platform) {
@@ -155,6 +111,11 @@ class Scene2 extends Phaser.Scene {
     }
 
     update() {
+        this.enemy2.update()
+        this.enemy3.update()
+
+
+
         this.enemy.hp.x = this.enemy.body.x + 50
         this.enemy.hp.y = this.enemy.y - 150
         this.enemy.hp.draw()
@@ -299,7 +260,7 @@ class Scene2 extends Phaser.Scene {
         } else {
             console.log("NOT READABLE");
         }
-        
+
     }
 
 }
