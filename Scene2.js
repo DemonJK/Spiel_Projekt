@@ -190,7 +190,7 @@ class Scene2 extends Phaser.Scene {
 
         } else if (this.cursors.space.isDown && this.player.body.touching.down) {
             console.log("SPACEBAR IS ACTIVE");
-            if (this.cursors.space.isDown && this.player.body.touching.down && ) {
+            if (this.cursors.space.isDown && this.player.body.touching.down) {
                 this.enemy.hp.decrease(5)
             }
             this.player.anims.play("space", true);
