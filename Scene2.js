@@ -138,12 +138,12 @@ class Scene2 extends Phaser.Scene {
         this.anims.create({
             key: "run-left",
             frames: this.anims.generateFrameNumbers("enemyrun", { start: 0, end: 6 }),
-            frameRate: 6,
+            frameRate: 8,
             repeat: -1,
         });
 
         this.anims.create({
-            key: "death",
+            key: "death-anim",
             frames: this.anims.generateFrameNumbers("enemydie", { start: 0, end: 13 }),
             frameRate: 8,
         })
@@ -228,22 +228,26 @@ class Scene2 extends Phaser.Scene {
                     if (this.is_hitting_from_left() && this.is_player_over_enemy()) {
                         this.enemy.setVelocityX(0);
                         this.enemy.anims.play("stand", true)
+                        this.enemy_no_hp_death
                     } else {
                         if (this.player_is_not_in_left_area()) {
                             this.enemy.body.setOffset(67, 65);
                             this.enemy.setVelocityX(-55).setFlipX(-1);
                             this.enemy.anims.play("run-left", true);
+                            this.enemy_no_hp_death
                         }
                     }
                 } else if (this.is_player_right()) {
                     if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
                         this.enemy.setVelocityX(0);
                         this.enemy.anims.play("stand", true)
+                        this.enemy_no_hp_death
                     } else {
                         if (this.player_is_not_in_right_area()) {
                             this.enemy.body.setOffset(67, 65);
                             this.enemy.setVelocityX(55).setFlipX(0);
                             this.enemy.anims.play("run-left", true);
+                            this.enemy_no_hp_death
                         }
                     }
                 }
@@ -251,11 +255,10 @@ class Scene2 extends Phaser.Scene {
         } else {
             this.enemy.body.setOffset(97, 67);
             this.enemy.anims.play("stand", true)
+            this.enemy_no_hp_death
         }
-
-
-
     }
+
     is_player_left() {
         return this.player.x < this.enemy.x && this.enemy.body.touching.down
     }
@@ -285,4 +288,18 @@ class Scene2 extends Phaser.Scene {
         this.left_point = this.enemy.body.x + 200
         return this.player.x > this.left_point
     }
+
+    //PROBE FUNTKION FÜR TOD VOM GEGNER
+
+    enemy_no_hp_death() {
+        this.enemy.isDead = this.enemy.hp.value
+
+        if (this.enemy.hp.value >= 25 && this.enemy.body.touching.down) {
+            console.log("ENEMY IS STILL ALIVE");
+        } else {
+            console.log("NOT READABLE");
+        }
+        
+    }
+
 }

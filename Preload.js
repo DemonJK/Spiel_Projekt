@@ -37,6 +37,7 @@ class Preload extends Phaser.Scene {
             frameWidth: 256,
             frameHeight: 256
         });
+        console.log("All preloaded")
     }
 
     create() {
