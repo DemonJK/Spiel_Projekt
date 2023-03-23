@@ -1,4 +1,5 @@
 var config = {
+    pixelArt: true,
     width: 2529,
     height: 1144,
     backgroundColor: 0x000000,
@@ -9,7 +10,6 @@ var config = {
             debug: true,
         }
     },
-    scene: [Preload, Scene2],
-    pixelArt: true,
+    scene: [Preloads, Scene2],
 }
 var game = new Phaser.Game(config);
