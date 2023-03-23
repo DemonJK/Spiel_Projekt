@@ -1,16 +1,12 @@
 class Scene2 extends Phaser.Scene {
     constructor() {
         super("playGame");
-        this.is_coliding = false
     }
 
-    collideObjects() {
-        this.is_coliding = true
-    }
 
     create() {
 
-        this.player_is_touching_enemy = false;
+        //this.player_is_touching_enemy = false;
 
         //CREATE BACKGROUND
 
@@ -56,39 +52,18 @@ class Scene2 extends Phaser.Scene {
         this.bodengrass.setOrigin(0, 0);
         this.bodengrass.setScale(1.5);
 
-        //ENEMY SPAWNING
-        this.enemy = this.physics.add.sprite(1500, 3000, "enemy1").setFlipX(true);
-        this.enemy.body.setSize(90, 137, 1);
-        this.enemy.body.setOffset(93, 67);
-        this.enemy.setScale(2);
-        this.enemy.setBounce(0.2);
-        this.physics.add.existing(this.enemy);
-
-        this.enemy.setCollideWorldBounds(true);
-        this.physics.add.collider(this.enemy, this.platforms);
-        this.physics.add.collider(this.enemy, this.passThruPlatforms, this.onPlatform);
-        this.physics.add.collider(this.enemy, this.passThruPlatforms2, this.onPlatform);
-        this.physics.add.collider(this.enemy, this.platforms4);
-        this.enemy.setPushable(false)
-        this.enemy.hp = new HealthBar(this, 0, 0)
-
         //PLAYER SPAWNING
+        this.player = new Player(this, 150, 900, "playermodel");
 
-        this.player = this.physics.add.sprite(150, 900, "playermodel");
-        this.player.body.setSize(30, 30, 1);
-        this.player.body.setOffset(25, 33);
-        this.player.setScale(5);
-        this.player.setCollideWorldBounds(true);
-        this.physics.add.collider(this.player, this.platforms);
-        this.physics.add.collider(this.player, this.passThruPlatforms, this.onPlatform);
-        this.physics.add.collider(this.player, this.passThruPlatforms2, this.onPlatform);
-        this.physics.add.collider(this.player, this.platforms4);
-        this.physics.add.collider(this.player, this.enemy, this.collideObjects, null, this);
+        // ENEMY SPAWNING
+        this.enemy = new Enemy(this, 900, 900, "enemy1")
+
+
+        // CAMERA MOVING
         this.cameras.main.startFollow(this.player);
         this.cameras.main.followOffset.set(-250, 0)
 
         //CREATE BACKGROUND
-
         this.background5 = this.add.image(0, 0, "background5");
         this.background5.setOrigin(0, 0);
         this.background5.setScale(4.5);
@@ -96,151 +71,10 @@ class Scene2 extends Phaser.Scene {
         this.background6 = this.add.image(0, 0, "background6");
         this.background6.setOrigin(0, 0);
         this.background6.setScale(4.5);
-
-        /*
-        this.enemy2 = new Enemy(this, 100, 0, "enemy1")
-        this.enemy3 = new Enemy(this, 200, 0, "enemy1")
-
-        this.player2 = new Player(this, 500, 500, "idle")
-        */
-
-    }
-
-    onPlatform(player, platform) {
-        player.isOnPlatform = true;
-        player.onPlatform = platform;
     }
 
     update() {
-        this.enemy2.update()
-        this.enemy3.update()
-
-        this.enemy.hp.x = this.enemy.body.x + 50
-        this.enemy.hp.y = this.enemy.y - 150
-        this.enemy.hp.draw()
-        //ÜBERPRÜFT DIE X UND Y KORDINATEN ZWICHEN GEGNER UND SPIELER SODASS DER GEGNER NICHT BEWEGBAR IST
-        //NUR AN MACHEN UM ETWAS ZU ÜBERPRÜFEN
-
-        //console.log("Player X: " + Math.round(this.player.x) + " Enemy X: " + (Math.round(this.enemy.x - 145)));
-        //console.log("Enemy X: " + Math.round(this.enemy.x) + " Player X: " + (Math.round(this.player.x - 185)));
-        //console.log("Player Y: " + Math.round(this.player.y + 237) + " Enemy Y; " + (Math.round(this.enemy.y)));
-
-        //CONTROLS OF PLAYERMODEL
-        this.cursors = this.input.keyboard.createCursorKeys();
-        if ((this.cursors.up.isDown && this.player.body.touching.down)) {
-            console.log("UP CURSOR IS ACTIVE");
-            this.player.setVelocityY(-600);
-            this.player.anims.play("up", true);
-            if (this.isOnPlatform) {
-                this.onPlatform.body.checkCollision.up = true;
-                this.isOnPlatform = false;
-                this.onPlatform = null;
-            }
-        } else if (this.cursors.left.isDown && !(Math.round(this.enemy.x) === Math.round(this.player.x - 185))) {
-            console.log("LEFT CURSOR IS ACTIVE");
-            this.player.setVelocityX(-160).setFlipX(-1);
-            this.player.anims.play("left", true);
-            this.cameras.main.followOffset.x = -250
-
-        } else if (this.cursors.right.isDown) {
-            console.log("RIGHT CURSOR IS ACTIVE");
-            this.player.setVelocityX(160).setFlipX(0);
-            this.player.anims.play("right", true);
-            this.cameras.main.followOffset.x = -250;
-
-        } else if (this.cursors.space.isDown && this.player.body.touching.down) {
-            console.log("SPACEBAR IS ACTIVE");
-            if (this.cursors.space.isDown && this.player.body.touching.down) {
-                this.enemy.hp.decrease(5)
-            }
-            this.player.anims.play("space", true);
-            this.player.setVelocityX(0);
-
-        } else {
-            this.player.setVelocityX(0);
-            this.player.anims.play("idle", true);
-        }
-
-        if ((this.cursors.down.isDown)) {
-            console.log("DOWN CURSOR IS ACTIVE")
-            this.passThruPlatforms.clear()
-            this.passThruPlatforms2.clear()
-            setTimeout(() => {
-                this.passThruPlatforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
-                    .body.checkCollision.down = false;
-                this.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
-                    .body.checkCollision.down = false;
-            }
-                , 3000);
-        }
-
-        if ((Math.round(this.player.y + 237) === Math.round(this.enemy.y)) && !(Math.round(this.player.x) === Math.round(this.enemy.x - 145))) {
-            if (this.cursors.left.isDown) {
-                this.player.setPosition(this.enemy.x - 220, this.player.y)
-            } else if (this.cursors.right.isDown) {
-                this.player.setPosition(this.enemy.x + 220, this.player.y)
-            };
-        }
-
-        if (!(Math.round(this.player.x) === Math.round(this.enemy.x - 197))) {
-            if (this.is_player_left() || this.is_player_right()) {
-                if (this.is_player_left()) {
-                    if (this.is_hitting_from_left() && this.is_player_over_enemy()) {
-                        this.enemy.setVelocityX(0);
-                        this.enemy.anims.play("stand", true)
-                    } else {
-                        if (this.player_is_not_in_left_area()) {
-                            this.enemy.body.setOffset(67, 65);
-                            this.enemy.setVelocityX(-55).setFlipX(-1);
-                            this.enemy.anims.play("run-left", true);
-                        }
-                    }
-                } else if (this.is_player_right()) {
-                    if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
-                        this.enemy.setVelocityX(0);
-                        this.enemy.anims.play("stand", true)
-                    } else {
-                        if (this.player_is_not_in_right_area()) {
-                            this.enemy.body.setOffset(67, 65);
-                            this.enemy.setVelocityX(55).setFlipX(0);
-                            this.enemy.anims.play("run-left", true);
-                        }
-                    }
-                }
-            }
-        } else {
-            this.enemy.body.setOffset(97, 67);
-            this.enemy.anims.play("stand", true)
-        }
-    }
-
-    is_player_left() {
-        return this.player.x < this.enemy.x && this.enemy.body.touching.down
-    }
-
-    is_player_right() {
-        return this.player.x > this.enemy.x && this.enemy.body.touching.down
-    }
-
-    is_hitting_from_left() {
-        return (this.player.x + 25) > (this.enemy.x - 170)
-    }
-
-    is_hitting_from_right() {
-        return (this.player.x - 25) < (this.enemy.x + 170)
-    }
-
-    is_player_over_enemy() {
-        return this.player.y < this.enemy.y + 500
-    }
-
-    player_is_not_in_left_area() {
-        this.left_point = this.enemy.body.x - 200
-        return this.player.x < this.left_point
-    }
-
-    player_is_not_in_right_area() {
-        this.left_point = this.enemy.body.x + 200
-        return this.player.x > this.left_point
+        this.enemy.update()
+        this.player.update()
     }
 }

@@ -1,9 +1,9 @@
 class HealthBar {
 
-    constructor (scene, x, y)
+    constructor (scene, x, y, enemy)
     {
         this.bar = new Phaser.GameObjects.Graphics(scene);
-
+        this.enemy = enemy;
         this.x = x;
         this.y = y;
         this.value = 100;
@@ -25,8 +25,13 @@ class HealthBar {
 
         this.draw();
 
-        if (this.value === 0){
+        if (this.value === 0 && !this.enemy.is_dead){
+            this.enemy.is_dead = true;
+            this.enemy.setVelocity(0, 0);
+            this.enemy.anims.play("death-anim", true)
             this.bar.destroy(true)
+            
+            
         }
 
         return (this.value === 0);
