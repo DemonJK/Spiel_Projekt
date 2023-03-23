@@ -94,9 +94,10 @@ class Preloads extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers("enemydie", { start: 0, end: 13 }),
             frameRate: 8,
         })
-
-        this.scene.start("playGame")
-
+        
+        setTimeout(() => {
+            this.scene.start("playGame")
+        }, 4000);
     }
 }
 

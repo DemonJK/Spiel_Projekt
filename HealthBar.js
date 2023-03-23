@@ -30,10 +30,7 @@ class HealthBar {
             this.enemy.setVelocity(0, 0);
             this.enemy.anims.play("death-anim", true)
             this.bar.destroy(true)
-            
-            
         }
-
         return (this.value === 0);
     }
 
@@ -46,7 +43,6 @@ class HealthBar {
         this.bar.fillRect(this.x, this.y, 80, 16);
 
         //  Health
-
         this.bar.fillStyle(0xffffff);
         this.bar.fillRect(this.x + 2, this.y + 2, 76, 12);
 
@@ -63,5 +59,4 @@ class HealthBar {
 
         this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
     }
-
 }

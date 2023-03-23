@@ -6,8 +6,6 @@ class Scene2 extends Phaser.Scene {
 
     create() {
 
-        //this.player_is_touching_enemy = false;
-
         //CREATE BACKGROUND
 
         this.background = this.add.image(0, 0, "background");
