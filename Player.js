@@ -1,17 +1,17 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
-    constructor (scene, x, y, texture) {
+    constructor(scene, x, y, texture) {
         super(scene, x, y, texture);
         this.player_spawning_attributes();
 
         this.scene.physics.add.collider(this, this.scene.platforms);
-        this.scene.physics.add.collider(this, this.scene.enemy);     
+        this.scene.physics.add.collider(this, this.scene.enemy);
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform);
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform);
         this.scene.physics.add.collider(this, this.scene.platforms4);
         this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this);
         this.anims.play("Idle", true);
     }
-    
+
     player_spawning_attributes() {
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
@@ -25,12 +25,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+        console.log(this.y);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         if ((this.cursors.up.isDown && this.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
             this.setVelocityY(-600);
             this.anims.play("Jump", true);
-            
+            setTimeout(() => {
+                if (this.body.wasTouching.down) {
+                    this.setVelocityY(0);
+                }
+            }, 1500);
         } else if (this.cursors.left.isDown && !(Math.round(this.scene.enemy.x) === Math.round(this.x - 185))) {
             console.log("LEFT CURSOR IS ACTIVE");
             this.setVelocityX(-160).setFlipX(-1);
@@ -48,7 +53,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
             this.anims.play("Attack", true);
             this.setVelocityX(0);
-            
+
         } else {
             this.setVelocityX(0);
             this.anims.play("Idle", true);
@@ -66,8 +71,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
                 , 3000);
         }
-    } 
-    
+    }
+
     is_player_left() {
         return this.x < this.scene.enemy.x && this.scene.enemy.body.touching.down
     }
@@ -98,5 +103,3 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         return this.x > this.left_point
     }
 }
-
-    

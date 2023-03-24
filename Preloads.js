@@ -63,7 +63,7 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "Jump",
             frames: this.anims.generateFrameNumbers("PlayerJump", { start: 0, end: 14 }),
-            frameRate: 10,
+            seframeRate: 10,
         });
 
         this.anims.create({
@@ -111,7 +111,3 @@ class Preloads extends Phaser.Scene {
         }, 4000);
     }
 }
-
-
-
-
