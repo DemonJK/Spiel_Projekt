@@ -9,14 +9,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform);
         this.scene.physics.add.collider(this, this.scene.platforms4);
         this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this);
+        this.anims.play("idle", true);
     }
     
     player_spawning_attributes() {
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
-        this.body.setSize(30, 30, 1);
-        this.body.setOffset(25, 33);
-        this.setScale(5);
+        this.body.setSize(90, 137, 1);
+        this.setScale(2);
         this.setPosition(this.x, this.y);
         this.setCollideWorldBounds(true)
     }

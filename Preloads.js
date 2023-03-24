@@ -7,21 +7,31 @@ class Preloads extends Phaser.Scene {
     preload() {
 
         //PRELOAD BACKGROUND
-        this.load.image("background", "/assets/images/HillsLayer01.png");
-        this.load.image("background2", "/assets/images/HillsLayer02.png");
-        this.load.image("background3", "/assets/images/HillsLayer03.png");
-        this.load.image("background4", "/assets/images/HillsLayer04.png");
-        this.load.image("background5", "/assets/images/HillsLayer05.png");
-        this.load.image("background6", "/assets/images/HillsLayer06.png");
+        this.load.image("SkyBackground", "/new_assets/Background/Background.png")
 
         //PRELOAD GROUND
         this.load.image("boden", "/assets/ground/boden_welt_part1.png");
         this.load.image("boden-grass", "assets/ground/boden_welt_part2.png");
 
         //PRELOAD PLAYER
-        this.load.spritesheet("playermodel", "/assets/player_model/NightBorne.png", {
-            frameWidth: 80,
-            frameHeight: 80
+        this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {
+            frameWidth: 64,
+            frameHeight: 64
+        });
+
+        this.load.spritesheet("PlayerRun", "/new_assets/Character/Run/Run-Sheet.png", {
+            frameWidth: 64,
+            frameHeight: 64
+        });
+
+        this.load.spritesheet("PlayerJump", "/new_assets/Character/Jumlp-All/Jump-All-Sheet.png", {
+            frameWidth: 64,
+            frameHeight: 64
+        });
+
+        this.load.spritesheet("PlayerAttack", "/new_assets/Character/Attack-01/Attack-01-Sheet.png", {
+            frameWidth: 64,
+            frameHeight: 64
         });
 
         //PRELOAD ENEMY
@@ -29,16 +39,16 @@ class Preloads extends Phaser.Scene {
             frameWidth: 256,
             frameHeight: 256
         });
+
         this.load.spritesheet("enemyrun", "/assets/enemy/run/Run.png", {
             frameWidth: 256,
             frameHeight: 256
         });
+
         this.load.spritesheet("enemydie", "/assets/enemy/death/Die.png", {
             frameWidth: 256,
             frameHeight: 256
         });
-
-            console.log("All preloaded")
     }
 
     create() {
@@ -46,33 +56,33 @@ class Preloads extends Phaser.Scene {
 
         this.anims.create({
             key: "space",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 46, end: 57 }),
-            frameRate: 14,
+            frames: this.anims.generateFrameNumbers("PlayerAttack", { start: 0, end: 7 }),
+            frameRate: 10,
         });
 
         this.anims.create({
             key: "up",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 96, end: 100 }),
-            frameRate: 6,
+            frames: this.anims.generateFrameNumbers("PlayerJump", { start: 0, end: 14 }),
+            frameRate: 10,
         });
 
         this.anims.create({
             key: "idle",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 0, end: 8 }),
-            frameRate: 8,
+            frames: this.anims.generateFrameNumbers("PlayerIdle", { start: 0, end: 3 }),
+            frameRate: 10,
         });
 
         this.anims.create({
             key: "right",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 23, end: 28 }),
-            frameRate: 6,
+            frames: this.anims.generateFrameNumbers("PlayerRun", { start: 0, end: 7 }),
+            frameRate: 10,
             repeat: -1,
         });
 
         this.anims.create({
             key: "left",
-            frames: this.anims.generateFrameNumbers("playermodel", { start: 23, end: 28 }),
-            frameRate: 6,
+            frames: this.anims.generateFrameNumbers("PlayerRun", { start: 0, end: 7 }),
+            frameRate: 10,
             repeat: -1,
         });
 
