@@ -25,7 +25,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        console.log(this.y);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         if ((this.cursors.up.isDown && this.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
@@ -36,6 +35,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     this.setVelocityY(0);
                 }
             }, 1500);
+            
         } else if (this.cursors.left.isDown && !(Math.round(this.scene.enemy.x) === Math.round(this.x - 185))) {
             console.log("LEFT CURSOR IS ACTIVE");
             this.setVelocityX(-160).setFlipX(-1);
