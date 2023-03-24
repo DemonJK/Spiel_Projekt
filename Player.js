@@ -9,14 +9,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform);
         this.scene.physics.add.collider(this, this.scene.platforms4);
         this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this);
-        this.anims.play("idle", true);
+        this.anims.play("Idle", true);
     }
     
     player_spawning_attributes() {
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
-        this.body.setSize(90, 137, 1);
-        this.setScale(2);
+        this.body.setSize(32, 64, true);
         this.setPosition(this.x, this.y);
         this.setCollideWorldBounds(true)
     }
@@ -30,31 +29,29 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if ((this.cursors.up.isDown && this.body.touching.down)) {
             console.log("UP CURSOR IS ACTIVE");
             this.setVelocityY(-600);
-            this.anims.play("up", true);
+            this.anims.play("Jump", true);
             
         } else if (this.cursors.left.isDown && !(Math.round(this.scene.enemy.x) === Math.round(this.x - 185))) {
             console.log("LEFT CURSOR IS ACTIVE");
             this.setVelocityX(-160).setFlipX(-1);
-            this.anims.play("left", true);
-            this.scene.cameras.main.followOffset.x = -250
+            this.anims.play("MoveLeft", true);
 
         } else if (this.cursors.right.isDown) {
             console.log("RIGHT CURSOR IS ACTIVE");
             this.setVelocityX(160).setFlipX(0);
-            this.anims.play("right", true);
-            this.scene.cameras.main.followOffset.x = -250;
+            this.anims.play("MoveRight", true);
 
         } else if (this.cursors.space.isDown && this.body.touching.down) {
             console.log("SPACEBAR IS ACTIVE");
             if (this.cursors.space.isDown && this.body.touching.down) {
                 this.scene.enemy.hp.decrease(5)
             }
-            this.anims.play("space", true);
+            this.anims.play("Attack", true);
             this.setVelocityX(0);
             
         } else {
             this.setVelocityX(0);
-            this.anims.play("idle", true);
+            this.anims.play("Idle", true);
         }
 
         if ((this.cursors.down.isDown)) {

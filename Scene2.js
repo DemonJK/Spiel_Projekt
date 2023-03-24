@@ -3,7 +3,6 @@ class Scene2 extends Phaser.Scene {
         super("playGame");
     }
 
-
     create() {
 
         //CREATE BACKGROUND
@@ -42,7 +41,8 @@ class Scene2 extends Phaser.Scene {
 
         // CAMERA MOVING
         this.cameras.main.startFollow(this.player);
-        this.cameras.main.followOffset.set(-250, 0);
+        this.cameras.main.followOffset.set(0, 150);
+        this.cameras.main.zoom = 1.5;
     }
 
     update() {

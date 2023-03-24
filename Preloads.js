@@ -25,12 +25,12 @@ class Preloads extends Phaser.Scene {
         });
 
         this.load.spritesheet("PlayerJump", "/new_assets/Character/Jumlp-All/Jump-All-Sheet.png", {
-            frameWidth: 64,
+            frameWidth: 32,
             frameHeight: 64
         });
 
         this.load.spritesheet("PlayerAttack", "/new_assets/Character/Attack-01/Attack-01-Sheet.png", {
-            frameWidth: 64,
+            frameWidth: 32,
             frameHeight: 64
         });
 
@@ -55,32 +55,33 @@ class Preloads extends Phaser.Scene {
         this.add.text(35, 35, "Das Spiel wird geladen...");
 
         this.anims.create({
-            key: "space",
+            key: "Attack",
             frames: this.anims.generateFrameNumbers("PlayerAttack", { start: 0, end: 7 }),
             frameRate: 10,
         });
 
         this.anims.create({
-            key: "up",
+            key: "Jump",
             frames: this.anims.generateFrameNumbers("PlayerJump", { start: 0, end: 14 }),
             frameRate: 10,
         });
 
         this.anims.create({
-            key: "idle",
+            key: "Idle",
             frames: this.anims.generateFrameNumbers("PlayerIdle", { start: 0, end: 3 }),
             frameRate: 10,
+            repeat: -1,
         });
 
         this.anims.create({
-            key: "right",
+            key: "MoveRight",
             frames: this.anims.generateFrameNumbers("PlayerRun", { start: 0, end: 7 }),
             frameRate: 10,
             repeat: -1,
         });
 
         this.anims.create({
-            key: "left",
+            key: "MoveLeft",
             frames: this.anims.generateFrameNumbers("PlayerRun", { start: 0, end: 7 }),
             frameRate: 10,
             repeat: -1,
