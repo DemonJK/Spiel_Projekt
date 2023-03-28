@@ -1,6 +1,7 @@
 var config = {
-    width: 2300,
-    height: 1140,
+    pixelArt: true,
+    width: 2529,
+    height: 1144,
     backgroundColor: 0x000000,
     physics: {
         default: 'arcade',
@@ -9,7 +10,9 @@ var config = {
             debug: true,
         }
     },
-    scene: [Scene1, Scene2],
-    pixelArt: true,
+    fps: {
+        target: 60,
+    },
+    scene: [Preloads, Scene2],
 }
 var game = new Phaser.Game(config);
