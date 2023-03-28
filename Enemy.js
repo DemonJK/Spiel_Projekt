@@ -7,7 +7,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms);
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2);
         this.scene.physics.add.collider(this, this.scene.platforms4);
-        this.hp = new HealthBar(this.scene, 150, 960, this);
+        this.hp = new HealthBar(this.scene, 150, 960, 80, 16, 100, this);
         this.anims.play("stand", true);
     }
 
@@ -22,10 +22,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setPushable(false);
     }
 
-    update() {
-        this.hp.x = this.body.x + 50
-        this.hp.y = this.y - 150
+    update_health_bar_pos() {
+        this.hp.x = this.body.x + 5
+        this.hp.y = this.y - 80
         this.hp.draw()
+    }
+
+    update() {
+        this.update_health_bar_pos();
 
         if ((Math.round(this.scene.player.y + 237) === Math.round(this.y)) && !(Math.round(this.scene.player.x) === Math.round(this.x - 145))) {
             if (this.scene.player.cursors.left.isDown) {

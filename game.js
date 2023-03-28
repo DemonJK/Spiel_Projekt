@@ -10,6 +10,9 @@ var config = {
             debug: true,
         }
     },
+    fps: {
+        target: 60,
+    },
     scene: [Preloads, Scene2],
 }
 var game = new Phaser.Game(config);

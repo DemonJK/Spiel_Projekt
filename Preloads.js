@@ -1,5 +1,5 @@
 class Preloads extends Phaser.Scene {
-    constructor () {
+    constructor() {
         super("bootGame");
     }
 
@@ -16,22 +16,32 @@ class Preloads extends Phaser.Scene {
         //PRELOAD PLAYER
         this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {
             frameWidth: 64,
-            frameHeight: 64
+            frameHeight: 80
         });
 
         this.load.spritesheet("PlayerRun", "/new_assets/Character/Run/Run-Sheet.png", {
+            frameWidth: 80,
+            frameHeight: 80
+        });
+
+        this.load.spritesheet("PlayerJump", "/new_assets/Character/Jumlp-All/Jump-All-Sheet.png", {
             frameWidth: 64,
             frameHeight: 64
         });
 
-        this.load.spritesheet("PlayerJump", "/new_assets/Character/Jumlp-All/Jump-All-Sheet.png", {
-            frameWidth: 32,
-            frameHeight: 64
+        this.load.spritesheet("PlayerAttack", "/new_assets/Character/Attack-01/Attack-01-Sheet.png", {
+            frameWidth: 96,
+            frameHeight: 80
         });
 
-        this.load.spritesheet("PlayerAttack", "/new_assets/Character/Attack-01/Attack-01-Sheet.png", {
-            frameWidth: 32,
-            frameHeight: 64
+        this.load.spritesheet("PlayerFall", "/new_assets/Character/Jump-End/Jump-End-Sheet.png", {
+            frameWidth: 64,
+            frameHeight: 64,
+        });
+
+        this.load.spritesheet("PlayerStartJump", "/new_assets/Character/Jump-Start/Jump-Start-Sheet.png", {
+            frameWidth: 64,
+            frameHeight: 64,
         });
 
         //PRELOAD ENEMY
@@ -88,6 +98,17 @@ class Preloads extends Phaser.Scene {
         });
 
         this.anims.create({
+            key: "Fall",
+            frames: this.anims.generateFrameNames("PlayerFall", { start: 0, end: 2 }),
+            frameRate: 10,
+        });
+
+        this.anims.create({
+            key: "PlayerUpJump",
+            frames: this.anims.generateFrameNumbers("PlayerStartJump", { start: 0, end: 3 }),
+        });
+
+        this.anims.create({
             key: "stand",
             frames: this.anims.generateFrameNumbers("enemy1", { start: 0, end: 10 }),
             frameRate: 8,
@@ -104,10 +125,10 @@ class Preloads extends Phaser.Scene {
             key: "death-anim",
             frames: this.anims.generateFrameNumbers("enemydie", { start: 0, end: 13 }),
             frameRate: 8,
-        })
-        
+        });
+
         setTimeout(() => {
             this.scene.start("playGame")
-        }, 4000);
+        }, 0);
     }
 }
