@@ -65,7 +65,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     }
                 }
             } else {
-                this.anims.play("stand", true)
+                this.anims.play("stand", true);
             }
         }
     }

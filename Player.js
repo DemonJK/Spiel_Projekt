@@ -7,6 +7,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.anims.play("Idle", true);
         this.is_jump_played = false
         this.is_jumpdown_played = false
+        this.swing_box;
+        this.looking_direction;
     }
 
     colliders() {
@@ -30,7 +32,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(32, 64, true);
         this.setPosition(this.x, this.y);
         this.setCollideWorldBounds(true)
-        this.setOffset(15, 0)
     }
 
     collideObjects() {
@@ -52,21 +53,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         } else if (this.cursors.left.isDown && !this.body.touching.down) {
             this.setVelocityX(-160).setFlipX(-1);
-            if (!this.is_jump_played) {
-                this.anims.play("PlayerUpJump", true);
-                this.is_jump_played = true
+            if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
+                this.anims.play("Fall", true);
+                this.is_jumpdown_played = true;
             }
 
         } else if (this.cursors.left.isDown && this.body.touching.down) {
             console.log("LEFT CURSOR IS ACTIVE");
+            this.looking_direction = "left"
             this.setVelocityX(-160).setFlipX(-1);
             this.anims.play("MoveLeft", true);
 
         } else if (this.cursors.right.isDown && !this.body.touching.down) {
             this.setVelocityX(160).setFlipX(0);
-            if (!this.is_jump_played) {
-                this.anims.play("PlayerUpJump", true);
-                this.is_jump_played = true
+            if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
+                this.anims.play("Fall", true);
+                this.is_jumpdown_played = true;
             }
 
         } else if (this.body.velocity.y >= 75) {
@@ -77,27 +79,36 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         } else if (this.cursors.right.isDown && this.body.touching.down) {
             console.log("RIGHT CURSOR IS ACTIVE");
+            this.looking_direction = "right"
+
             this.setVelocityX(160).setFlipX(0);
             this.anims.play("MoveRight", true);
-            this.setOffset(30, 0)
+            this.setOffset(30, 0);
 
         } else if (this.cursors.space.isDown && this.body.touching.down) {
             console.log("SPACEBAR IS ACTIVE");
-            if (this.cursors.space.isDown && this.body.touching.down) {
-                this.scene.enemy.hp.decrease(5)
-            }
+            this.setOffset(30, 0)
             this.anims.play("Attack", true);
             this.setVelocityX(0);
+            if (this.looking_direction === "right") {
+                this.swing_box = this.scene.add.rectangle(this.x + 20, this.y, 40, 40);
+                this.swing_box.setStrokeStyle(2, 0x1a65ac);
+
+            } else {
+                this.swing_box = this.scene.add.rectangle(this.x - 20, this.y, 40, 40)
+                this.swing_box.setStrokeStyle(2, 0x1a65ac)
+            }
 
         } else {
             if (this.body.touching.down) {
                 this.anims.play("Idle", true);
-                this.setOffset(15, 0)
+                this.setOffset(15, 0);
+                this.setVelocityX(0);
+
             }
             if (this.body.velocity.y >= 75) {
                 this.anims.play("Fall", true);
             }
-            this.setVelocityX(0);
         }
 
         if ((this.cursors.down.isDown)) {
