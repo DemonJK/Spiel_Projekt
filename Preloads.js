@@ -13,6 +13,12 @@ class Preloads extends Phaser.Scene {
         this.load.image("boden", "/assets/ground/boden_welt_part1.png");
         this.load.image("boden-grass", "assets/ground/boden_welt_part2.png");
 
+        //PRELOAD PORTAL
+        this.load.spritesheet("PortalGreen", "/new_assets/Portal/ezgif.com-gif-maker.png", {
+            frameWidth: 192,
+            frameHeight: 192
+        })
+
         //PRELOAD PLAYER
         this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {
             frameWidth: 64,
@@ -100,12 +106,13 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "Fall",
             frames: this.anims.generateFrameNames("PlayerFall", { start: 0, end: 2 }),
-            frameRate: 10,
+            frameRate: 4,
         });
 
         this.anims.create({
             key: "PlayerUpJump",
             frames: this.anims.generateFrameNumbers("PlayerStartJump", { start: 0, end: 3 }),
+            frameRate: 7,
         });
 
         this.anims.create({
@@ -125,6 +132,12 @@ class Preloads extends Phaser.Scene {
             key: "death-anim",
             frames: this.anims.generateFrameNumbers("enemydie", { start: 0, end: 13 }),
             frameRate: 8,
+        });
+
+        this.anims.create({
+            key: "Portal",
+            frames: this.anims.generateFrameNumbers("PortalGreen", { start: 0, end: 4 }),
+            frameRate: 3,
         });
 
         setTimeout(() => {

@@ -30,7 +30,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(32, 64, true);
         this.setPosition(this.x, this.y);
         this.setCollideWorldBounds(true)
-        this.setOffset(15, 0)
     }
 
     collideObjects() {
@@ -79,7 +78,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             console.log("RIGHT CURSOR IS ACTIVE");
             this.setVelocityX(160).setFlipX(0);
             this.anims.play("MoveRight", true);
-            this.setOffset(30, 0)
+            this.setOffset(30, 0);
 
         } else if (this.cursors.space.isDown && this.body.touching.down) {
             console.log("SPACEBAR IS ACTIVE");
@@ -92,7 +91,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else {
             if (this.body.touching.down) {
                 this.anims.play("Idle", true);
-                this.setOffset(15, 0)
+                this.setOffset(15, 0);
             }
             if (this.body.velocity.y >= 75) {
                 this.anims.play("Fall", true);
