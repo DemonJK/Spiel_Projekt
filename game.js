@@ -13,6 +13,6 @@ var config = {
     fps: {
         target: 60,
     },
-    scene: [Preloads, Scene2],
+    scene: [Preloads, Scene2, StartLevel],
 }
 var game = new Phaser.Game(config);

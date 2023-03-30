@@ -13,11 +13,28 @@ class Preloads extends Phaser.Scene {
         this.load.image("boden", "/assets/ground/boden_welt_part1.png");
         this.load.image("boden-grass", "assets/ground/boden_welt_part2.png");
 
+        //PRELOAD ALL TILES
+        this.load.image("Buildings", "/new_assets/Assets/Buildings.png");
+        this.load.image("Hive", "/new_assets/Assets/Hive.png");
+        this.load.image("Interior-01", "/new_assets/Assets/Interior-01.png");
+        this.load.image("Props-Rocks", "/new_assets/Assets/Props-Rocks.png");
+        this.load.image("Tiles", "/new_assets/Assets/Tiles.png");
+        this.load.image("Tree-Assets", "/new_assets/Assets/Tree-Assets.png");
+        this.load.image("Background", "/new_assets/Trees/Background.png");
+        this.load.image("Dark-Tree", "/new_assets/Trees/Dark-Tree.png");
+        this.load.image("Golden-Tree", "/new_assets/Trees/Golden-Tree.png");
+        this.load.image("Green-Tree", "/new_assets/Trees/Green-Tree.png");
+        this.load.image("Red-Tree", "/new_assets/Trees/Red-Tree.png");
+        this.load.image("Yellow-Tree", "/new_assets/Trees/Yellow-Tree.png");
+        
+        //PRELOAD TILED MAP
+        this.load.tilemapTiledJSON("StartLevel", "/Tiled Levels/TiledMapGameStartLevel.json")
+
         //PRELOAD PORTAL
         this.load.spritesheet("PortalGreen", "/new_assets/Portal/ezgif.com-gif-maker.png", {
             frameWidth: 192,
             frameHeight: 192
-        })
+        });
 
         //PRELOAD PLAYER
         this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {
