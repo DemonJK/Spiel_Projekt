@@ -44,8 +44,11 @@ class Scene2 extends Phaser.Scene {
         this.cameras.main.followOffset.set(0, 150);
         this.cameras.main.zoom = 1.5;
 
-        if (this.enemy.is_dead) {
-            this.anims.play("")
+        if (!this.enemy.is_dead) { 
+            this.enemy.anims.play("death-anim")
+            setTimeout(() => {
+                this.scene.start(StartLevel)
+            }, 5000);
         }
     }
 
