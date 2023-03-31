@@ -26,9 +26,9 @@ class Preloads extends Phaser.Scene {
         this.load.image("Green-Tree", "/new_assets/Trees/Green-Tree.png");
         this.load.image("Red-Tree", "/new_assets/Trees/Red-Tree.png");
         this.load.image("Yellow-Tree", "/new_assets/Trees/Yellow-Tree.png");
-        
+
         //PRELOAD TILED MAP
-        this.load.tilemapTiledJSON("StartLevel", "/TiledLevels/TiledMapGameStartLevel.json")
+        this.load.tilemapTiledJSON("MAP", "/TiledLevels/TiledMapGameStartLevel.json")
 
         //PRELOAD PORTAL
         this.load.spritesheet("PortalGreen", "/new_assets/Portal/ezgif.com-gif-maker.png", {
