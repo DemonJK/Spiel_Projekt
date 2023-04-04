@@ -37,6 +37,14 @@ class StartLevel extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
         this.cameras.main.followOffset.set(0, 150);
         this.cameras.main.zoom = 1.5;
+
+        layer.setCollisionBetween(0, 5)
+        layer.setCollisionBetween(25, 30)
+        layer.setCollisionBetween(50, 55)
+        layer.setCollisionBetween(75, 80)
+        layer.setCollisionBetween(100, 105)
+        this.physics.add.collider(this.player, layer)
+        
     }
 
     update() {
