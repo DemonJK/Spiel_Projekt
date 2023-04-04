@@ -2,13 +2,15 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture);
         this.enemy_spawning_attributes();
-        this.scene.physics.add.collider(this, this.scene.platforms);
+        this.scene.physics.add.collider(this, this.scene.layer, () => {this.body.touching.down = true});
         this.scene.physics.add.collider(this, this.scene.player);
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms);
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2);
         this.scene.physics.add.collider(this, this.scene.platforms4);
         this.hp = new HealthBar(this.scene, 150, 960, 80, 16, 100, this);
         this.anims.play("stand", true);
+        this.setFlipX(true)
+
     }
 
     enemy_spawning_attributes() {
@@ -66,6 +68,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 }
             } else {
                 this.anims.play("stand", true);
+                
             }
         }
     }

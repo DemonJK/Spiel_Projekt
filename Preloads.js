@@ -73,7 +73,7 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "Attack",
             frames: this.anims.generateFrameNumbers("PlayerAttack", { start: 0, end: 7 }),
-            frameRate: 10,
+            frameRate: 20,
         });
 
         this.anims.create({

@@ -48,7 +48,7 @@ class Scene2 extends Phaser.Scene {
 
         setTimeout(() => {
             this.scene.start("StartLevel")
-        }, 5000);
+        }, 1000);
     }
 
     update() {

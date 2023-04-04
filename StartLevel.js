@@ -29,15 +29,17 @@ class StartLevel extends Phaser.Scene {
         const map = this.make.tilemap({ key: "MAP", tileWidth: 16, tileHeight: 16 })
         this.tileset = map.addTilesetImage("Tiles", "Tiles")
         this.tileset2 = map.addTilesetImage("Buildings", "Buildings")
-        const buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
-        const layer = map.createStaticLayer("ground", this.tileset, 0, 0)
+        this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
+        this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
+        this.enemy = new Enemy(this, 750, 150, "enemy1")
+
         const bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
         const testLayer = map.createStaticLayer("test", this.tileset, 0, 0)
 
         
 
-        layer.setCollisionByProperty({ colliders: true })
-        buildings.setCollisionByProperty({ colliders: true })
+        this.layer.setCollisionByProperty({ colliders: true })
+        this.buildings.setCollisionByProperty({ colliders: true })
 
         this.player = new Player(this, 400, 150, "PlayerIdle")
 
@@ -45,18 +47,17 @@ class StartLevel extends Phaser.Scene {
         this.cameras.main.startFollow(this.player)
         this.cameras.main.followOffset.set(0, 150)
         this.cameras.main.zoom = 1.5
-        this.physics.add.collider(this.player, buildings, () => {
-            this.player.body.touching.down = true
-        })
-        this.physics.add.collider(this.player, layer, () => {
-            this.player.body.touching.down = true
-        })
+
+        
+
 
     }
 
     update() {
         console.log("Start Level")
         this.player.update()
+        this.enemy.update()
+        
         
     }
 }
