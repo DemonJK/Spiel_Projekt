@@ -7,7 +7,7 @@ class StartLevel extends Phaser.Scene {
         //PRELOAD ALL TILES
         this.load.image("Buildings", "/new_assets/Assets/Buildings.png")
         this.load.image("Hive", "/new_assets/Assets/Hive.png")
-        this.load.image("Interior-01", "/new_assets/Assets/Interior-01.png")
+        this.load.image("Inter ior-01", "/new_assets/Assets/Interior-01.png")
         this.load.image("Props-Rocks", "/new_assets/Assets/Props-Rocks.png")
         this.load.image("Tiles", "/new_assets/Assets/Tiles.png")
         this.load.image("Tree-Assets", "/new_assets/Assets/Tree-Assets.png")
@@ -27,28 +27,36 @@ class StartLevel extends Phaser.Scene {
         this.SkyBackground.setOrigin(0, 0)
         this.SkyBackground.setDisplaySize(2400, 1000)
         const map = this.make.tilemap({ key: "MAP", tileWidth: 16, tileHeight: 16 })
-        const tileset = map.addTilesetImage("Tiles", "Tiles")
-        const layer = map.createStaticLayer("ground", tileset, 0, 0)
-        const bushLayer = map.createStaticLayer("bush", tileset, 0, 0)
+        this.tileset = map.addTilesetImage("Tiles", "Tiles")
+        this.tileset2 = map.addTilesetImage("Buildings", "Buildings")
+        const buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
+        const layer = map.createStaticLayer("ground", this.tileset, 0, 0)
+        const bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
+        const testLayer = map.createStaticLayer("test", this.tileset, 0, 0)
 
-        this.player = new Player(this, 150, 150, "PlayerIdle")
+        
+
+        layer.setCollisionByProperty({ colliders: true })
+        buildings.setCollisionByProperty({ colliders: true })
+
+        this.player = new Player(this, 400, 150, "PlayerIdle")
 
         // CAMERA MOVING
-        this.cameras.main.startFollow(this.player);
-        this.cameras.main.followOffset.set(0, 150);
-        this.cameras.main.zoom = 1.5;
+        this.cameras.main.startFollow(this.player)
+        this.cameras.main.followOffset.set(0, 150)
+        this.cameras.main.zoom = 1.5
+        this.physics.add.collider(this.player, buildings, () => {
+            this.player.body.touching.down = true
+        })
+        this.physics.add.collider(this.player, layer, () => {
+            this.player.body.touching.down = true
+        })
 
-        layer.setCollisionBetween(0, 5)
-        layer.setCollisionBetween(25, 30)
-        layer.setCollisionBetween(50, 55)
-        layer.setCollisionBetween(75, 80)
-        layer.setCollisionBetween(100, 105)
-        this.physics.add.collider(this.player, layer)
-        
     }
 
     update() {
         console.log("Start Level")
         this.player.update()
+        
     }
 }

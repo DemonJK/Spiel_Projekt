@@ -44,6 +44,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.is_jumpdown_played = false
         }
 
+         
+
         this.update_health_bar_pos();
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         if ((this.cursors.up.isDown && this.body.touching.down)) {
