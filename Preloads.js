@@ -13,11 +13,11 @@ class Preloads extends Phaser.Scene {
         this.load.image("boden", "/assets/ground/boden_welt_part1.png");
         this.load.image("boden-grass", "assets/ground/boden_welt_part2.png"),
 
-        //PRELOAD PORTAL
-        this.load.spritesheet("PortalGreen", "/new_assets/Portal/ezgif.com-gif-maker.png", {
-            frameWidth: 192,
-            frameHeight: 192
-        });
+            //PRELOAD PORTAL
+            this.load.spritesheet("PortalGreen", "/new_assets/Portal/ezgif.com-gif-maker.png", {
+                frameWidth: 192,
+                frameHeight: 192
+            });
 
         //PRELOAD PLAYER
         this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {
