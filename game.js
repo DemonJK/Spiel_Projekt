@@ -1,7 +1,7 @@
 var config = {
     pixelArt: true,
-    width: 2828,
-    height: 1104,
+    width: 2800,
+    height: 1150,
     backgroundColor: 0x000000,
     physics: {
         default: 'arcade',

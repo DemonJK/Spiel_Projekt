@@ -12,16 +12,20 @@ class StartLevel extends Phaser.Scene {
         this.tileset2 = map.addTilesetImage("Buildings", "Buildings")
         this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
         this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
-        this.enemy = new Enemy(this, 750, 150, "enemy1")
         const bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
+        this.enemy = new Enemy(this, 1550, 750, "enemy1")
         this.layer.setCollisionByProperty({ colliders: true })
         this.buildings.setCollisionByProperty({ colliders: true })
-        this.player = new Player(this, 400, 150, "PlayerIdle")
+        this.player = new Player(this, 1050, 750, "PlayerIdle")
 
         // CAMERA MOVING
         this.cameras.main.startFollow(this.player)
         this.cameras.main.followOffset.set(0, 150)
-        this.cameras.main.zoom = 1.5
+        this.cameras.main.zoom = 2
+
+        this.border = this.add.rectangle(900, 750, 20, 1000)
+        this.physics.add.existing(this.border, true)
+        this.physics.add.collider(this.player, this.border);
     }
 
     update() {

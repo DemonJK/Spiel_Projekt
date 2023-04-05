@@ -38,7 +38,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.world.enable(this);
         this.body.setSize(32, 64, true);
         this.setPosition(this.x, this.y);
-        this.setCollideWorldBounds(true)
+        this.setCollideWorldBounds(true, 7680, 4320)
     }
 
     collideObjects() {
@@ -55,7 +55,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         if ((this.cursors.up.isDown && this.body.touching.down && !this.is_atacking)) {
             console.log("UP CURSOR IS ACTIVE");
-            this.setVelocityY(-600);
+            this.setVelocityY(-425);
             this.anims.play("PlayerUpJump", true);
 
         } else if (this.cursors.left.isDown && !this.body.touching.down && !this.is_atacking) {
