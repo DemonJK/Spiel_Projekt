@@ -158,7 +158,7 @@ class Preloads extends Phaser.Scene {
         });
 
         setTimeout(() => {
-            this.scene.start("playGame")
+            this.scene.start("StartLevel")
         }, 0);
     }
 }

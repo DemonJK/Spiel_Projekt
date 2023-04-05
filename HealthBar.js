@@ -24,7 +24,7 @@ class HealthBar {
 
         this.draw();
 
-        if (this.value === 0 && !this.living_object.is_dead) {
+        if (this.value <= 0 && !this.living_object.is_dead) {
             this.living_object.is_dead = true;
             this.living_object.setVelocity(0, 0);
             this.living_object.anims.play("death-anim", true)
