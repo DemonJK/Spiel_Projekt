@@ -10,17 +10,24 @@ class StartLevel extends Phaser.Scene {
         this.SkyBackground2.setDisplaySize(game.config.width + 200, game.config.height + 200)
 
         const map = this.make.tilemap({ key: "MAP", tileWidth: 16, tileHeight: 16 })
+
         this.tileset = map.addTilesetImage("Tiles", "Tiles")
         this.tileset2 = map.addTilesetImage("Buildings", "Buildings")
+        this.tileset3 = map.addTilesetImage("Props-Rocks", "Props-Rocks")
+
+        //BENUTZT BUILDINGS
         this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
-        this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
+        //BENUTZT TILES
         const bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
+        //BENUTZT PROPS-ROCKS
+        this.props = map.createStaticLayer("props", this.tileset3, 0, 0)
+        //BENUTZT TILES
+        this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
+        
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
         this.layer.setCollisionByProperty({ colliders: true })
         this.buildings.setCollisionByProperty({ colliders: true })
         this.player = new Player(this, 1050, 750, "PlayerIdle")
-
-
 
         // CAMERA MOVING
         this.cameras.main.startFollow(this.player)
