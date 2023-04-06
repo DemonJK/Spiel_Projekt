@@ -15,9 +15,12 @@ class StartLevel extends Phaser.Scene {
         this.tileset2 = map.addTilesetImage("Buildings", "Buildings")
         this.tileset3 = map.addTilesetImage("Props-Rocks", "Props-Rocks")
         this.tileset4 = map.addTilesetImage("Green-Tree", "Green-Tree")
+        this.tileset5 = map.addTilesetImage("Background", "Background")
 
         //BENUTZT BUILDINGS
         this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
+        //BENUTZT BACKGROUND
+        this.background = map.createStaticLayer("background", this.tileset5, 0, 0)
         //BENUTZT GREEN-TREE
         this.tree = map.createStaticLayer("greentree", this.tileset4, 0, 0)
         //BENUTZT TILES
