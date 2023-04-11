@@ -51,7 +51,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                             if (this.scene.player.player_is_not_in_left_area()) {
                                 this.setVelocityX(-55).setFlipX(-1);
                                 this.anims.play("run-left", true);
-
                             }
                         }
                     } else if (this.scene.player.is_player_right()) {
