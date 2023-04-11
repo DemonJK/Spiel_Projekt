@@ -2,13 +2,15 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture);
         this.enemy_spawning_attributes();
-        this.scene.physics.add.collider(this, this.scene.platforms);
+        this.scene.physics.add.collider(this, this.scene.layer, () => { this.body.touching.down = true });
         this.scene.physics.add.collider(this, this.scene.player);
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms);
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2);
         this.scene.physics.add.collider(this, this.scene.platforms4);
         this.hp = new HealthBar(this.scene, 150, 960, 80, 16, 100, this);
         this.anims.play("stand", true);
+        this.setFlipX(true)
+        this.has_hp_lose = false
     }
 
     enemy_spawning_attributes() {
@@ -18,7 +20,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(90, 137, 1);
         this.setBounce(0.2);
         this.setPosition(this.x, this.y);
-        this.setCollideWorldBounds(true);
         this.setPushable(false);
     }
 
@@ -50,6 +51,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                             if (this.scene.player.player_is_not_in_left_area()) {
                                 this.setVelocityX(-55).setFlipX(-1);
                                 this.anims.play("run-left", true);
+
                             }
                         }
                     } else if (this.scene.player.is_player_right()) {
@@ -65,7 +67,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     }
                 }
             } else {
-                this.anims.play("stand", true);
+                if (this.velocity === 0) {
+                    this.anims.play("stand", true);
+                }
             }
         }
     }
