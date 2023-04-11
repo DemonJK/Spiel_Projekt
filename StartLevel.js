@@ -29,7 +29,7 @@ class StartLevel extends Phaser.Scene {
         this.props = map.createStaticLayer("props", this.tileset3, 0, 0)
         //BENUTZT TILES
         this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
-        
+
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
         this.layer.setCollisionByProperty({ colliders: true })
         this.buildings.setCollisionByProperty({ colliders: true })

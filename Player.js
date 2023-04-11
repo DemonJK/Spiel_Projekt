@@ -10,7 +10,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.swing_box;
         this.looking_direction = "right";
         this.is_atacking = false
-
     }
 
     colliders() {
@@ -50,9 +49,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.is_jump_played = false
             this.is_jumpdown_played = false
         }
-
-
-
 
         this.update_health_bar_pos();
         this.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -104,19 +100,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if (this.looking_direction === "right") {
                 this.swing_box = this.scene.add.rectangle(this.x + 20, this.y, 40, 40).setDepth(-1)
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
-
             } else {
                 this.swing_box = this.scene.add.rectangle(this.x - 20, this.y, 40, 40).setDepth(-1)
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
             }
-            if(this.scene.physics.overlap(this.swing_box, this.scene.enemy)) {
+            if (this.scene.physics.overlap(this.swing_box, this.scene.enemy)) {
                 if (!this.scene.enemy.has_hp_lose) {
                     this.scene.enemy.hp.decrease(10)
                     this.scene.enemy.has_hp_lose = true
-
                 }
                 console.log(this.scene.enemy.hp.value);
-
             }
 
             this.on('animationcomplete', () => {
@@ -140,7 +133,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // durch den Boden fallen
             // this.passthrough()
         }
-
     }
 
     passthrough() {
