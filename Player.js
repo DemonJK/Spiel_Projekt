@@ -86,7 +86,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else if (this.cursors.right.isDown && this.body.touching.down && !this.is_atacking) {
             console.log("RIGHT CURSOR IS ACTIVE");
             this.looking_direction = "right"
-
             this.setVelocityX(160).setFlipX(0);
             this.anims.play("MoveRight", true);
             this.setOffset(30, 0);
