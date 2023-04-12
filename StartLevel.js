@@ -17,22 +17,28 @@ class StartLevel extends Phaser.Scene {
         this.tileset4 = map.addTilesetImage("Green-Tree", "Green-Tree")
         this.tileset5 = map.addTilesetImage("Background", "Background")
 
-        //BENUTZT BUILDINGS
-        this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
         //BENUTZT BACKGROUND
         this.background = map.createStaticLayer("background", this.tileset5, 0, 0)
         //BENUTZT GREEN-TREE
         this.tree = map.createStaticLayer("greentree", this.tileset4, 0, 0)
         //BENUTZT TILES
-        const bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
+        this.bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
         //BENUTZT PROPS-ROCKS
         this.props = map.createStaticLayer("props", this.tileset3, 0, 0)
         //BENUTZT TILES
         this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
+        this.layer.setCollisionByProperty({ colliders: true })
+        //BENUTZT BUILDINGS
+        this.buildings2 = map.createStaticLayer("buildings2", this.tileset2, 0, 0)
+        this.buildings2.setCollisionByProperty({ colliders: true })
+        //BENUTZT BUILDINGS
+        this.buildings3 = map.createStaticLayer("buildings3", this.tileset2, 0, 0)
+        this.buildings3.setCollisionByProperty({ colliders: true })
+        //BENUTZT BUILDINGS
+        this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
+        this.buildings.setCollisionByProperty({ colliders: true })
 
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
-        this.layer.setCollisionByProperty({ colliders: true })
-        this.buildings.setCollisionByProperty({ colliders: true })
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
         // CAMERA MOVING
@@ -42,11 +48,14 @@ class StartLevel extends Phaser.Scene {
 
         this.border = this.add.rectangle(900, 750, 20, 1000)
         this.physics.add.existing(this.border, true)
-        this.physics.add.collider(this.player, this.border);
+        this.physics.add.collider(this.player, this.border)
+
+        this.border2 = this.add.rectangle(3050, 700, 20, 200)
+        this.physics.add.existing(this.border2, true)
+        this.physics.add.collider(this.player, this.border2)
     }
 
     update() {
-        console.log("Start Level")
         this.player.update()
         this.enemy.update()
     }
