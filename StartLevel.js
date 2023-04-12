@@ -21,10 +21,18 @@ class StartLevel extends Phaser.Scene {
         this.background = map.createStaticLayer("background", this.tileset5, 0, 0)
         //BENUTZT GREEN-TREE
         this.tree = map.createStaticLayer("greentree", this.tileset4, 0, 0)
+        //BENUTZT GREEN-TREE
+        this.tree2 = map.createStaticLayer("greentree2", this.tileset4, 0, 0)
+        //BENUTZT GREEN-TREE
+        this.tree3 = map.createStaticLayer("greentree3", this.tileset4, 0, 0)
+        //BENUTZT GREEN-TREE
+        this.tree4 = map.createStaticLayer("greentree4", this.tileset4, 0, 0)
         //BENUTZT TILES
         this.bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
         //BENUTZT PROPS-ROCKS
         this.props = map.createStaticLayer("props", this.tileset3, 0, 0)
+        //BENUTZT PROPS-ROCKS
+        this.props2 = map.createStaticLayer("props2", this.tileset3, 0, 0)
         //BENUTZT TILES
         this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
         this.layer.setCollisionByProperty({ colliders: true })
@@ -53,11 +61,28 @@ class StartLevel extends Phaser.Scene {
         this.border2 = this.add.rectangle(3050, 700, 20, 200)
         this.physics.add.existing(this.border2, true)
         this.physics.add.collider(this.player, this.border2)
+
+        this.textbox = this.add.rectangle(2200, 900, 10, 1000,)
+        this.physics.add.existing(this.textbox, true)
     }
 
     update() {
         this.player.update()
         this.enemy.update()
+
+        if (this.physics.overlap(this.textbox, this.player)) {
+            if (!this.player.readen) {
+                console.log("overlaping");
+                this.add.text(this.player.x, this.player.y + 50, 
+                    "There is an abandoned House," +  "I should check it out")
+                setTimeout(() => {
+                    this.player.readen = true
+                    if (this.player.readen = true) {
+                        this.textbox.destroy(true)
+                    }
+                }, 3000);
+            }
+        }
     }
 
     static center(obj) {

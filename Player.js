@@ -10,6 +10,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.swing_box;
         this.looking_direction = "right";
         this.is_atacking = false
+        this.readen = false
     }
 
     colliders() {
@@ -108,7 +109,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     this.scene.enemy.hp.decrease(10)
                     this.scene.enemy.has_hp_lose = true
                 }
-                console.log(this.scene.enemy.hp.value);
+                console.log(this.scene.enemy.hp.value)
             }
 
             this.on('animationcomplete', () => {
