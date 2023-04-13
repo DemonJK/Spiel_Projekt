@@ -26,11 +26,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.layer, () => {
             this.body.touching.down = true
         })
+        this.scene.physics.add.collider(this, this.scene.buildings3);
     }
 
     update_health_bar_pos() {
-        this.hp.x = this.x - 680
-        this.hp.y = this.y - 400
+        this.hp.x = this.body.position.x - 680
+        this.hp.y = this.body.position.y - 350
         this.hp.draw();
     }
 
@@ -145,29 +146,5 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 .body.checkCollision.down = false;
         }
             , 3000);
-    }
-
-    is_player_left() {
-        return this.x < this.scene.enemy.x && this.scene.enemy.body.touching.down
-    }
-    is_player_right() {
-        return this.x > this.scene.enemy.x && this.scene.enemy.body.touching.down
-    }
-    is_hitting_from_left() {
-        return (this.x + 25) > (this.scene.enemy.x - 70)
-    }
-    is_hitting_from_right() {
-        return (this.x - 25) < (this.scene.enemy.x + 70)
-    }
-    is_player_over_enemy() {
-        return this.y < this.scene.enemy.y + 500
-    }
-    player_is_not_in_left_area() {
-        this.left_point = this.scene.enemy.body.x - 200
-        return this.x < this.left_point
-    }
-    player_is_not_in_right_area() {
-        this.left_point = this.scene.enemy.body.x + 200
-        return this.x > this.left_point
     }
 }

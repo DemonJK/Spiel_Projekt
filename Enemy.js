@@ -42,23 +42,23 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         if (!this.is_dead) {
             if (!(Math.round(this.scene.player.x) === Math.round(this.x - 197))) {
-                if (this.scene.player.is_player_left() || this.scene.player.is_player_right()) {
-                    if (this.scene.player.is_player_left()) {
-                        if (this.scene.player.is_hitting_from_left() && this.scene.player.is_player_over_enemy()) {
+                if (this.is_player_left() || this.is_player_right()) {
+                    if (this.is_player_left()) {
+                        if (this.is_hitting_from_left() && this.is_player_over_enemy()) {
                             this.setVelocityX(0);
                             this.anims.play("stand", true)
                         } else {
-                            if (this.scene.player.player_is_not_in_left_area()) {
+                            if (this.player_is_not_in_left_area()) {
                                 this.setVelocityX(-55).setFlipX(-1);
                                 this.anims.play("run-left", true);
                             }
                         }
-                    } else if (this.scene.player.is_player_right()) {
-                        if (this.scene.player.is_hitting_from_right() && this.scene.player.is_player_over_enemy()) {
+                    } else if (this.is_player_right()) {
+                        if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
                             this.setVelocityX(0);
                             this.anims.play("stand", true)
                         } else {
-                            if (this.scene.player.player_is_not_in_right_area()) {
+                            if (this.player_is_not_in_right_area()) {
                                 this.setVelocityX(55).setFlipX(0);
                                 this.anims.play("run-left", true);
                             }
@@ -71,5 +71,29 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 }
             }
         }
+    }
+
+    is_player_left() {
+        return this.scene.player.x < this.x && this.body.touching.down
+    }
+    is_player_right() {
+        return this.scene.player.x > this.x && this.body.touching.down
+    }
+    is_hitting_from_left() {
+        return (this.scene.player.x + 25) > (this.x - 70)
+    }
+    is_hitting_from_right() {
+        return (this.scene.player.x - 25) < (this.x + 70)
+    }
+    is_player_over_enemy() {
+        return this.scene.player.y < this.y + 500
+    }
+    player_is_not_in_left_area() {
+        this.left_point = this.body.x - 200
+        return this.scene.player.x < this.left_point
+    }
+    player_is_not_in_right_area() {
+        this.left_point = this.body.x + 200
+        return this.scene.player.x > this.left_point
     }
 }

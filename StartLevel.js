@@ -47,6 +47,7 @@ class StartLevel extends Phaser.Scene {
         this.buildings.setCollisionByProperty({ colliders: true })
 
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
+        this.enemy2 = new Enemy(this, 1950, 750, "enemy1")
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
         // CAMERA MOVING
@@ -64,25 +65,49 @@ class StartLevel extends Phaser.Scene {
 
         this.textbox = this.add.rectangle(2200, 900, 10, 1000,)
         this.physics.add.existing(this.textbox, true)
+
+        this.house_box = this.add.rectangle(3050, 900, 10, 1000,)
+        this.physics.add.existing(this.house_box, true)
+
+        // text
+
+        this.hint = this.add.text(this.player.x, this.player.y + 50, 
+            "There is an abandoned House," + "I should check it out")
+        this.hint.visible = false
     }
 
     update() {
         this.player.update()
         this.enemy.update()
+        this.enemy2.update()
 
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 console.log("overlaping");
-                this.add.text(this.player.x, this.player.y + 50, 
-                    "There is an abandoned House," +  "I should check it out")
+                this.hint.setPosition(this.player.x-200, this.player.y + 50)
+                this.hint.visible = true
+                
                 setTimeout(() => {
                     this.player.readen = true
                     if (this.player.readen = true) {
                         this.textbox.destroy(true)
                     }
-                }, 3000);
+                }, 0);
             }
         }
+
+        this.hint.x = this.player.body.position.x - 200
+
+        if (this.physics.overlap(this.house_box, this.player)) {
+
+            this.hint.visible = false
+        }
+
+
+
+
+
+        
     }
 
     static center(obj) {
