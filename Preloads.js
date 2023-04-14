@@ -8,6 +8,10 @@ class Preloads extends Phaser.Scene {
 
         //PRELOAD BACKGROUND
         this.load.image("SkyBackground", "/new_assets/Background/Background.png")
+        this.load.spritesheet("NightBackgroud", "/new_assets/Background/spritesheet.png", {
+            frameWidth: 2800,
+            frameHeight: 1154,
+        })
 
         //PRELOAD GROUND
         this.load.image("boden", "/assets/ground/boden_welt_part1.png")
@@ -165,6 +169,12 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "Portal",
             frames: this.anims.generateFrameNumbers("PortalGreen", { start: 0, end: 4 }),
+            frameRate: 10,
+        });
+
+        this.anims.create({
+            key: "nightbackground",
+            frames: this.anims.generateFrameNumbers("NightBackgroud", { start: 0, end: 81 }),
             frameRate: 10,
         });
 

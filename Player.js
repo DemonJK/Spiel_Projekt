@@ -117,6 +117,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.scene.enemy.has_hp_lose = false
             })
             this.swing_box.destroy(true)
+
         } else {
             if (this.body.touching.down) {
                 this.is_atacking = false
@@ -128,6 +129,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.anims.play("Fall", true);
             }
         }
+
         if ((this.cursors.down.isDown)) {
             console.log("DOWN CURSOR IS ACTIVE")
             // durch den Boden fallen
