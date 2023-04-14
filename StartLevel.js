@@ -17,32 +17,32 @@ class StartLevel extends Phaser.Scene {
         this.tileset4 = map.addTilesetImage("Green-Tree", "Green-Tree")
         this.tileset5 = map.addTilesetImage("Background", "Background")
 
-        //BENUTZT BACKGROUND
+        // BENUTZT BACKGROUND
         this.background = map.createStaticLayer("background", this.tileset5, 0, 0)
-        //BENUTZT GREEN-TREE
+        // BENUTZT GREEN-TREE
         this.tree = map.createStaticLayer("greentree", this.tileset4, 0, 0)
-        //BENUTZT GREEN-TREE
+        // BENUTZT GREEN-TREE
         this.tree2 = map.createStaticLayer("greentree2", this.tileset4, 0, 0)
-        //BENUTZT GREEN-TREE
+        // BENUTZT GREEN-TREE
         this.tree3 = map.createStaticLayer("greentree3", this.tileset4, 0, 0)
-        //BENUTZT GREEN-TREE
+        // BENUTZT GREEN-TREE
         this.tree4 = map.createStaticLayer("greentree4", this.tileset4, 0, 0)
-        //BENUTZT TILES
+        // BENUTZT TILES
         this.bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
-        //BENUTZT PROPS-ROCKS
+        // BENUTZT PROPS-ROCKS
         this.props = map.createStaticLayer("props", this.tileset3, 0, 0)
-        //BENUTZT PROPS-ROCKS
+        // BENUTZT PROPS-ROCKS
         this.props2 = map.createStaticLayer("props2", this.tileset3, 0, 0)
-        //BENUTZT TILES
+        // BENUTZT TILES
         this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
         this.layer.setCollisionByProperty({ colliders: true })
-        //BENUTZT BUILDINGS
+        // BENUTZT BUILDINGS
         this.buildings2 = map.createStaticLayer("buildings2", this.tileset2, 0, 0)
         this.buildings2.setCollisionByProperty({ colliders: true })
-        //BENUTZT BUILDINGS
+        // BENUTZT BUILDINGS
         this.buildings3 = map.createStaticLayer("buildings3", this.tileset2, 0, 0)
         this.buildings3.setCollisionByProperty({ colliders: true })
-        //BENUTZT BUILDINGS
+        // BENUTZT BUILDINGS
         this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
         this.buildings.setCollisionByProperty({ colliders: true })
 
@@ -51,8 +51,11 @@ class StartLevel extends Phaser.Scene {
         this.physics.add.existing(this.portal, true)
         this.portal.setSize(64, 64)
 
+        // ENEMY
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
         this.enemy2 = new Enemy(this, 1950, 750, "enemy1")
+
+        // PLAYER
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
         // CAMERA MOVING
@@ -109,10 +112,5 @@ class StartLevel extends Phaser.Scene {
         if (this.physics.overlap(this.portal, this.player)) {
             this.scene.start("FirstLevel")
         }
-    }
-
-    static center(obj) {
-        obj.x = game.config.width / 2
-        obj.y = game.config.height / 2
     }
 }

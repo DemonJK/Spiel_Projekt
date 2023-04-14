@@ -1,9 +1,9 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
-        super(scene, x, y, texture);
-        this.player_spawning_attributes();
-        this.colliders();
-        this.hp = new HealthBar(this.scene, this.x - 700, this.y - 600, 300, 25, 390, this);
+        super(scene, x, y, texture)
+        this.player_spawning_attributes()
+        this.colliders()
+        this.hp = new HealthBar(this.scene, this.x - 700, this.y - 600, 300, 25, 390, this)
         this.anims.play("Idle", true)
         this.is_jump_played = false
         this.is_jumpdown_played = false
@@ -14,19 +14,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     colliders() {
-        this.scene.physics.add.collider(this, this.scene.platforms);
-        this.scene.physics.add.collider(this, this.scene.enemy);
-        this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform);
-        this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform);
-        this.scene.physics.add.collider(this, this.scene.platforms4);
-        this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this);
+        this.scene.physics.add.collider(this, this.scene.platforms)
+        this.scene.physics.add.collider(this, this.scene.enemy)
+        this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
+        this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
+        this.scene.physics.add.collider(this, this.scene.platforms4)
+        this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this)
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
         })
         this.scene.physics.add.collider(this, this.scene.layer, () => {
             this.body.touching.down = true
         })
-        this.scene.physics.add.collider(this, this.scene.buildings3);
+        this.scene.physics.add.collider(this, this.scene.buildings3)
+        this.scene.physics.add.collider(this, this.scene.groundlayer)
+        this.scene.physics.add.collider(this, this.scene.groundlayer, () => {
+            this.body.touching.down = true
+        })
     }
 
     update_health_bar_pos() {

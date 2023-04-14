@@ -8,10 +8,6 @@ class Preloads extends Phaser.Scene {
 
         //PRELOAD BACKGROUND
         this.load.image("SkyBackground", "/new_assets/Background/Background.png")
-        this.load.spritesheet("NightBackgroud", "/new_assets/Background/spritesheet.png", {
-            frameWidth: 2800,
-            frameHeight: 1154,
-        })
 
         //PRELOAD GROUND
         this.load.image("boden", "/assets/ground/boden_welt_part1.png")
@@ -39,6 +35,7 @@ class Preloads extends Phaser.Scene {
 
         //PRELOAD TILED MAP
         this.load.tilemapTiledJSON("MAP", "/TiledLevels/TiledMapGameStartLevel.json")
+        this.load.tilemapTiledJSON("NIGHTMAP", "/TiledLevels/TiledMapGameFirstLevel.json")
 
         //PRELOAD PLAYER
         this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {
@@ -169,12 +166,6 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "Portal",
             frames: this.anims.generateFrameNumbers("PortalGreen", { start: 0, end: 4 }),
-            frameRate: 10,
-        });
-
-        this.anims.create({
-            key: "nightbackground",
-            frames: this.anims.generateFrameNumbers("NightBackgroud", { start: 0, end: 81 }),
             frameRate: 10,
         });
 
