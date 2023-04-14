@@ -3,7 +3,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture)
         this.player_spawning_attributes()
         this.colliders()
-        this.hp = new HealthBar(this.scene, this.x - 700, this.y - 600, 300, 25, 390, this)
+        this.hp = new HealthBar(this.scene, this.x - 680, this.y - 350, 300, 25, 390, this)
         this.anims.play("Idle", true)
         this.is_jump_played = false
         this.is_jumpdown_played = false
