@@ -44,7 +44,11 @@ class StartLevel extends Phaser.Scene {
         this.buildings3.setCollisionByProperty({ colliders: true })
         //BENUTZT BUILDINGS
         this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
-        this.buildings.setCollisionByProperty({ colliders: true })
+        this.buildings.setCollisionByProperty({ colliders: true }) 
+
+        // PORTAL
+        this.portal = new Portal(this, 2950, this.layer.y + 820 , "Portal")
+        this.physics.add.existing(this.portal, true)
 
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
         this.enemy2 = new Enemy(this, 1950, 750, "enemy1")
@@ -55,6 +59,7 @@ class StartLevel extends Phaser.Scene {
         this.cameras.main.followOffset.set(0, 150)
         this.cameras.main.zoom = 2
 
+        // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
         this.physics.add.existing(this.border, true)
         this.physics.add.collider(this.player, this.border)
@@ -63,15 +68,14 @@ class StartLevel extends Phaser.Scene {
         this.physics.add.existing(this.border2, true)
         this.physics.add.collider(this.player, this.border2)
 
-        this.textbox = this.add.rectangle(2200, 900, 10, 1000,)
-        this.physics.add.existing(this.textbox, true)
-
         this.house_box = this.add.rectangle(3050, 900, 10, 1000,)
         this.physics.add.existing(this.house_box, true)
 
-        // text
+        this.textbox = this.add.rectangle(2200, 900, 10, 1000,)
+        this.physics.add.existing(this.textbox, true)
 
-        this.hint = this.add.text(this.player.x, this.player.y + 50, 
+        // TEXT
+        this.hint = this.add.text(this.player.x, this.player.y + 50,
             "There is an abandoned House," + "I should check it out")
         this.hint.visible = false
     }
@@ -80,13 +84,13 @@ class StartLevel extends Phaser.Scene {
         this.player.update()
         this.enemy.update()
         this.enemy2.update()
+        this.portal.update()
 
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 console.log("overlaping");
-                this.hint.setPosition(this.player.x-200, this.player.y + 50)
+                this.hint.setPosition(this.player.x - 200, this.player.y + 50)
                 this.hint.visible = true
-                
                 setTimeout(() => {
                     this.player.readen = true
                     if (this.player.readen = true) {
@@ -99,15 +103,8 @@ class StartLevel extends Phaser.Scene {
         this.hint.x = this.player.body.position.x - 200
 
         if (this.physics.overlap(this.house_box, this.player)) {
-
             this.hint.visible = false
         }
-
-
-
-
-
-        
     }
 
     static center(obj) {

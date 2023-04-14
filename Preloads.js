@@ -82,6 +82,11 @@ class Preloads extends Phaser.Scene {
             frameWidth: 256,
             frameHeight: 256
         });
+
+        this.load.spritesheet("enemyattack", "/assets/enemy/attackVariant1/Attack 1.png", {
+            frameWidth: 256,
+            frameHeight: 256,
+        });
     }
 
     create() {
@@ -152,9 +157,15 @@ class Preloads extends Phaser.Scene {
         });
 
         this.anims.create({
+            key: "enemyatt",
+            frames: this.anims.generateFrameNumbers("enemyattack", { start: 0, end: 14 }),
+            frameRate: 8,
+        });
+
+        this.anims.create({
             key: "Portal",
             frames: this.anims.generateFrameNumbers("PortalGreen", { start: 0, end: 4 }),
-            frameRate: 3,
+            frameRate: 10,
         });
 
         setTimeout(() => {

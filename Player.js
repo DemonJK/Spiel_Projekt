@@ -4,11 +4,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.player_spawning_attributes();
         this.colliders();
         this.hp = new HealthBar(this.scene, this.x - 700, this.y - 600, 300, 25, 390, this);
-        this.anims.play("Idle", true);
+        this.anims.play("Idle", true)
         this.is_jump_played = false
         this.is_jumpdown_played = false
         this.swing_box;
-        this.looking_direction = "right";
+        this.looking_direction = "right"
         this.is_atacking = false
         this.readen = false
     }
@@ -36,10 +36,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     player_spawning_attributes() {
-        this.scene.add.existing(this);
-        this.scene.physics.world.enable(this);
-        this.body.setSize(32, 64, true);
-        this.setPosition(this.x, this.y);
+        this.scene.add.existing(this)
+        this.scene.physics.world.enable(this)
+        this.body.setSize(32, 64, true)
+        this.setPosition(this.x, this.y)
     }
 
     collideObjects() {
@@ -112,11 +112,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }
                 console.log(this.scene.enemy.hp.value)
             }
-
             this.on('animationcomplete', () => {
                 this.is_atacking = false
                 this.scene.enemy.has_hp_lose = false
-            });
+            })
             this.swing_box.destroy(true)
         } else {
             if (this.body.touching.down) {
