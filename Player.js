@@ -3,7 +3,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture)
         this.player_spawning_attributes()
         this.colliders()
-        this.hp = new HealthBar(this.scene, this.x - 680, this.y - 350, 300, 25, 390, this)
+        this.hp = new HealthBar(this.scene, 750, 350, 300, 25, 390, this)
+        this.hp.bar.setScrollFactor(0,0)
         this.anims.play("Idle", true)
         this.is_jump_played = false
         this.is_jumpdown_played = false
@@ -59,12 +60,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+        
         if (this.body.touching.down) {
             this.is_jump_played = false
             this.is_jumpdown_played = false
         }
 
-        this.update_health_bar_pos();
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         if ((this.cursors.up.isDown && this.body.touching.down && !this.is_atacking)) {
             console.log("UP CURSOR IS ACTIVE");

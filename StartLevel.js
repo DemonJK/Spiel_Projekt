@@ -98,8 +98,6 @@ class StartLevel extends Phaser.Scene {
             this.hint.visible = false
         }
 
-        /*if (this.physics.overlap(this.portal, this.player)) {
-            this.scene.start("FirstLevel")
-        }*/
+   
     }
 }
