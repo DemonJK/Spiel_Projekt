@@ -46,11 +46,6 @@ class StartLevel extends Phaser.Scene {
         this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
         this.buildings.setCollisionByProperty({ colliders: true })
 
-        // PORTAL
-        this.portal = new Portal(this, 2950, this.layer.y + 820, "Portal")
-        this.physics.add.existing(this.portal, true)
-        this.portal.setSize(64, 64)
-
         // ENEMY
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
         this.enemy2 = new Enemy(this, 1950, 750, "enemy1")
@@ -83,7 +78,6 @@ class StartLevel extends Phaser.Scene {
         this.player.update()
         this.enemy.update()
         this.enemy2.update()
-        this.portal.update()
 
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
@@ -104,8 +98,8 @@ class StartLevel extends Phaser.Scene {
             this.hint.visible = false
         }
 
-        if (this.physics.overlap(this.portal, this.player)) {
+        /*if (this.physics.overlap(this.portal, this.player)) {
             this.scene.start("FirstLevel")
-        }
+        }*/
     }
 }

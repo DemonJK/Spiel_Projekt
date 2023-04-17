@@ -13,12 +13,6 @@ class Preloads extends Phaser.Scene {
         this.load.image("boden", "/assets/ground/boden_welt_part1.png")
         this.load.image("boden-grass", "assets/ground/boden_welt_part2.png")
 
-        //PRELOAD PORTAL
-        this.load.spritesheet("PortalGreen", "/new_assets/Portal/ezgif.com-gif-maker.png", {
-            frameWidth: 192,
-            frameHeight: 192
-        })
-
         //PRELOAD ALL TILES
         this.load.image("Buildings", "/new_assets/Assets/Buildings.png")
         this.load.image("Hive", "/new_assets/Assets/Hive.png")
@@ -161,12 +155,6 @@ class Preloads extends Phaser.Scene {
             key: "enemyatt",
             frames: this.anims.generateFrameNumbers("enemyattack", { start: 0, end: 14 }),
             frameRate: 8,
-        });
-
-        this.anims.create({
-            key: "Portal",
-            frames: this.anims.generateFrameNumbers("PortalGreen", { start: 0, end: 4 }),
-            frameRate: 10,
         });
 
         setTimeout(() => {
