@@ -39,11 +39,6 @@ class Scene2 extends Phaser.Scene {
         // ENEMY SPAWNING
         this.enemy = new Enemy(this, 900, 900, "enemy1");
 
-        // CAMERA MOVING
-        this.cameras.main.startFollow(this.player);
-        this.cameras.main.followOffset.set(0, 150);
-        this.cameras.main.zoom = 1.5;
-
         setTimeout(() => {
             this.scene.start("StartLevel")
         }, 1000);

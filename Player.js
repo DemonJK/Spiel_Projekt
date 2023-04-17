@@ -18,16 +18,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.enemy)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
-        this.scene.physics.add.collider(this, this.scene.platforms4)
+        this.scene.physics.add.collider(this, this.scene.platforms4)        
+        this.scene.physics.add.collider(this, this.scene.buildings3)
+        this.scene.physics.add.collider(this, this.scene.groundlayer)
+        
         this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this)
+        
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
         })
+
         this.scene.physics.add.collider(this, this.scene.layer, () => {
             this.body.touching.down = true
         })
-        this.scene.physics.add.collider(this, this.scene.buildings3)
-        this.scene.physics.add.collider(this, this.scene.groundlayer)
+
         this.scene.physics.add.collider(this, this.scene.groundlayer, () => {
             this.body.touching.down = true
         })
@@ -44,6 +48,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.world.enable(this)
         this.body.setSize(32, 64, true)
         this.setPosition(this.x, this.y)
+        // CAMERA MOVING
+        this.scene.cameras.main.startFollow(this)
+        this.scene.cameras.main.followOffset.set(0, 150)
+        this.scene.cameras.main.zoom = 2
     }
 
     collideObjects() {

@@ -58,11 +58,6 @@ class StartLevel extends Phaser.Scene {
         // PLAYER
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
-        // CAMERA MOVING
-        this.cameras.main.startFollow(this.player)
-        this.cameras.main.followOffset.set(0, 150)
-        this.cameras.main.zoom = 2
-
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
         this.physics.add.existing(this.border, true)

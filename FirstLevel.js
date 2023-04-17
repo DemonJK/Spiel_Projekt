@@ -14,11 +14,6 @@ class FirstLevel extends Phaser.Scene {
 
         // PLAYER
         this.player = new Player(this, 15, 15, "PlayerIdle")
-
-        // CAMERA MOVING
-        this.cameras.main.startFollow(this.player)
-        this.cameras.main.followOffset.set(0, 150)
-        this.cameras.main.zoom = 2
     }
 
     update() {
