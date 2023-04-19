@@ -15,4 +15,4 @@ var config = {
     },
     scene: [Preloads, Scene2, StartLevel, FirstLevel],
 }
-var game = new Phaser.Game(config);
+var game = new Phaser.Game(config)

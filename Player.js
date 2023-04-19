@@ -8,7 +8,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.anims.play("Idle", true)
         this.is_jump_played = false
         this.is_jumpdown_played = false
-        this.swing_box;
+        this.swing_box
         this.looking_direction = "right"
         this.is_atacking = false
         this.readen = false
@@ -41,7 +41,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update_health_bar_pos() {
         this.hp.x = this.body.position.x - 680
         this.hp.y = this.body.position.y - 350
-        this.hp.draw();
+        this.hp.draw()
     }
 
     player_spawning_attributes() {
@@ -66,51 +66,51 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.is_jumpdown_played = false
         }
 
-        this.cursors = this.scene.input.keyboard.createCursorKeys();
+        this.cursors = this.scene.input.keyboard.createCursorKeys()
         if ((this.cursors.up.isDown && this.body.touching.down && !this.is_atacking)) {
-            console.log("UP CURSOR IS ACTIVE");
-            this.setVelocityY(-425);
-            this.anims.play("PlayerUpJump", true);
+            console.log("UP CURSOR IS ACTIVE")
+            this.setVelocityY(-425)
+            this.anims.play("PlayerUpJump", true)
 
         } else if (this.cursors.left.isDown && !this.body.touching.down && !this.is_atacking) {
-            this.setVelocityX(-160).setFlipX(-1);
+            this.setVelocityX(-160).setFlipX(-1)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
-                this.anims.play("Fall", true);
-                this.is_jumpdown_played = true;
+                this.anims.play("Fall", true)
+                this.is_jumpdown_played = true
             }
 
         } else if (this.cursors.left.isDown && this.body.touching.down && !this.is_atacking) {
-            console.log("LEFT CURSOR IS ACTIVE");
+            console.log("LEFT CURSOR IS ACTIVE")
             this.looking_direction = "left"
-            this.setVelocityX(-160).setFlipX(-1);
-            this.anims.play("MoveLeft", true);
+            this.setVelocityX(-160).setFlipX(-1)
+            this.anims.play("MoveLeft", true)
 
         } else if (this.cursors.right.isDown && !this.body.touching.down && !this.is_atacking) {
-            this.setVelocityX(160).setFlipX(0);
+            this.setVelocityX(160).setFlipX(0)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
-                this.anims.play("Fall", true);
-                this.is_jumpdown_played = true;
+                this.anims.play("Fall", true)
+                this.is_jumpdown_played = true
             }
 
         } else if (this.body.velocity.y >= 75) {
             if (!this.is_jumpdown_played) {
-                this.anims.play("Fall", true);
+                this.anims.play("Fall", true)
                 this.is_jumpdown_played = true
             }
 
         } else if (this.cursors.right.isDown && this.body.touching.down && !this.is_atacking) {
-            console.log("RIGHT CURSOR IS ACTIVE");
+            console.log("RIGHT CURSOR IS ACTIVE")
             this.looking_direction = "right"
-            this.setVelocityX(160).setFlipX(0);
-            this.anims.play("MoveRight", true);
-            this.setOffset(30, 0);
+            this.setVelocityX(160).setFlipX(0)
+            this.anims.play("MoveRight", true)
+            this.setOffset(30, 0)
 
         } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking) {
-            console.log("SPACEBAR IS ACTIVE");
+            console.log("SPACEBAR IS ACTIVE")
             this.is_atacking = true
             this.setOffset(30, 0)
-            this.anims.play("Attack", true);
-            this.setVelocityX(0);
+            this.anims.play("Attack", true)
+            this.setVelocityX(0)
             if (this.looking_direction === "right") {
                 this.swing_box = this.scene.add.rectangle(this.x + 20, this.y, 40, 40).setDepth(-1)
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
@@ -134,12 +134,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else {
             if (this.body.touching.down) {
                 this.is_atacking = false
-                this.anims.play("Idle", true);
-                this.setOffset(15, 0);
-                this.setVelocityX(0);
+                this.anims.play("Idle", true)
+                this.setOffset(15, 0)
+                this.setVelocityX(0)
             }
             if (this.body.velocity.y >= 75) {
-                this.anims.play("Fall", true);
+                this.anims.play("Fall", true)
             }
         }
 
@@ -155,10 +155,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.passThruPlatforms2.clear()
         setTimeout(() => {
             this.scene.passThruPlatforms.create(0, 296, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
-                .body.checkCollision.down = false;
+                .body.checkCollision.down = false
             this.scene.passThruPlatforms2.create(1350, 260, "boden").setOrigin(0, -15).setScale(1.5).refreshBody()
-                .body.checkCollision.down = false;
+                .body.checkCollision.down = false
         }
-            , 3000);
+            , 3000)
     }
 }
