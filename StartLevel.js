@@ -83,9 +83,9 @@ class StartLevel extends Phaser.Scene {
             if (!this.player.readen) {
                 this.hint.setScrollFactor(0, 0)
                 this.hint.setPosition(this.player.x, this.player.y + 100)
-                this.hint.
                 this.hint.visible = true
                 
+                //CHECKBOX FÜR DIE ÜBERPRÜFUNG VON DER POSITION VON "THIS.HINT"
                 this.checkbox = this.add.rectangle(2172, 988)
                 this.physics.add.existing(this.checkbox, true)
 
