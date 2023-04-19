@@ -18,32 +18,32 @@ class StartLevel extends Phaser.Scene {
         this.tileset5 = map.addTilesetImage("Background", "Background")
 
         // BENUTZT BACKGROUND
-        this.background = map.createStaticLayer("background", this.tileset5, 0, 0)
+        this.background = map.createLayer("background", this.tileset5, 0, 0)
         // BENUTZT GREEN-TREE
-        this.tree = map.createStaticLayer("greentree", this.tileset4, 0, 0)
+        this.tree = map.createLayer("greentree", this.tileset4, 0, 0)
         // BENUTZT GREEN-TREE
-        this.tree2 = map.createStaticLayer("greentree2", this.tileset4, 0, 0)
+        this.tree2 = map.createLayer("greentree2", this.tileset4, 0, 0)
         // BENUTZT GREEN-TREE
-        this.tree3 = map.createStaticLayer("greentree3", this.tileset4, 0, 0)
+        this.tree3 = map.createLayer("greentree3", this.tileset4, 0, 0)
         // BENUTZT GREEN-TREE
-        this.tree4 = map.createStaticLayer("greentree4", this.tileset4, 0, 0)
+        this.tree4 = map.createLayer("greentree4", this.tileset4, 0, 0)
         // BENUTZT TILES
-        this.bushLayer = map.createStaticLayer("bush", this.tileset, 0, 0)
+        this.bushLayer = map.createLayer("bush", this.tileset, 0, 0)
         // BENUTZT PROPS-ROCKS
-        this.props = map.createStaticLayer("props", this.tileset3, 0, 0)
+        this.props = map.createLayer("props", this.tileset3, 0, 0)
         // BENUTZT PROPS-ROCKS
-        this.props2 = map.createStaticLayer("props2", this.tileset3, 0, 0)
+        this.props2 = map.createLayer("props2", this.tileset3, 0, 0)
         // BENUTZT TILES
-        this.layer = map.createStaticLayer("ground", this.tileset, 0, 0)
+        this.layer = map.createLayer("ground", this.tileset, 0, 0)
         this.layer.setCollisionByProperty({ colliders: true })
         // BENUTZT BUILDINGS
-        this.buildings2 = map.createStaticLayer("buildings2", this.tileset2, 0, 0)
+        this.buildings2 = map.createLayer("buildings2", this.tileset2, 0, 0)
         this.buildings2.setCollisionByProperty({ colliders: true })
         // BENUTZT BUILDINGS
-        this.buildings3 = map.createStaticLayer("buildings3", this.tileset2, 0, 0)
+        this.buildings3 = map.createLayer("buildings3", this.tileset2, 0, 0)
         this.buildings3.setCollisionByProperty({ colliders: true })
         // BENUTZT BUILDINGS
-        this.buildings = map.createStaticLayer("buildings", this.tileset2, 0, 0)
+        this.buildings = map.createLayer("buildings", this.tileset2, 0, 0)
         this.buildings.setCollisionByProperty({ colliders: true })
 
         // ENEMY
@@ -81,23 +81,25 @@ class StartLevel extends Phaser.Scene {
 
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
-                this.hint.setPosition(this.player.x - 200, this.player.y + 50)
+                this.hint.setScrollFactor(0, 0)
+                this.hint.setPosition(this.player.x, this.player.y + 100)
+                this.hint.
                 this.hint.visible = true
+                
+                this.checkbox = this.add.rectangle(2172, 988)
+                this.physics.add.existing(this.checkbox, true)
+
                 setTimeout(() => {
                     this.player.readen = true
                     if (this.player.readen = true) {
                         this.textbox.destroy(true)
                     }
-                }, 0);
+                }, 1000);
             }
         }
-
-        this.hint.x = this.player.body.position.x - 200
 
         if (this.physics.overlap(this.house_box, this.player)) {
             this.hint.visible = false
         }
-
-   
     }
 }

@@ -3,8 +3,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture)
         this.player_spawning_attributes()
         this.colliders()
-        this.hp = new HealthBar(this.scene, 750, 350, 300, 25, 390, this)
-        this.hp.bar.setScrollFactor(0,0)
+        this.hp = new HealthBar(this.scene, 710, 300, 300, 25, 390, this)
+        this.hp.bar.setScrollFactor(0, 0)
         this.anims.play("Idle", true)
         this.is_jump_played = false
         this.is_jumpdown_played = false
@@ -19,12 +19,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.enemy)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
-        this.scene.physics.add.collider(this, this.scene.platforms4)        
+        this.scene.physics.add.collider(this, this.scene.platforms4)
         this.scene.physics.add.collider(this, this.scene.buildings3)
         this.scene.physics.add.collider(this, this.scene.groundlayer)
-        
+
         this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this)
-        
+
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
         })
@@ -60,7 +60,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        
+
         if (this.body.touching.down) {
             this.is_jump_played = false
             this.is_jumpdown_played = false
