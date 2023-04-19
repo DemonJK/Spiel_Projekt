@@ -48,7 +48,6 @@ class StartLevel extends Phaser.Scene {
 
         // ENEMY
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
-        this.enemy2 = new Enemy(this, 1950, 750, "enemy1")
 
         // PLAYER
         this.player = new Player(this, 1050, 750, "PlayerIdle")
@@ -69,26 +68,20 @@ class StartLevel extends Phaser.Scene {
         this.physics.add.existing(this.textbox, true)
 
         // TEXT
-        this.hint = this.add.text(this.player.x, this.player.y + 50,
+        this.hint = this.add.text(this.player.x, this.player.y+20,
             "There is an abandoned House," + "I should check it out")
+        this.hint.setScrollFactor(0, 0)
         this.hint.visible = false
     }
 
     update() {
         this.player.update()
         this.enemy.update()
-        this.enemy2.update()
 
         if (this.physics.overlap(this.textbox, this.player)) {
-            if (!this.player.readen) {
-                this.hint.setScrollFactor(0, 0)
-                this.hint.setPosition(this.player.x, this.player.y + 100)
+            if (!this.player.readen) {                
                 this.hint.visible = true
-                
-                //CHECKBOX FÜR DIE ÜBERPRÜFUNG VON DER POSITION VON "THIS.HINT"
-                this.checkbox = this.add.rectangle(2172, 988)
-                this.physics.add.existing(this.checkbox, true)
-
+            
                 setTimeout(() => {
                     this.player.readen = true
                     if (this.player.readen = true) {
