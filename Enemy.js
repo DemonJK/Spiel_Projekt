@@ -11,10 +11,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.anims.play("stand", true)
         this.setFlipX(true)
         this.has_hp_lose = false
-        this.atack_box = this.scene.add.rectangle(this.x, this.y, 40, 40).setDepth(-1);
+        this.atack_box = this.scene.add.rectangle(this.x, this.y, 40, 40).setDepth(-1)
         this.scene.physics.add.existing(this.atack_box, true).setDepth(-1)
+        this.atack_box2 = this.scene.add.rectangle(this.x + 100, this.y, 40, 40).setDepth(-1)
+        this.scene.physics.add.existing(this.atack_box2, true).setDepth(-1)
         this.is_atacking = false
-        
+        this.is_in_attack_anim = false
     }
 
     enemy_spawning_attributes() {
@@ -37,6 +39,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.update_health_bar_pos()
         this.atack_box.body.x = this.x - 100
         this.atack_box.body.y = this.y + 10
+        this.atack_box2.body.x = this.x + 60
+        this.atack_box2.body.y = this.y + 10
 
         if ((Math.round(this.scene.player.y + 237) === Math.round(this.y)) && !(Math.round(this.scene.player.x) === Math.round(this.x - 145))) {
             if (this.scene.player.cursors.left.isDown) {
@@ -52,30 +56,42 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     if (this.is_player_left()) {
                         if (this.is_hitting_from_left() && this.is_player_over_enemy()) {
                             this.setVelocityX(0)
+                            this.is_in_attack_anim = true
                             this.anims.play("enemyatt", true)
                             this.on("animationcomplete", () => {
                                 this.is_atacking = true
-                                
+                                this.is_in_attack_anim = false
                             })
                             if (this.is_atacking && this.scene.physics.overlap(this.atack_box, this.scene.player)) {
                                 this.scene.player.hp.decrease(15)
                             }
                             this.is_atacking = false
                         } else {
-                            if (this.player_is_not_in_left_area()) {
+                            if (this.player_is_not_in_left_area() && !this.is_in_attack_anim) {
                                 this.setVelocityX(-55).setFlipX(-1)
                                 this.anims.play("run-left", true)
                             }
+                            this.is_atacking = false
                         }
                     } else if (this.is_player_right()) {
                         if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
                             this.setVelocityX(0)
-                            this.anims.play("stand", true)
+                            this.is_in_attack_anim = true
+                            this.anims.play("enemyatt", true)
+                            this.on("animationcomplete", () => {
+                                this.is_atacking = true
+                                this.is_in_attack_anim = false
+                            })
+                            if (this.is_atacking && this.scene.physics.overlap(this.atack_box2, this.scene.player)) {
+                                this.scene.player.hp.decrease(15)
+                            }
+                            this.is_atacking = false
                         } else {
-                            if (this.player_is_not_in_right_area()) {
+                            if (this.player_is_not_in_right_area() && !this.is_in_attack_anim) {
                                 this.setVelocityX(55).setFlipX(0)
                                 this.anims.play("run-left", true)
                             }
+                            this.is_atacking = false
                         }
                     }
                 }
