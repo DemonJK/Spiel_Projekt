@@ -53,6 +53,10 @@ class StartLevel extends Phaser.Scene {
         // PLAYER
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
+        // TEST STARTER POTION CLASS
+
+        this.starter_potion = new Healthpoint(this, 1100, 750, "starter-healthpotion")
+
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
         this.physics.add.existing(this.border, true)
@@ -78,6 +82,7 @@ class StartLevel extends Phaser.Scene {
     update() {
         this.player.update()
         this.enemy.update()
+        this.starter_potion.update()
 
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {                

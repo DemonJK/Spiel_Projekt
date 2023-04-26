@@ -82,6 +82,18 @@ class Preloads extends Phaser.Scene {
             frameWidth: 256,
             frameHeight: 256
         })
+
+        //PRELOAD CONSUMABLES
+        this.load.spritesheet("consum", "/new_assets/Consumables/consumables.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
+
+        //PRELOAD POTIONS
+        this.load.spritesheet("potion", "/new_assets/Potions/potions.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
     }
 
     create() {
@@ -155,6 +167,13 @@ class Preloads extends Phaser.Scene {
             key: "enemyatt",
             frames: this.anims.generateFrameNumbers("enemyattack", { start: 0, end: 14 }),
             frameRate: 8,
+        })
+
+        this.anims.create({
+            key: "starter-healthpotion",
+            frames: this.anims.generateFrameNumbers("potion", { start: 3, end: 20}),
+            frameRate: 1,
+            repeat: -1,
         })
 
         setTimeout(() => {
