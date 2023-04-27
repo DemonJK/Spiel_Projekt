@@ -171,7 +171,7 @@ class Preloads extends Phaser.Scene {
 
         this.anims.create({
             key: "starter-healthpotion",
-            frames: this.anims.generateFrameNumbers("potion", { start: 3, end: 20}),
+            frames: this.anims.generateFrameNumbers("potion", { start: 3, end: 4 }),
             frameRate: 1,
             repeat: -1,
         })
