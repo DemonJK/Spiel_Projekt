@@ -9,8 +9,7 @@ class Healthpoint extends Phaser.Physics.Arcade.Sprite {
     }
 
     create() {
-        this.consumable_potion.setBounce(0.2)
-        this.consumable_potion.setVelocityY(10)
+
         this.scene.add.sprite(this.scene.player.x, this.scene.player.y, "starter-healthpotion")
         this.scene.add.image(this.scene.player.x, this.scene.player.y, "potion", 3)
     }
@@ -21,8 +20,9 @@ class Healthpoint extends Phaser.Physics.Arcade.Sprite {
             console.log("overlap");
             this.consumable_potion.setPosition(0, 0)
         }
-
-        console.log(this.consumable_potion.x, this.consumable_potion.y);
+        this.consumable_potion.setBounce(0.5)
+        this.consumable_potion.setBodySize(100, 100)
+        //console.log(this.consumable_potion.x, this.consumable_potion.y);
     }
 }
 
