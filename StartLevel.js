@@ -57,7 +57,8 @@ class StartLevel extends Phaser.Scene {
         // TEST STARTER POTION CLASS
 
         this.starter_potion = new Healthpoint(this, 1300, 750, "starter-healthpotion")
-        // HIER KANN MAN SCHREIBEN
+        //this.add.sprite(this.player.x, this.player.y, "potion", 3)
+
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
         this.physics.add.existing(this.border, true)
