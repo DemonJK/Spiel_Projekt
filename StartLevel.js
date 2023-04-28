@@ -4,7 +4,7 @@ class StartLevel extends Phaser.Scene {
     }
 
     create() {
-        
+
         this.SkyBackground = this.add.image(0, 0, "SkyBackground").setOrigin(0, 0)
         this.SkyBackground.setDisplaySize(game.config.width + 200, game.config.height + 200)
         this.SkyBackground2 = this.add.image(2840, 0, "SkyBackground").setOrigin(0, 0)
@@ -50,14 +50,8 @@ class StartLevel extends Phaser.Scene {
         // ENEMY
         this.enemy = new Enemy(this, 1550, 750, "enemy1")
 
-
         // PLAYER
         this.player = new Player(this, 1050, 750, "PlayerIdle")
-
-        // TEST STARTER POTION CLASS
-
-        this.starter_potion = new Healthpoint(this, 1300, 750, "starter-healthpotion")
-        //this.add.sprite(this.player.x, this.player.y, "potion", 3)
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
@@ -75,7 +69,7 @@ class StartLevel extends Phaser.Scene {
         this.physics.add.existing(this.textbox, true)
 
         // TEXT
-        this.hint = this.add.text(this.player.x, this.player.y+20,
+        this.hint = this.add.text(this.player.x + 50, this.player.y + 20,
             "There is an abandoned House," + "I should check it out")
         this.hint.setScrollFactor(0, 0)
         this.hint.visible = false
@@ -84,12 +78,11 @@ class StartLevel extends Phaser.Scene {
     update() {
         this.player.update()
         this.enemy.update()
-        this.starter_potion.update()
 
         if (this.physics.overlap(this.textbox, this.player)) {
-            if (!this.player.readen) {                
+            if (!this.player.readen) {
                 this.hint.visible = true
-            
+
                 setTimeout(() => {
                     this.player.readen = true
                     if (this.player.readen = true) {

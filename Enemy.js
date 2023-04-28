@@ -101,6 +101,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 }
             }
         }
+        if (this.is_dead === true) {
+            this.healthpoint()
+        }
     }
 
     is_player_left() {
@@ -125,5 +128,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     player_is_not_in_right_area() {
         this.left_point = this.body.x + 70
         return this.scene.player.x > this.left_point
+    }
+    healthpoint() {
+        this.starter_potion = new Healthpoint(this.scene, this.x, this.y, "starter-healthpotion")
     }
 }
