@@ -1,3 +1,5 @@
+const { Input } = require("phaser")
+
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
@@ -12,18 +14,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.looking_direction = "right"
         this.is_atacking = false
         this.readen = false
+        this.items = []
+        this.keyW = this.scene.input.keyboard.addKey('W');
+        this.keyA = this.scene.input.keyboard.addKey('A');
+        this.keyS = this.scene.input.keyboard.addKey('S');
+        this.keyD = this.scene.input.keyboard.addKey('D');
+
     }
 
     colliders() {
+        this.enemy_collider = this.scene.physics.add.collider(this, this.scene.enemy)
         this.scene.physics.add.collider(this, this.scene.platforms)
-        this.scene.physics.add.collider(this, this.scene.enemy)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.platforms4)
         this.scene.physics.add.collider(this, this.scene.buildings3)
         this.scene.physics.add.collider(this, this.scene.groundlayer)
 
-        this.scene.physics.add.collider(this, this.scene.enemy, this.collideObjects, null, this)
 
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
@@ -60,6 +67,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+        
+        this.input.on("pointerdown", ()=> {
+            console.log("down");
+        })
+        
+        console.log(this.items);
 
         if (this.body.touching.down) {
             this.is_jump_played = false
@@ -67,25 +80,25 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.cursors = this.scene.input.keyboard.createCursorKeys()
-        if ((this.cursors.up.isDown && this.body.touching.down && !this.is_atacking)) {
-            console.log("UP CURSOR IS ACTIVE")
+        if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking)) {
+            console.log("UP")
             this.setVelocityY(-425)
             this.anims.play("PlayerUpJump", true)
 
-        } else if (this.cursors.left.isDown && !this.body.touching.down && !this.is_atacking) {
+        } else if (this.keyA.isDown && !this.body.touching.down && !this.is_atacking) {
             this.setVelocityX(-160).setFlipX(-1)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
                 this.is_jumpdown_played = true
             }
 
-        } else if (this.cursors.left.isDown && this.body.touching.down && !this.is_atacking) {
-            console.log("LEFT CURSOR IS ACTIVE")
+        } else if (this.keyA.isDown && this.body.touching.down && !this.is_atacking) {
+            console.log("LEFT")
             this.looking_direction = "left"
             this.setVelocityX(-160).setFlipX(-1)
             this.anims.play("MoveLeft", true)
 
-        } else if (this.cursors.right.isDown && !this.body.touching.down && !this.is_atacking) {
+        } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking) {
             this.setVelocityX(160).setFlipX(0)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
@@ -98,8 +111,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.is_jumpdown_played = true
             }
 
-        } else if (this.cursors.right.isDown && this.body.touching.down && !this.is_atacking) {
-            console.log("RIGHT CURSOR IS ACTIVE")
+        } else if (this.keyD.isDown && this.body.touching.down && !this.is_atacking) {
+            console.log("RIGHT")
             this.looking_direction = "right"
             this.setVelocityX(160).setFlipX(0)
             this.anims.play("MoveRight", true)

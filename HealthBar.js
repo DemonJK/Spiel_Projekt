@@ -21,6 +21,10 @@ class HealthBar {
         if (this.value < 0) {
             this.value = 0;
         }
+        
+        if (this.value >= 390) {
+            this.value = 390
+        }
 
         this.draw();
 

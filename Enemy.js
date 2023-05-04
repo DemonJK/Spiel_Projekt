@@ -3,7 +3,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture)
         this.enemy_spawning_attributes()
         this.scene.physics.add.collider(this, this.scene.layer, () => { this.body.touching.down = true })
-        this.scene.physics.add.collider(this, this.scene.player)
+        this.player_collider = this.scene.physics.add.collider(this, this.scene.player)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2)
         this.scene.physics.add.collider(this, this.scene.platforms4)
@@ -17,6 +17,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this.atack_box2, true).setDepth(-1)
         this.is_atacking = false
         this.is_in_attack_anim = false
+        this.is_position_spawned = false;
     }
 
     enemy_spawning_attributes() {
@@ -102,7 +103,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 }
             }
         } else if (this.is_dead === true) {
-            this.consumable_potion = new Healthpoint(this.scene, this.x, this.y, "starter-healthpotion")
+            if (!this.is_position_spawned) {
+                this.consumable_potion = new Healthpoint(this.scene, this.x, this.y, "starter-healthpotion")
+                this.is_position_spawned = true
+                this.scene.player.enemy_collider.destroy()
+                this.player_collider.destroy()
+            }
+            this.consumable_potion.update()
         }
     }
 
@@ -128,13 +135,5 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     player_is_not_in_right_area() {
         this.left_point = this.body.x + 70
         return this.scene.player.x > this.left_point
-    }
-    //FUNKTION FÜR POTION
-    healthpoint() {
-        if (this.is_dead === true) {
-            this.consumable_potion = new Healthpoint(this.scene, this.x, this.y, "starter-healthpotion")
-        } else {
-            console.log("not dead, no drop")
-        }
     }
 }
