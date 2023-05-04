@@ -8,12 +8,16 @@ class Healthpoint extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this.consumable_potion, this.scene.layer)
     }
 
+    create() {
+        
+    }
+
     update() {
         //CHANGE POS OF CONSUMABLE POTION IF USED
         if (this.scene.physics.overlap(this.consumable_potion, this.scene.player)) {
             console.log("overlap");
             this.consumable_potion.setPosition(0, 0)
-            this.scene.player.hp.decrease(-150)
+            this.scene.player.hp.decrease(-25)
         }
     }
 }

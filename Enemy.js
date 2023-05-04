@@ -27,6 +27,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setBounce(0.2)
         this.setPosition(this.x, this.y)
         this.setPushable(false)
+        this.healthpoint()
+        
     }
 
     update_health_bar_pos() {
@@ -34,6 +36,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.hp.y = this.y - 80
         this.hp.draw()
     }
+
 
     update() {
         this.update_health_bar_pos()
@@ -101,9 +104,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 }
             }
         }
-        if (this.is_dead === true) {
-            this.healthpoint()
-        }
     }
 
     is_player_left() {
@@ -130,6 +130,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         return this.scene.player.x > this.left_point
     }
     healthpoint() {
-        this.starter_potion = new Healthpoint(this.scene, this.x, this.y, "starter-healthpotion")
+        if (this.is_dead === true) {
+            this.consumable_potion = new Healthpoint(this.scene, this.x, this.y, "starter-healthpotion")
+        } else {
+            console.log("not dead, no drop")
+        }
     }
 }
