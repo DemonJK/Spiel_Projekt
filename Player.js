@@ -18,6 +18,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyS = this.scene.input.keyboard.addKey('S');
         this.keyD = this.scene.input.keyboard.addKey('D');
         this.cursors = this.scene.input.keyboard.createCursorKeys()
+        this.regeneration = false
     }
 
     colliders() {
@@ -28,7 +29,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.platforms4)
         this.scene.physics.add.collider(this, this.scene.buildings3)
         this.scene.physics.add.collider(this, this.scene.groundlayer)
-
 
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
@@ -169,6 +169,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             console.log("DOWN CURSOR IS ACTIVE")
             // durch den Boden fallen
             // this.passthrough()
+        }
+
+        //TEST FÜR PASSIVE REGENERATION
+        console.log(this.regeneration);
+        if (this.hp.value > 390 && (this.regeneration = false)) {
+            console.log("HIER");
+            this.regeneration = true
+        }
+        if (this.regeneration === true) {
+            this.scene.player.hp.decrease(-15)
+            this.regeneration = false
         }
     }
 
