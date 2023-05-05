@@ -1,5 +1,3 @@
-const { Input } = require("phaser")
-
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
@@ -19,7 +17,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyA = this.scene.input.keyboard.addKey('A');
         this.keyS = this.scene.input.keyboard.addKey('S');
         this.keyD = this.scene.input.keyboard.addKey('D');
-
+        this.cursors = this.scene.input.keyboard.createCursorKeys()
     }
 
     colliders() {
@@ -68,18 +66,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     update() {
 
-        this.input.on("pointerdown", () => {
-            console.log("down");
-        })
-
-        console.log(this.items);
+        //console.log(this.items);
 
         if (this.body.touching.down) {
             this.is_jump_played = false
             this.is_jumpdown_played = false
         }
 
-        this.cursors = this.scene.input.keyboard.createCursorKeys()
         if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking)) {
             console.log("UP")
             this.setVelocityY(-425)
@@ -97,6 +90,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.looking_direction = "left"
             this.setVelocityX(-160).setFlipX(-1)
             this.anims.play("MoveLeft", true)
+
+            // TEST FÜR SPEED POTION
+            if (this.keyA.isDown && this.body.touching.down && !this.is_atacking && this.scene.physics.overlap(this, this.scene.speedpotion_lvl_1)) {
+                console.log("LEFT")
+                this.looking_direction = "left"
+                this.setVelocityX(-350).setFlipX(-1)
+                this.anims.play("MoveLeft", true)
+            }
 
         } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking) {
             this.setVelocityX(160).setFlipX(0)
@@ -117,6 +118,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(160).setFlipX(0)
             this.anims.play("MoveRight", true)
             this.setOffset(30, 0)
+
+            // TEST FÜR SPEED POTION
+            if (this.keyD.isDown && this.body.touching.down && !this.is_atacking && this.scene.physics.overlap(this, this.scene.speedpotion_lvl_1)) {
+                console.log("RIGHT")
+                this.looking_direction = "right"
+                this.setVelocityX(350).setFlipX(0)
+                this.anims.play("MoveRight", true)
+                this.setOffset(30, 0)
+            }
 
         } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking) {
             console.log("SPACEBAR IS ACTIVE")

@@ -102,14 +102,17 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     this.anims.play("stand", true)
                 }
             }
+            //CHECK WENN TOT FÜR ITEM SPAWN
         } else if (this.is_dead === true) {
             if (!this.is_position_spawned) {
-                this.consumable_potion = new Healthpoint(this.scene, this.x, this.y, "starter-healthpotion")
+                this.healthpotion_lvl_1 = new Healthpotion_LVL_1(this.scene, this.x, this.y)
+                this.speedpotion_lvl_1 = new Speedpotion_LVL_1(this.scene, this.x + 50, this.y)
                 this.is_position_spawned = true
                 this.scene.player.enemy_collider.destroy()
                 this.player_collider.destroy()
             }
-            this.consumable_potion.update()
+            this.healthpotion_lvl_1.update()
+            this.speedpotion_lvl_1.update()
         }
     }
 

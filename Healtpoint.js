@@ -1,22 +1,40 @@
-class Healthpoint extends Phaser.Physics.Arcade.Sprite {
+class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
 
-        this.consumable_potion = this.scene.physics.add.sprite(this.x, this.y, "potion", 3).setDepth(0)
-        this.consumable_potion.setBounce(0.3)
-        this.consumable_potion.setSize(16, 16)
-        this.scene.physics.add.collider(this.consumable_potion, this.scene.layer)
-    }
-
-    create() {
-
+        this.healthpotion_lvl_1 = this.scene.physics.add.sprite(this.x, this.y, "potion", 3).setDepth(0)
+        this.healthpotion_lvl_1.setBounce(0.3)
+        this.healthpotion_lvl_1.setSize(16, 16)
+        this.scene.physics.add.collider(this.healthpotion_lvl_1, this.scene.layer)
     }
 
     update() {
-        //CHANGE POS OF CONSUMABLE POTION IF USED
-        if (this.scene.physics.overlap(this.consumable_potion, this.scene.player)) {
-            this.consumable_potion.setPosition(0, 0)
+        //CHANGE POS OF HEALTH POTION IF USED
+        if (this.scene.physics.overlap(this.healthpotion_lvl_1, this.scene.player)) {
+            this.healthpotion_lvl_1.setPosition(0, 0)
             this.scene.player.hp.decrease(-25)
+            this.scene.player.items.push(this)
+        }
+    }
+}
+
+class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, texture) {
+        super(scene, x, y, texture)
+
+        this.speedpotion_lvl_1 = this.scene.physics.add.sprite(this.x, this.y, "potion", 12).setDepth(0)
+        this.speedpotion_lvl_1.setBounce(0.3)
+        this.speedpotion_lvl_1.setSize(16, 16)
+        this.scene.physics.add.collider(this.speedpotion_lvl_1, this.scene.layer)
+    }
+
+    update() {
+        //CHANGE POS OF SPEED POTION IF USED
+        if (this.scene.physics.overlap(this.speedpotion_lvl_1, this.scene.player)) {
+            this.speedpotion_lvl_1.setPosition(0, 0)
+            if (this.scene.player.keyA.isDown && (this.scene.player.setVelocityX = -425)) {
+                this.scene.player.setVelocityX(-475)
+            }
             this.scene.player.items.push(this)
         }
     }
