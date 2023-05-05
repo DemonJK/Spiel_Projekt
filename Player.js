@@ -174,12 +174,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //TEST FÜR PASSIVE REGENERATION
         console.log(this.regeneration);
         if (this.hp.value > 390 && (this.regeneration = false)) {
-            console.log("HIER");
             this.regeneration = true
-        }
-        if (this.regeneration === true) {
-            this.scene.player.hp.decrease(-15)
-            this.regeneration = false
+            if (this.regeneration === true) {
+                this.scene.player.hp.decrease(-15)
+                this.regeneration = false
+            }
         }
     }
 
