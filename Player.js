@@ -67,11 +67,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        
-        this.input.on("pointerdown", ()=> {
+
+        this.input.on("pointerdown", () => {
             console.log("down");
         })
-        
+
         console.log(this.items);
 
         if (this.body.touching.down) {
