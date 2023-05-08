@@ -19,6 +19,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyD = this.scene.input.keyboard.addKey('D');
         this.cursors = this.scene.input.keyboard.createCursorKeys()
         this.regeneration = false
+        this.Running_in_grass = this.scene.sound.add("footsteps-grass", { loop: false, volume: 0.035, detune: -220 })
+        this.footsteps = false
     }
 
     colliders() {
@@ -159,6 +161,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.anims.play("Idle", true)
                 this.setOffset(15, 0)
                 this.setVelocityX(0)
+                this.Running_in_grass.stop()
             }
             if (this.body.velocity.y >= 75) {
                 this.anims.play("Fall", true)
@@ -171,8 +174,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // this.passthrough()
         }
 
+        /*if (!this.footsteps && this.body.touching.down) {
+            if (this.keyD.) {
+                console.log("check");
+                this.Running_in_grass.play()
+            } else if (this.keyA.onDown === true) {
+                console.log("check");
+                this.Running_in_grass.play()
+            }
+        }*/
+
         //TEST FÜR PASSIVE REGENERATION
-        console.log(this.regeneration);
+        //console.log(this.regeneration);
         if (this.hp.value > 390 && (this.regeneration = false)) {
             this.regeneration = true
             if (this.regeneration === true) {

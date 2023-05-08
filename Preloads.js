@@ -13,7 +13,7 @@ class Preloads extends Phaser.Scene {
         this.load.image("boden", "/assets/ground/boden_welt_part1.png")
         this.load.image("boden-grass", "assets/ground/boden_welt_part2.png")
 
-        //PRELOAD AUDIO
+        //PRELOAD AUDIO SONGS
         this.load.audio("Ingame-music", ["/audio/music_zapsplat_game_music.mp3"])
         this.load.audio("action1", ["/audio/mp3/Action1.mp3"])
         this.load.audio("action2", ["/audio/mp3/Action2.mp3"])
@@ -30,6 +30,9 @@ class Preloads extends Phaser.Scene {
         this.load.audio("ambient8", ["/audio/mp3/Ambient8.mp3"])
         this.load.audio("ambient9", ["/audio/mp3/Ambient9.mp3"])
         this.load.audio("ambient10", ["/audio/mp3/Ambient10.mp3"])
+
+        //PRELOAD AUDIO EFFECTS
+        this.load.audio("footsteps-grass", ["/audio/effects/Footsteps-in-grass-fast.mp3"])
 
         //PRELOAD ALL TILES
         this.load.image("Buildings", "/new_assets/Assets/Buildings.png")

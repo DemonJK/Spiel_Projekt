@@ -54,8 +54,8 @@ class StartLevel extends Phaser.Scene {
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
         //INGAME AUDIO TEST
-        this.ingame_audio1 = this.sound.add("Ingame-music", { loop: true, volume: 0.035, detune: -220 })
-        this.ingame_audio1.play()
+        this.Ambient1 = this.sound.add("ambient1", { loop: true, volume: 0.035, detune: -220 })
+        this.Ambient1.play()
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
