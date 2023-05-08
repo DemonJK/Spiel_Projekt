@@ -54,8 +54,13 @@ class StartLevel extends Phaser.Scene {
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
         //INGAME AUDIO TEST
-        this.Ambient1 = this.sound.add("ambient1", { loop: true, volume: 0.035, detune: -220 })
+        this.Ambient1 = this.sound.add("ambient1", {
+            loop: true,
+            volume: 0.055,
+            detune: -220,
+        })
         this.Ambient1.play()
+        this.Ambient1.onBlur = false
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
@@ -82,7 +87,6 @@ class StartLevel extends Phaser.Scene {
     update() {
         this.player.update()
         this.enemy.update()
-
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 this.hint.visible = true

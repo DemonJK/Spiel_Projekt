@@ -6,12 +6,28 @@ class Preloads extends Phaser.Scene {
     //PRELOAD VON HINTERGRUND
     preload() {
 
+        let loadingBar = this.add.graphics({
+            fillStyle: {
+                color:0xffffff //Weiß
+            }
+        })
+
+        //LÄNGERER LADUNG
+        for (let i = 0; i < 100; i++) {
+            this.load.audio("Ingame-music", ["/audio/music_zapsplat_game_music.mp3"])
+        }
+
+        this.load.on("progress", (percent)=>{
+            loadingBar.fillRect(100, this.game.renderer.height / 1.5, this.game.renderer.width * percent, 50)
+            console.log(percent);
+            this.add.text(loadingBar.x, loadingBar.y +50, this.preload)
+        })
+
         //PRELOAD BACKGROUND
         this.load.image("SkyBackground", "/new_assets/Background/Background.png")
 
-        //PRELOAD GROUND
-        this.load.image("boden", "/assets/ground/boden_welt_part1.png")
-        this.load.image("boden-grass", "assets/ground/boden_welt_part2.png")
+        //PRELOAD STARTMENU BACKGROUND
+        this.load.image("Startmenu", "/new_assets/Startmenu/startmenu.png")
 
         //PRELOAD AUDIO SONGS
         this.load.audio("Ingame-music", ["/audio/music_zapsplat_game_music.mp3"])
@@ -198,7 +214,7 @@ class Preloads extends Phaser.Scene {
         })
 
         setTimeout(() => {
-            this.scene.start("StartLevel")
+            this.scene.start("StartMenu")
         }, 0)
     }
 }
