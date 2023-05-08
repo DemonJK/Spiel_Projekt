@@ -13,6 +13,24 @@ class Preloads extends Phaser.Scene {
         this.load.image("boden", "/assets/ground/boden_welt_part1.png")
         this.load.image("boden-grass", "assets/ground/boden_welt_part2.png")
 
+        //PRELOAD AUDIO
+        this.load.audio("Ingame-music", ["/audio/music_zapsplat_game_music.mp3"])
+        this.load.audio("action1", ["/audio/mp3/Action1.mp3"])
+        this.load.audio("action2", ["/audio/mp3/Action2.mp3"])
+        this.load.audio("action3", ["/audio/mp3/Action3.mp3"])
+        this.load.audio("action4", ["/audio/mp3/Action4.mp3"])
+        this.load.audio("action5", ["/audio/mp3/Action5.mp3"])
+        this.load.audio("ambient1", ["/audio/mp3/Ambient1.mp3"])
+        this.load.audio("ambient2", ["/audio/mp3/Ambient2.mp3"])
+        this.load.audio("ambient3", ["/audio/mp3/Ambient3.mp3"])
+        this.load.audio("ambient4", ["/audio/mp3/Ambient4.mp3"])
+        this.load.audio("ambient5", ["/audio/mp3/Ambient5.mp3"])
+        this.load.audio("ambient6", ["/audio/mp3/Ambient6.mp3"])
+        this.load.audio("ambient7", ["/audio/mp3/Ambient7.mp3"])
+        this.load.audio("ambient8", ["/audio/mp3/Ambient8.mp3"])
+        this.load.audio("ambient9", ["/audio/mp3/Ambient9.mp3"])
+        this.load.audio("ambient10", ["/audio/mp3/Ambient10.mp3"])
+
         //PRELOAD ALL TILES
         this.load.image("Buildings", "/new_assets/Assets/Buildings.png")
         this.load.image("Hive", "/new_assets/Assets/Hive.png")
