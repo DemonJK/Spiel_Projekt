@@ -8,7 +8,7 @@ class StartMenu extends Phaser.Scene {
     create() {
         this.Menubackground = this.add.image(0, 0, "Startmenu").setOrigin(0, 0)
         this.Menubackground.setDisplaySize(game.config.width, game.config.height)
-        this.zoomer()  
+        this.zoomer()
         setTimeout(() => {
             console.log("timer over");
             this.create2()
@@ -89,17 +89,35 @@ class StartMenu extends Phaser.Scene {
 
     create2() {
         if (this.panEffect === true) {
+
             this.boxInt = this.add.rectangle(
+                /*x*/game.config.width / 2,
+                /*y*/game.config.height / 2,
+                /*width*/100,
+                /*height*/100,
+                /*fillColor*/0x680B0B
+            ).setDepth(0)
+
+            this.textPlay = this.add.text(
                 game.config.width / 2,
-                game.config.height / 2, 
-                100, 
-                100,
-                0xff0000
-                )
+                game.config.height / 2,
+                "Play"
+            ).setDepth(1)
+            console.log(this.textPlay);
         }
     }
 
     update() {
 
+    }
+
+    testStuff() {
+        this.cameras.add(
+                /*x*/game.config.width,
+                /*y*/game.config.height,
+                /*width*/game.config.width,
+                /*height*/game.config.height,
+                /*makeMain*/false,
+        )
     }
 }
