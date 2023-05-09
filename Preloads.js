@@ -6,21 +6,73 @@ class Preloads extends Phaser.Scene {
     //PRELOAD VON HINTERGRUND
     preload() {
 
-        let loadingBar = this.add.graphics({
-            fillStyle: {
-                color:0xffffff //Weiß
+        var progressBar = this.add.graphics();
+        var progressBox = this.add.graphics();
+        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillRect(loadingText, loadingText, 320, 50);
+        
+        var width = this.cameras.main.width;
+        var height = this.cameras.main.height;
+        var loadingText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 50,
+            text: 'Loading...',
+            style: {
+                font: '20px monospace',
+                fill: '#ffffff'
             }
-        })
+        });
+        loadingText.setOrigin(0.5, 0.5);
+        
+        var percentText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 5,
+            text: '0%',
+            style: {
+                font: '18px monospace',
+                fill: '#ffffff'
+            }
+        });
+        percentText.setOrigin(0.5, 0.5);
+        
+        var assetText = this.make.text({
+            x: width / 2,
+            y: height / 2 + 50,
+            text: '',
+            style: {
+                font: '18px monospace',
+                fill: '#ffffff'
+            }
+        });
+        assetText.setOrigin(0.5, 0.5);
+        
+        this.load.on('progress', function (value) {
+            percentText.setText(parseInt(value * 100) + '%');
+            progressBar.clear();
+            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillRect(loadingText, loadingText, 300 * value, 30);
+        });
+        
+        this.load.on('fileprogress', function (file) {
+            assetText.setText('Loading asset: ' + file.key);
+        });
+        this.load.on('complete', function () {
+            progressBar.destroy();
+            progressBox.destroy();
+            loadingText.destroy();
+            percentText.destroy();
+            assetText.destroy();
+        });
 
         //LÄNGERER LADUNG
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 1000; i++) {
             this.load.audio("Ingame-music", ["/audio/music_zapsplat_game_music.mp3"])
         }
 
-        this.load.on("progress", (percent)=>{
-            loadingBar.fillRect(100, this.game.renderer.height / 1.5, this.game.renderer.width * percent, 50)
-            console.log(percent);
-            this.add.text(loadingBar.x, loadingBar.y +50, this.preload)
+        // PRELOAD INTERFACE
+        this.load.spritesheet("Interface", "/interface/GUI.png", {
+            frameWidth: 16,
+            frameHeight: 16
         })
 
         //PRELOAD BACKGROUND
@@ -63,10 +115,12 @@ class Preloads extends Phaser.Scene {
         this.load.image("Green-Tree", "/new_assets/Trees/Green-Tree.png")
         this.load.image("Red-Tree", "/new_assets/Trees/Red-Tree.png")
         this.load.image("Yellow-Tree", "/new_assets/Trees/Yellow-Tree.png")
+        this.load.image("GUI", "/interface/GUI.png")
 
         //PRELOAD TILED MAP
         this.load.tilemapTiledJSON("MAP", "/TiledLevels/TiledMapGameStartLevel.json")
         this.load.tilemapTiledJSON("NIGHTMAP", "/TiledLevels/TiledMapGameFirstLevel.json")
+        this.load.tilemapTiledJSON("STARTMENU", "/TiledLevels/StartMenu.json")
 
         //PRELOAD PLAYER
         this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {
