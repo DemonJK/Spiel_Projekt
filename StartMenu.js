@@ -19,15 +19,16 @@ class StartMenu extends Phaser.Scene {
                     /*x*/game.config.width / 2,
                     /*y*/game.config.height / 2,
                     /*text*/"Start a New Game",
-                ).setOrigin(0.5, 0.5).setScale(1.5, 1.5)
+                ).setOrigin(0.5, 0.5).setScale(1.5, 1.5).setDepth(1)
 
                 this.boxInt = this.add.rectangle(
                     /*x*/game.config.width / 2,
                     /*y*/game.config.height / 2,
-                    /*width*/this.textPlay,
+                    /*width*/this.textPlay, /* MUSS VERÄNDERT WERDEN SODASS AUTO ANPASSUNG KLAPPT */ 
                     /*height*/30,
-                    /*fillColor*/0x680B0B
-                )
+                    /*fillColor*/0x680B0B,
+                    /*fillAlpha*/0.45
+                ).set
 
                 this.isSelected = true
             }
@@ -42,7 +43,7 @@ class StartMenu extends Phaser.Scene {
 
     update() {
         if (this.panEffect === true) {
-            
+
             if (this.isSelected === true) {
 
                 this.textPlay.setTint(0xff6441)
