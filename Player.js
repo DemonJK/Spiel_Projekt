@@ -13,10 +13,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.is_atacking = false
         this.readen = false
         this.items = []
-        this.keyW = this.scene.input.keyboard.addKey('W');
-        this.keyA = this.scene.input.keyboard.addKey('A');
-        this.keyS = this.scene.input.keyboard.addKey('S');
-        this.keyD = this.scene.input.keyboard.addKey('D');
+        this.keyW = this.scene.input.keyboard.addKey('W')
+        this.keyA = this.scene.input.keyboard.addKey('A')
+        this.keyS = this.scene.input.keyboard.addKey('S')
+        this.keyD = this.scene.input.keyboard.addKey('D')
         this.cursors = this.scene.input.keyboard.createCursorKeys()
         this.regeneration = false
         this.Running_in_grass = this.scene.sound.add("footsteps-grass", { loop: false, volume: 0.035, detune: -220 })
