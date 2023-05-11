@@ -6,63 +6,8 @@ class Preloads extends Phaser.Scene {
     //PRELOAD VON HINTERGRUND
     preload() {
 
-        var progressBar = this.add.graphics();
-        var progressBox = this.add.graphics();
-        progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(loadingText, loadingText, 320, 50);
-        
-        var width = this.cameras.main.width;
-        var height = this.cameras.main.height;
-        var loadingText = this.make.text({
-            x: width / 2,
-            y: height / 2 - 50,
-            text: 'Loading...',
-            style: {
-                font: '20px monospace',
-                fill: '#ffffff'
-            }
-        });
-        loadingText.setOrigin(0.5, 0.5);
-        
-        var percentText = this.make.text({
-            x: width / 2,
-            y: height / 2 - 5,
-            text: '0%',
-            style: {
-                font: '18px monospace',
-                fill: '#ffffff'
-            }
-        });
-        percentText.setOrigin(0.5, 0.5);
-        
-        var assetText = this.make.text({
-            x: width / 2,
-            y: height / 2 + 50,
-            text: '',
-            style: {
-                font: '18px monospace',
-                fill: '#ffffff'
-            }
-        });
-        assetText.setOrigin(0.5, 0.5);
-        
-        this.load.on('progress', function (value) {
-            percentText.setText(parseInt(value * 100) + '%');
-            progressBar.clear();
-            progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(loadingText, loadingText, 300 * value, 30);
-        });
-        
-        this.load.on('fileprogress', function (file) {
-            assetText.setText('Loading asset: ' + file.key);
-        });
-        this.load.on('complete', function () {
-            progressBar.destroy();
-            progressBox.destroy();
-            loadingText.destroy();
-            percentText.destroy();
-            assetText.destroy();
-        });
+        this.load.image("loadingText", "/new_assets/Loading-Text/loading-text.png")
+        this.load.image("loadingBar", "/new_assets/Loading-Text/loading-bar.png")
 
         //LÄNGERER LADUNG
         for (let i = 0; i < 1000; i++) {
@@ -188,7 +133,46 @@ class Preloads extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(35, 35, "Das Spiel wird geladen...")
+
+        // Hintergrundbild
+        var background = this.add.image(0, 0, 'Startmenu');
+        background.setOrigin(0);
+        background.setDisplaySize(game.scale.width, game.scale.height)
+
+        // Text
+        var loadingText = this.add.image(game.scale.width / 2, game.scale.height / 2, 'loadingText');
+
+        // Ladebalken
+        var loadingBar = this.add.image(game.scale.width / 2, game.scale.height / 2 + 50, 'loadingBar');
+
+        // Fortschrittsbalken erstellen
+        var progressBar = this.add.graphics();
+
+        // Ladebalken als Maske für den Fortschrittsbalken setzen
+        progressBar.mask = new Phaser.Display.Masks.BitmapMask(this, loadingBar);
+
+        // Fortschrittsbalken-Update bei jedem Ladevorgang
+        this.load.on('progress', function (value) {
+            progressBar.clear();
+            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillRect(loadingBar.x - loadingBar.width / 2, loadingBar.y - loadingBar.height / 2, loadingBar.width * value, loadingBar.height);
+        }, this);
+
+        // Ressourcen laden
+        this.load.on('complete', function () {
+            // Ladebildschirm entfernen und das eigentliche Spiel starten
+            loadingText.destroy();
+            loadingBar.destroy();
+            progressBar.destroy();
+            // Hier kannst du die Startfunktion deines Spiels aufrufen
+            // z.B. game.scene.start('Level1');
+            setTimeout(() => {
+                this.scene.start("StartMenu")
+            }, 5000)
+        }, this);
+
+        // Starte den Ladevorgang
+        this.load.start();
 
         this.anims.create({
             key: "Attack",
@@ -266,9 +250,5 @@ class Preloads extends Phaser.Scene {
             frameRate: 1,
             repeat: -1,
         })
-
-        setTimeout(() => {
-            this.scene.start("StartMenu")
-        }, 0)
     }
 }

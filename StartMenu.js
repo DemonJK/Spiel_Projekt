@@ -14,26 +14,7 @@ class StartMenu extends Phaser.Scene {
         this.zoomer()
         setTimeout(() => {
             if (this.panEffect === true) {
-
-                this.textPlay = this.add.text(
-                    /*x*/game.scale.width / 2,
-                    /*y*/game.scale.height / 2,
-                    /*text*/"Start a New Game",
-                ).setOrigin(0.5, 0.5).setScale(1.5, 1.5).setDepth(1)
-
-                this.boxInt = this.add.rectangle(
-                    /*x*/game.scale.width / 2,
-                    /*y*/game.scale.height / 2,
-                    /*width*/0, /* MUSS VERÄNDERT WERDEN SODASS AUTO ANPASSUNG KLAPPT */ 
-                    /*height*/0,
-                    /*fillColor*/0x680B0B,
-                    /*fillAlpha*/0.45
-                )
-
-                this.boxInt.setSize(this.textPlay.width + 20, this.textPlay.height + 20)
-                this.boxInt.setPosition(game.scale.width / 2, game.scale.height / 2);
-
-
+                this.playButton()
                 this.isSelected = true
             }
         }, 38000);
@@ -49,7 +30,6 @@ class StartMenu extends Phaser.Scene {
         if (this.panEffect === true) {
 
             if (this.isSelected === true) {
-
                 this.textPlay.setTint(0xff6441)
             }
 
@@ -60,6 +40,43 @@ class StartMenu extends Phaser.Scene {
                 }, 6100);
             }
         }
+    }
+
+    playButton() {
+
+        // RECHTECK
+        this.boxInt = this.add.rectangle(
+            /*x*/0,
+            /*y*/0,
+            /*width*/0,
+            /*height*/0,
+            /*fillColor*/0x680B0B,
+            /*fillAlpha*/0.45
+        )
+
+        // TEXT
+        this.textPlay = this.add.text(
+            /*x*/0,
+            /*y*/0,
+            /*text*/"Start a New Game", {
+            fontFamily: "Arial",
+            fontSize: "24px",
+        })
+
+        // Textmaße abrufen
+        var textWidth = this.textPlay.width
+        var textHeight = this.textPlay.height
+
+        // Rechteckgröße an Textinhalt anpassen
+        this.boxInt.setSize(this.textPlay.width + 20, this.textPlay.height + 20)
+
+        this.boxInt.setOrigin(0.5, 0.5)
+
+        // Rechteck in die Mitte des Spiels zentrieren
+        this.boxInt.setPosition(game.scale.width / 2, game.scale.height / 2)
+
+        // Text in das Rechteck zentrieren
+        this.textPlay.setPosition(this.boxInt.x - textWidth / 2, this.boxInt.y - textHeight / 2)
     }
 
     zoomer() {
@@ -120,22 +137,5 @@ class StartMenu extends Phaser.Scene {
             game.scale.height / 2,
             5000)
         this.panEffect = true
-    }
-
-    testStuff() {
-        this.cameras.add(
-                /*x*/game.scale.width,
-                /*y*/game.scale.height,
-                /*width*/game.scale.width,
-                /*height*/game.scale.height,
-                /*makeMain*/false,
-        )
-        this.checkCenterBox = this.add.rectangle(
-                /*x*/this.textPlay.x,
-                /*y*/this.textPlay.y,
-                /*width*/1,
-                /*height*/1,
-                /*fillColor*/0xFFF700
-        ).setDepth(2)
     }
 }
