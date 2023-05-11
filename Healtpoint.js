@@ -13,7 +13,6 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         if (this.scene.physics.overlap(this.healthpotion_lvl_1, this.scene.player)) {
             this.healthpotion_lvl_1.setPosition(0, 0)
             this.scene.player.hp.decrease(-25)
-            this.scene.player.items.push(this)
         }
     }
 }
@@ -35,7 +34,6 @@ class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
             if (this.scene.player.keyA.isDown && (this.scene.player.setVelocityX = -425)) {
                 this.scene.player.setVelocityX(-475)
             }
-            this.scene.player.items.push(this)
         }
     }
 }

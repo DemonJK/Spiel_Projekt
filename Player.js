@@ -12,7 +12,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.looking_direction = "right"
         this.is_atacking = false
         this.readen = false
-        this.items = []
         this.keyW = this.scene.input.keyboard.addKey('W')
         this.keyA = this.scene.input.keyboard.addKey('A')
         this.keyS = this.scene.input.keyboard.addKey('S')
@@ -67,8 +66,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-
-        //console.log(this.items);
 
         if (this.body.touching.down) {
             this.is_jump_played = false
