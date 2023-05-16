@@ -13,70 +13,52 @@ class StartMenu extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys()
         this.zoomer()
         setTimeout(() => {
+
             if (this.panEffect === true) {
-                this.playButton()
                 this.isSelected = true
+
+                // Start Knopf
+                this.startButton = this.add.text(0, 0, "Start", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+                this.startButton.on("pointerover", () => { this.selectButton(this.startButton) });
+                this.startButton.on("pointerout", () => { this.deselectButton(this.startButton) });
+                this.startButton.on("pointerup", () => { this.scene.start("StartLevel") });
+                this.startButton.setPosition(game.scale.width / 2, game.scale.height / 2).setOrigin(0.5, 0.5)
+
+                // Einstellungen Knopf
+                this.settingsButton = this.add.text(0, 0, "Einstellungen", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+                this.settingsButton.on("pointerover", () => { this.selectButton(this.settingsButton) });
+                this.settingsButton.on("pointerout", () => { this.deselectButton(this.settingsButton) });
+                this.settingsButton.on("pointerup", () => { console.log("Einstellungen geklickt") });
+                this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 50).setOrigin(0.5, 0.5)
+
+                // Credits Knopf
+                this.creditsButton = this.add.text(0, 0, "Credits", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+                this.creditsButton.on("pointerover", () => { this.selectButton(this.creditsButton) });
+                this.creditsButton.on("pointerout", () => { this.deselectButton(this.creditsButton) });
+                this.creditsButton.on("pointerup", () => { console.log("Credits geklickt") });
+                this.creditsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 100).setOrigin(0.5, 0.5)
+
+                // Standardauswahl
+                this.selectedButton = this.startButton;
+                this.selectButton(this.selectedButton);
             }
         }, 38000);
+    }
 
-        /*
-        const map = this.make.tilemap({ key: "STARTMENU", tileWidth: 16, tileHeight: 16 })
-        this.tileset = map.addTilesetImage("GUI", "GUI")
-        this.layer = map.createLayer("TileLayer", this.tileset, 0, 0)
-        */
+    // Funktion zum Auswählen des Knopfes und Ändern der Farbe
+    selectButton(button) {
+        this.deselectButton(this.selectedButton);
+        this.selectedButton = button;
+        this.selectedButton.setColor("#ff0");
+    }
+
+    // Funktion zum Abwählen des Knopfes und Zurücksetzen der Farbe
+    deselectButton(button) {
+        button.setColor("#fff");
     }
 
     update() {
-        if (this.panEffect === true) {
 
-            if (this.isSelected === true) {
-                this.textPlay.setTint(0xff6441)
-            }
-
-            if (this.keyE.isDown && (this.isSelected === true)) {
-                this.cameras.main.fadeOut(6000)
-                setTimeout(() => {
-                    this.scene.start("StartLevel")
-                }, 6100);
-            }
-        }
-    }
-
-    playButton() {
-
-        // RECHTECK
-        this.boxInt = this.add.rectangle(
-            /*x*/0,
-            /*y*/0,
-            /*width*/0,
-            /*height*/0,
-            /*fillColor*/0x680B0B,
-            /*fillAlpha*/0.45
-        )
-
-        // TEXT
-        this.textPlay = this.add.text(
-            /*x*/0,
-            /*y*/0,
-            /*text*/"Start a New Game", {
-            fontFamily: "Arial",
-            fontSize: "24px",
-        })
-
-        // Textmaße abrufen
-        var textWidth = this.textPlay.width
-        var textHeight = this.textPlay.height
-
-        // Rechteckgröße an Textinhalt anpassen
-        this.boxInt.setSize(this.textPlay.width + 20, this.textPlay.height + 20)
-
-        this.boxInt.setOrigin(0.5, 0.5)
-
-        // Rechteck in die Mitte des Spiels zentrieren
-        this.boxInt.setPosition(game.scale.width / 2, game.scale.height / 2)
-
-        // Text in das Rechteck zentrieren
-        this.textPlay.setPosition(this.boxInt.x - textWidth / 2, this.boxInt.y - textHeight / 2)
     }
 
     zoomer() {
