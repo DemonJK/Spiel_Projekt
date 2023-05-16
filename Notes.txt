@@ -22,6 +22,9 @@
 
 -   ZOOM EFFEKTE BESSER ANPASSSE, SODASS ES FÜR ALLE BILDSCHIRME PASST
 
+-   TRADER SCENE BEHBEN, WIRD NICHT GESTARTET
+    Uncaught TypeError: Cannot read properties of undefined (reading '2')
+
 
 
 <-- FERTIG  -->

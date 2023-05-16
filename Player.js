@@ -199,7 +199,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 setTimeout(() => {
                     this.scene.scene.start("Trader")
                 }, 6100);
-            }, 5000);
+            }, 1000);
         }
     }
 

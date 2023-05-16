@@ -63,10 +63,10 @@ class Preloads extends Phaser.Scene {
         this.load.image("GUI", "/interface/GUI.png")
 
         //PRELOAD TILED MAP
+        this.load.tilemapTiledJSON("TRADER", "/TiledLevels/Trader.json")
         this.load.tilemapTiledJSON("MAP", "/TiledLevels/TiledMapGameStartLevel.json")
         this.load.tilemapTiledJSON("NIGHTMAP", "/TiledLevels/TiledMapGameFirstLevel.json")
         this.load.tilemapTiledJSON("STARTMENU", "/TiledLevels/StartMenu.json")
-        this.load.tilemapTiledJSON("TRADER", "/TiledLevels/Trader.json")
 
         //PRELOAD PLAYER
         this.load.spritesheet("PlayerIdle", "/new_assets/Character/Idle/Idle-Sheet.png", {

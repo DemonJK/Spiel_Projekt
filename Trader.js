@@ -1,6 +1,6 @@
 class Trader extends Phaser.Scene {
     constructor() {
-        super("Trader")
+        super({ key: "Trader"})
     }
 
     create() {
@@ -10,11 +10,11 @@ class Trader extends Phaser.Scene {
 
         const map = this.make.tilemap({ key: "TRADER", tileWidth: 16, tileHeight: 16 })
 
-        this.tileset = map.addTilesetImage("Tiles", "Tiles")
+        this.tilesetTiles = map.addTilesetImage("Tiles", "Tiles")
 
         // BENUTZT TILES
-        this.layer = map.createLayer("ground", this.tileset, 0, 0)
-        this.layer.setCollisionByProperty({ colliders: true })
+        this.layerground = map.createLayer("ground", this.tilesetTiles, 0, 0)
+        this.layerground.setCollisionByProperty({ colliders: true })
     }
 
     update() {
