@@ -16,6 +16,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyA = this.scene.input.keyboard.addKey('A')
         this.keyS = this.scene.input.keyboard.addKey('S')
         this.keyD = this.scene.input.keyboard.addKey('D')
+        this.keyN = this.scene.input.keyboard.addKey('N') //TRADER
         this.cursors = this.scene.input.keyboard.createCursorKeys()
         this.regeneration = false
         this.Running_in_grass = this.scene.sound.add("footsteps-grass", { loop: false, volume: 0.035, detune: -220 })
@@ -189,6 +190,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.scene.player.hp.decrease(-15)
                 this.regeneration = false
             }
+        }
+
+        if (this.keyN.isDown && this.body.touching.down && !this.is_atacking) {
+            console.log("KeyN isDown");
+            setTimeout(() => {
+                this.scene.cameras.main.fadeOut(6000)
+                setTimeout(() => {
+                    this.scene.scene.start("Trader")
+                }, 6100);
+            }, 5000);
         }
     }
 
