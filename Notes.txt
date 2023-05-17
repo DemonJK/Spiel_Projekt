@@ -24,9 +24,6 @@
 
 -   MENÜ SCENE ÜBERSPRINGEN SODASS MAN NICHT DAS WARTEN MUSS
 
--   TRADER SCENE BEHBEN, WIRD NICHT GESTARTET
-    Uncaught TypeError: Cannot read properties of undefined (reading '2')
-
 
 
 <-- FERTIG  -->
@@ -50,6 +47,10 @@
 
 -   TILEDMAP EXPERMIENTIEREN UND EINRICHTEN
     AUF DER NÄCHSTEN SCENE
+    (FERTIG)
+    
+-   TRADER SCENE BEHBEN, WIRD NICHT GESTARTET
+    Uncaught TypeError: Cannot read properties of undefined (reading '2')
     (FERTIG)
     
 -   HP BAR BEWEGUNG VERBESSERN

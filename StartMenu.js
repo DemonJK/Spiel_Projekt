@@ -10,34 +10,37 @@ class StartMenu extends Phaser.Scene {
         this.panEffect = false
         this.keyC = this.input.keyboard.addKey('C')
         this.zoomer()
+        
+        this.id_6 = setTimeout(() => {
 
-        if (this.panEffect === true) {
-            
-            // Start Knopf
-            this.startButton = this.add.text(0, 0, "Start", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
-            this.startButton.on("pointerover", () => { this.selectButton(this.startButton) });
-            this.startButton.on("pointerout", () => { this.deselectButton(this.startButton) });
-            this.startButton.on("pointerup", () => { this.scene.start("StartLevel") });
-            this.startButton.setPosition(game.scale.width / 2, game.scale.height / 2).setOrigin(0.5, 0.5)
+            if (this.panEffect === true) {
 
-            // Einstellungen Knopf
-            this.settingsButton = this.add.text(0, 0, "Einstellungen", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
-            this.settingsButton.on("pointerover", () => { this.selectButton(this.settingsButton) });
-            this.settingsButton.on("pointerout", () => { this.deselectButton(this.settingsButton) });
-            this.settingsButton.on("pointerup", () => { console.log("Einstellungen geklickt") });
-            this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 50).setOrigin(0.5, 0.5)
+                // Start Knopf
+                this.startButton = this.add.text(0, 0, "Start", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+                this.startButton.on("pointerover", () => { this.selectButton(this.startButton) });
+                this.startButton.on("pointerout", () => { this.deselectButton(this.startButton) });
+                this.startButton.on("pointerup", () => { this.scene.start("StartLevel") });
+                this.startButton.setPosition(game.scale.width / 2, game.scale.height / 2).setOrigin(0.5, 0.5)
 
-            // Credits Knopf
-            this.creditsButton = this.add.text(0, 0, "Credits", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
-            this.creditsButton.on("pointerover", () => { this.selectButton(this.creditsButton) });
-            this.creditsButton.on("pointerout", () => { this.deselectButton(this.creditsButton) });
-            this.creditsButton.on("pointerup", () => { console.log("Credits geklickt") });
-            this.creditsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 100).setOrigin(0.5, 0.5)
+                // Einstellungen Knopf
+                this.settingsButton = this.add.text(0, 0, "Einstellungen", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+                this.settingsButton.on("pointerover", () => { this.selectButton(this.settingsButton) });
+                this.settingsButton.on("pointerout", () => { this.deselectButton(this.settingsButton) });
+                this.settingsButton.on("pointerup", () => { console.log("Einstellungen geklickt") });
+                this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 50).setOrigin(0.5, 0.5)
 
-            // Standardauswahl
-            this.selectedButton = this.startButton;
-            this.selectButton(this.selectedButton);
-        }
+                // Credits Knopf
+                this.creditsButton = this.add.text(0, 0, "Credits", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+                this.creditsButton.on("pointerover", () => { this.selectButton(this.creditsButton) });
+                this.creditsButton.on("pointerout", () => { this.deselectButton(this.creditsButton) });
+                this.creditsButton.on("pointerup", () => { console.log("Credits geklickt") });
+                this.creditsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 100).setOrigin(0.5, 0.5)
+
+                // Standardauswahl
+                this.selectedButton = this.startButton;
+                this.selectButton(this.selectedButton);
+            }
+        }, 38000);
     }
 
     // Funktion zum Auswählen des Knopfes und Ändern der Farbe
@@ -53,14 +56,14 @@ class StartMenu extends Phaser.Scene {
     }
 
     update() {
-        if (this.keyC.isDown) {
+        if(this.keyC.isDown) {
             console.log("C")
-            this.zoomCenter()
             clearTimeout(this.id_1)
             clearTimeout(this.id_2)
             clearTimeout(this.id_3)
             clearTimeout(this.id_4)
             clearTimeout(this.id_5)
+            this.zoomCenter()
         }
     }
 

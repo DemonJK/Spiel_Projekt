@@ -30,7 +30,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.platforms4)
         this.scene.physics.add.collider(this, this.scene.buildings3)
-        this.scene.physics.add.collider(this, this.scene.groundlayer)
+        this.scene.physics.add.collider(this, this.scene.layerground)
 
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
@@ -40,7 +40,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.body.touching.down = true
         })
 
-        this.scene.physics.add.collider(this, this.scene.groundlayer, () => {
+        this.scene.physics.add.collider(this, this.scene.layerground, () => {
             this.body.touching.down = true
         })
     }

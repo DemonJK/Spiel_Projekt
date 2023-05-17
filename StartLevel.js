@@ -53,6 +53,9 @@ class StartLevel extends Phaser.Scene {
         // PLAYER
         this.player = new Player(this, 1050, 750, "PlayerIdle")
 
+        // BENUTZT TILES
+        this.layer2 = map.createLayer("ground2", this.tileset, 0, 0)
+
         //INGAME AUDIO TEST
         this.Ambient1 = this.sound.add("ambient1", {
             loop: true,
