@@ -1,9 +1,11 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
+        this.inventory = new Inventory(this.scene, this.x, this.y)
+
         this.player_spawning_attributes()
         this.colliders()
-        this.hp = new HealthBar(this.scene, 710, 300, 300, 25, 390, this)
+        this.hp = new HealthBar(this.scene, 720, 400, 300, 25, 390, this)
         this.hp.bar.setScrollFactor(0, 0)
         this.anims.play("Idle", true)
         this.is_jump_played = false
@@ -15,12 +17,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyW = this.scene.input.keyboard.addKey('W')
         this.keyA = this.scene.input.keyboard.addKey('A')
         this.keyS = this.scene.input.keyboard.addKey('S')
+        this.keyI = this.scene.input.keyboard.addKey('I')
         this.keyD = this.scene.input.keyboard.addKey('D')
         this.keyN = this.scene.input.keyboard.addKey('N') //TRADER
         this.cursors = this.scene.input.keyboard.createCursorKeys()
         this.regeneration = false
         this.Running_in_grass = this.scene.sound.add("footsteps-grass", { loop: false, volume: 0.035, detune: -220 })
         this.footsteps = false
+        this.damage = 100
+        this.speed = 160
+
+
+
     }
 
     colliders() {
@@ -68,27 +76,33 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     update() {
 
+
         if (this.body.touching.down) {
             this.is_jump_played = false
             this.is_jumpdown_played = false
         }
 
-        if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyI) && this.body.touching.down) {
+            this.inventory.openInventory()
+            
+        }
+
+        if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened)) {
             console.log("UP")
             this.setVelocityY(-425)
             this.anims.play("PlayerUpJump", true)
 
-        } else if (this.keyA.isDown && !this.body.touching.down && !this.is_atacking) {
+        } else if (this.keyA.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             this.setVelocityX(-160).setFlipX(-1)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
                 this.is_jumpdown_played = true
             }
 
-        } else if (this.keyA.isDown && this.body.touching.down && !this.is_atacking) {
+        } else if (this.keyA.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             console.log("LEFT")
             this.looking_direction = "left"
-            this.setVelocityX(-160).setFlipX(-1)
+            this.setVelocityX(-this.speed).setFlipX(-1)
             this.anims.play("MoveLeft", true)
 
             // TEST FÜR SPEED POTION
@@ -99,7 +113,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.anims.play("MoveLeft", true)
             }
 
-        } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking) {
+        } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             this.setVelocityX(160).setFlipX(0)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
@@ -112,10 +126,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.is_jumpdown_played = true
             }
 
-        } else if (this.keyD.isDown && this.body.touching.down && !this.is_atacking) {
+        } else if (this.keyD.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             console.log("RIGHT")
             this.looking_direction = "right"
-            this.setVelocityX(160).setFlipX(0)
+            this.setVelocityX(this.speed).setFlipX(0)
             this.anims.play("MoveRight", true)
             this.setOffset(30, 0)
 
@@ -128,7 +142,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.setOffset(30, 0)
             }
 
-        } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking) {
+        } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking && !this.inventory.is_opened) {
             console.log("SPACEBAR IS ACTIVE")
             this.is_atacking = true
             this.setOffset(30, 0)
@@ -143,7 +157,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
             if (this.scene.physics.overlap(this.swing_box, this.scene.enemy)) {
                 if (!this.scene.enemy.has_hp_lose) {
-                    this.scene.enemy.hp.decrease(10)
+                    this.scene.enemy.hp.decrease(this.damage)
                     this.scene.enemy.has_hp_lose = true
                 }
             }

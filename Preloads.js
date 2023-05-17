@@ -7,6 +7,7 @@ class Preloads extends Phaser.Scene {
     preload() {
 
         this.load.image("loadingText", "/new_assets/Loading-Text/loading-text.png")
+        this.load.image("inventory", "/assets/player_model/inventory.png")
         this.load.image("loadingBar", "/new_assets/Loading-Text/loading-bar.png")
 
         //LÄNGERER LADUNG

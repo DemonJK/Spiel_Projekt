@@ -62,8 +62,47 @@ class StartLevel extends Phaser.Scene {
             volume: 0.055,
             detune: -220,
         })
-        this.Ambient1.play()
-        this.Ambient1.onBlur = false
+
+        this.Ambient2 = this.sound.add("ambient2", {
+            loop: true,
+            volume: 0.055,
+            detune: -220,
+        })
+        this.Ambient3 = this.sound.add("ambient3", {
+            loop: true,
+            volume: 0.055,
+            detune: -220,
+        })
+        this.Ambient4 = this.sound.add("ambient4", {
+            loop: true,
+            volume: 0.055,
+            detune: -220,
+        })
+
+    
+
+        this.ambients = [this.Ambient1, this.Ambient2, this.Ambient3, this.Ambient4]
+        this.random_ambient_num = Math.floor(Math.random() * 4);
+
+        this.Ambient1.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 4)].play()
+        })
+
+        this.Ambient2.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 4)].play()
+        })
+
+        this.Ambient3.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 4)].play()
+        })
+
+        this.Ambient4.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 4)].play()
+        })
+
+        this.ambients[this.random_ambient_num].play()
+        this.ambients[this.random_ambient_num].onBlur = false
+
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
@@ -81,10 +120,23 @@ class StartLevel extends Phaser.Scene {
         this.physics.add.existing(this.textbox, true)
 
         // TEXT
-        this.hint = this.add.text(this.player.x + 50, this.player.y + 20,
-            "There is an abandoned House," + "I should check it out")
+        this.hint = this.add.text(0, 0,
+            "There is an abandoned House," + " I should check it out", {
+            fontSize: "32px",
+            fontFamily: "Arial",
+            fill: "#fff"
+        }).setPosition(this.player.x, this.player.y /*+ 150*/)
         this.hint.setScrollFactor(0, 0)
         this.hint.visible = false
+        this.textBounds = this.hint.getBounds()
+
+        this.shadowBox = this.add.rectangle(this.player.x+365, this.player.y+15,
+            this.textBounds.width,
+            this.textBounds.height
+        )
+        this.shadowBox.setFillStyle(0x000000, 0.3)
+        this.shadowBox.setScrollFactor(0, 0)
+        this.shadowBox.visible = false
     }
 
     update() {
@@ -93,11 +145,17 @@ class StartLevel extends Phaser.Scene {
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 this.hint.visible = true
+                this.shadowBox.visible = true
+                console.log(this.hint.x);
+                console.log(this.hint.y);
+                console.log(this.shadowBox.x);
+                console.log(this.shadowBox.y);
 
                 setTimeout(() => {
                     this.player.readen = true
                     if (this.player.readen = true) {
                         this.textbox.destroy(true)
+                    
                     }
                 }, 1000);
             }
@@ -105,6 +163,7 @@ class StartLevel extends Phaser.Scene {
 
         if (this.physics.overlap(this.house_box, this.player)) {
             this.hint.visible = false
+            this.shadowBox.visible = false
         }
     }
 }
