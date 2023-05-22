@@ -59,45 +59,117 @@ class StartLevel extends Phaser.Scene {
         //INGAME AUDIO TEST
         this.Ambient1 = this.sound.add("ambient1", {
             loop: false,
-            volume: 0.055,
+            volume: 0.23,
             detune: -220,
         })
 
         this.Ambient2 = this.sound.add("ambient2", {
             loop: false,
-            volume: 0.055,
+            volume: 0.23,
             detune: -220,
         })
+
         this.Ambient3 = this.sound.add("ambient3", {
             loop: false,
-            volume: 0.055,
+            volume: 0.23,
             detune: -220,
         })
+
         this.Ambient4 = this.sound.add("ambient4", {
             loop: false,
-            volume: 0.055,
+            volume: 0.23,
             detune: -220,
         })
 
-    
+        this.Ambient5 = this.sound.add("ambient5", {
+            loop: false,
+            volume: 0.23,
+            detune: -220,
+        })
 
-        this.ambients = [this.Ambient1, this.Ambient2, this.Ambient3, this.Ambient4]
-        this.random_ambient_num = Math.floor(Math.random() * 4);
+        this.Ambient6 = this.sound.add("ambient6", {
+            loop: false,
+            volume: 0.23,
+            detune: -220,
+        })
+
+        this.Ambient7 = this.sound.add("ambient7", {
+            loop: false,
+            volume: 0.23,
+            detune: -220,
+        })
+
+        this.Ambient8 = this.sound.add("ambient8", {
+            loop: false,
+            volume: 0.23,
+            detune: -220,
+        })
+
+        this.Ambient9 = this.sound.add("ambient9", {
+            loop: false,
+            volume: 0.23,
+            detune: -220,
+        })
+
+        this.Ambient10 = this.sound.add("ambient10", {
+            loop: false,
+            volume: 0.23,
+            detune: -220,
+        })
+
+        this.ambients = [
+            this.Ambient1, 
+            this.Ambient2, 
+            this.Ambient3, 
+            this.Ambient4, 
+            this.Ambient5, 
+            this.Ambient6, 
+            this.Ambient7, 
+            this.Ambient8, 
+            this.Ambient9, 
+            this.Ambient10
+        ]
+
+        this.random_ambient_num = Math.floor(Math.random() * 10);
 
         this.Ambient1.on('complete', ()=>{
-            this.ambients[Math.floor(Math.random() * 4)].play()
+            this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
         this.Ambient2.on('complete', ()=>{
-            this.ambients[Math.floor(Math.random() * 4)].play()
+            this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
         this.Ambient3.on('complete', ()=>{
-            this.ambients[Math.floor(Math.random() * 4)].play()
+            this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
         this.Ambient4.on('complete', ()=>{
-            this.ambients[Math.floor(Math.random() * 4)].play()
+            this.ambients[Math.floor(Math.random() * 10)].play()
+        })
+
+        this.Ambient5.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 10)].play()
+        })
+
+        this.Ambient6.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 10)].play()
+        })
+
+        this.Ambient7.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 10)].play()
+        })
+
+        this.Ambient8.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 10)].play()
+        })
+
+        this.Ambient9.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 10)].play()
+        })
+
+        this.Ambient10.on('complete', ()=>{
+            this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
         this.ambients[this.random_ambient_num].play()
