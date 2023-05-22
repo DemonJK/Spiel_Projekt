@@ -21,6 +21,10 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
             this.scene.player.inventory.additem(this.healthpotion_lvl_1)
         }
     }
+
+    potion_Selected() {
+        this.scene.add.rectangle(this.scene.x_item, this.scene.y_item, 16, 16, 0xff00ff)
+    }
 }
 
 class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {

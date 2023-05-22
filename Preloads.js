@@ -6,9 +6,8 @@ class Preloads extends Phaser.Scene {
     //PRELOAD VON HINTERGRUND
     preload() {
 
-        this.load.image("loadingText", "/new_assets/Loading-Text/loading-text.png")
+        // PRELOAD INVENTAR
         this.load.image("inventory", "/assets/player_model/inventory.png")
-        this.load.image("loadingBar", "/new_assets/Loading-Text/loading-bar.png")
 
         // PRELOAD INTERFACE
         this.load.spritesheet("Interface", "/interface/GUI.png", {

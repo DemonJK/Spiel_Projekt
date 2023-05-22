@@ -117,7 +117,7 @@ class StartMenu extends Phaser.Scene {
         this.startButton = this.add.text(0, 0, "Start", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
         this.startButton.on("pointerover", () => { this.selectButton(this.startButton) });
         this.startButton.on("pointerout", () => { this.deselectButton(this.startButton) });
-        this.startButton.on("pointerup", () => { this.scene.start("StartLevel") });
+        this.startButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.start("StartLevel") });
         this.startButton.setPosition(game.scale.width / 2, game.scale.height / 2).setOrigin(0.5, 0.5)
 
         // Einstellungen Knopf
@@ -131,8 +131,15 @@ class StartMenu extends Phaser.Scene {
         this.creditsButton = this.add.text(0, 0, "Credits", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
         this.creditsButton.on("pointerover", () => { this.selectButton(this.creditsButton) });
         this.creditsButton.on("pointerout", () => { this.deselectButton(this.creditsButton) });
-        this.creditsButton.on("pointerup", () => { /*console.log("Credits geklickt")*/ });
+        this.creditsButton.on("pointerup", () => { console.log("Credits geklickt") });
         this.creditsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 100).setOrigin(0.5, 0.5)
+
+        // Exit Knopf
+        this.exitButton = this.add.text(0, 0, "Exit Game", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+        this.exitButton.on("pointerover", () => { this.selectButton(this.exitButton) });
+        this.exitButton.on("pointerout", () => { this.deselectButton(this.exitButton) });
+        this.exitButton.on("pointerup", () => { console.log("Exit Game geklickt") });
+        this.exitButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 150).setOrigin(0.5, 0.5)
 
         // Standardauswahl
         this.selectedButton = this.startButton;
