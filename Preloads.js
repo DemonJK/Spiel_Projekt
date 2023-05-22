@@ -10,11 +10,6 @@ class Preloads extends Phaser.Scene {
         this.load.image("inventory", "/assets/player_model/inventory.png")
         this.load.image("loadingBar", "/new_assets/Loading-Text/loading-bar.png")
 
-        //LÄNGERER LADUNG
-        for (let i = 0; i < 1000; i++) {
-            this.load.audio("Ingame-music", ["/audio/music_zapsplat_game_music.mp3"])
-        }
-
         // PRELOAD INTERFACE
         this.load.spritesheet("Interface", "/interface/GUI.png", {
             frameWidth: 16,
@@ -136,46 +131,6 @@ class Preloads extends Phaser.Scene {
 
     create() {
 
-        // Hintergrundbild
-        var background = this.add.image(0, 0, 'Startmenu');
-        background.setOrigin(0);
-        background.setDisplaySize(game.scale.width, game.scale.height)
-
-        // Text
-        var loadingText = this.add.image(game.scale.width / 2, game.scale.height / 2, 'loadingText');
-
-        // Ladebalken
-        var loadingBar = this.add.image(game.scale.width / 2, game.scale.height / 2 + 50, 'loadingBar');
-
-        // Fortschrittsbalken erstellen
-        var progressBar = this.add.graphics();
-
-        // Ladebalken als Maske für den Fortschrittsbalken setzen
-        progressBar.mask = new Phaser.Display.Masks.BitmapMask(this, loadingBar);
-
-        // Fortschrittsbalken-Update bei jedem Ladevorgang
-        this.load.on('progress', function (value) {
-            progressBar.clear();
-            progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(loadingBar.x - loadingBar.width / 2, loadingBar.y - loadingBar.height / 2, loadingBar.width * value, loadingBar.height);
-        }, this);
-
-        // Ressourcen laden
-        this.load.on('complete', function () {
-            // Ladebildschirm entfernen und das eigentliche Spiel starten
-            loadingText.destroy();
-            loadingBar.destroy();
-            progressBar.destroy();
-            // Hier kannst du die Startfunktion deines Spiels aufrufen
-            // z.B. game.scene.start('Level1');
-            setTimeout(() => {
-                this.scene.start("StartMenu")
-            }, 5000)
-        }, this);
-
-        // Starte den Ladevorgang
-        this.load.start();
-
         this.anims.create({
             key: "Attack",
             frames: this.anims.generateFrameNumbers("PlayerAttack", { start: 0, end: 7 }),
@@ -252,5 +207,9 @@ class Preloads extends Phaser.Scene {
             frameRate: 1,
             repeat: -1,
         })
+
+        setTimeout(() => {
+            this.scene.start("StartMenu")
+        }, 0)
     }
 }

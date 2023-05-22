@@ -48,33 +48,33 @@ class StartLevel extends Phaser.Scene {
         this.buildings.setCollisionByProperty({ colliders: true })
 
         // ENEMY
-        this.enemy = new Enemy(this, 1550, 750, "enemy1")
+        this.enemy = new Enemy(this, 1550, 850, "enemy1")
 
         // PLAYER
-        this.player = new Player(this, 1050, 750, "PlayerIdle")
+        this.player = new Player(this, 1050, 850, "PlayerIdle")
 
         // BENUTZT TILES
         this.layer2 = map.createLayer("ground2", this.tileset, 0, 0)
 
         //INGAME AUDIO TEST
         this.Ambient1 = this.sound.add("ambient1", {
-            loop: true,
+            loop: false,
             volume: 0.055,
             detune: -220,
         })
 
         this.Ambient2 = this.sound.add("ambient2", {
-            loop: true,
+            loop: false,
             volume: 0.055,
             detune: -220,
         })
         this.Ambient3 = this.sound.add("ambient3", {
-            loop: true,
+            loop: false,
             volume: 0.055,
             detune: -220,
         })
         this.Ambient4 = this.sound.add("ambient4", {
-            loop: true,
+            loop: false,
             volume: 0.055,
             detune: -220,
         })

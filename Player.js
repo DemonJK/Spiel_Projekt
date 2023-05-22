@@ -1,31 +1,29 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
-        this.inventory = new Inventory(this.scene, this.x, this.y)
+        this.inventory = new Inventory(this.scene, this.x, this.y) // INVENTAR
 
-        this.player_spawning_attributes()
-        this.colliders()
-        this.hp = new HealthBar(this.scene, 720, 400, 300, 25, 390, this)
-        this.hp.bar.setScrollFactor(0, 0)
-        this.anims.play("Idle", true)
+        this.player_spawning_attributes() // ATTRIBUTE VOM SPIELER
+        this.colliders() // FUNKTION VON COLLIDERN
+        this.hp = new HealthBar(this.scene, 720, 400, 300, 25, 390, this) // NEUE HP BAR
+        this.hp.bar.setScrollFactor(0, 0) // HP BAR STATIC
+        this.anims.play("Idle", true) // ANIMATION VOM SPIELER IM IDLE ALS DEFAULT
         this.is_jump_played = false
         this.is_jumpdown_played = false
-        this.swing_box
-        this.looking_direction = "right"
-        this.is_atacking = false
-        this.readen = false
-        this.keyW = this.scene.input.keyboard.addKey('W')
-        this.keyA = this.scene.input.keyboard.addKey('A')
-        this.keyS = this.scene.input.keyboard.addKey('S')
-        this.keyI = this.scene.input.keyboard.addKey('I')
-        this.keyD = this.scene.input.keyboard.addKey('D')
-        this.keyN = this.scene.input.keyboard.addKey('N') //TRADER
-        this.cursors = this.scene.input.keyboard.createCursorKeys()
-        this.regeneration = false
-        this.Running_in_grass = this.scene.sound.add("footsteps-grass", { loop: false, volume: 0.035, detune: -220 })
-        this.footsteps = false
-        this.damage = 100
-        this.speed = 160
+        this.swing_box // ATTACK BOXEN
+        this.looking_direction = "right" // SCHAUT IN DIE RICHTUNG RECHTS ALS DEFAULT
+        this.is_atacking = false // CHECK FÜR ANGRIFF
+        this.readen = false // TEXT GELESEN
+        this.keyW = this.scene.input.keyboard.addKey('W') // SPRUNG
+        this.keyA = this.scene.input.keyboard.addKey('A') // LINKS BEWEGEN
+        this.keyS = this.scene.input.keyboard.addKey('S') // FALLEN DURCH BESTIMMTE PLATFORMEN
+        this.keyI = this.scene.input.keyboard.addKey('I') // INVENTAR
+        this.keyD = this.scene.input.keyboard.addKey('D') // RECHTS BEWEGEN
+        this.keyN = this.scene.input.keyboard.addKey('N') //TRADER SCENE
+        this.cursors = this.scene.input.keyboard.createCursorKeys() // PFEIL TASTEN
+        this.regeneration = false // REGENERATION
+        this.damage = 100 // DAMAGE TO ENEMY
+        this.speed = 160 // SPEED
 
 
 
@@ -65,9 +63,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(32, 64, true)
         this.setPosition(this.x, this.y)
         // CAMERA MOVING
-        this.scene.cameras.main.startFollow(this)
-        this.scene.cameras.main.followOffset.set(0, 150)
-        this.scene.cameras.main.zoom = 2
+        this.scene.cameras.main.startFollow(this) // VERFOLGUNG VOM SPIELER
+        this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
+        this.scene.cameras.main.zoom = 2 // ZOOM DER KAMERA
     }
 
     collideObjects() {
@@ -76,15 +74,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     update() {
 
-
         if (this.body.touching.down) {
             this.is_jump_played = false
             this.is_jumpdown_played = false
         }
 
+        // INVENTORY OPENING
         if (Phaser.Input.Keyboard.JustDown(this.keyI) && this.body.touching.down) {
             this.inventory.openInventory()
-            
         }
 
         if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened)) {
@@ -105,14 +102,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(-this.speed).setFlipX(-1)
             this.anims.play("MoveLeft", true)
 
-            // TEST FÜR SPEED POTION
-            if (this.keyA.isDown && this.body.touching.down && !this.is_atacking && this.scene.physics.overlap(this, this.scene.speedpotion_lvl_1)) {
-                console.log("LEFT")
-                this.looking_direction = "left"
-                this.setVelocityX(-350).setFlipX(-1)
-                this.anims.play("MoveLeft", true)
-            }
-
         } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             this.setVelocityX(160).setFlipX(0)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
@@ -132,15 +121,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(this.speed).setFlipX(0)
             this.anims.play("MoveRight", true)
             this.setOffset(30, 0)
-
-            // TEST FÜR SPEED POTION
-            if (this.keyD.isDown && this.body.touching.down && !this.is_atacking && this.scene.physics.overlap(this, this.scene.speedpotion_lvl_1)) {
-                console.log("RIGHT")
-                this.looking_direction = "right"
-                this.setVelocityX(350).setFlipX(0)
-                this.anims.play("MoveRight", true)
-                this.setOffset(30, 0)
-            }
 
         } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking && !this.inventory.is_opened) {
             console.log("SPACEBAR IS ACTIVE")
@@ -173,7 +153,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.anims.play("Idle", true)
                 this.setOffset(15, 0)
                 this.setVelocityX(0)
-                this.Running_in_grass.stop()
             }
             if (this.body.velocity.y >= 75) {
                 this.anims.play("Fall", true)
@@ -185,16 +164,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // durch den Boden fallen
             // this.passthrough()
         }
-
-        /*if (!this.footsteps && this.body.touching.down) {
-            if (this.keyD.) {
-                console.log("check");
-                this.Running_in_grass.play()
-            } else if (this.keyA.onDown === true) {
-                console.log("check");
-                this.Running_in_grass.play()
-            }
-        }*/
 
         //TEST FÜR PASSIVE REGENERATION
         //console.log(this.regeneration);
