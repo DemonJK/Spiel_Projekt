@@ -4,19 +4,15 @@ class StartMenu extends Phaser.Scene {
     }
 
     create() {
-        var animationSkipped = false;
-        this.Menubackground = this.add.image(0, 0, "Startmenu").setOrigin(0, 0)
-        this.Menubackground.setDisplaySize(game.scale.width, game.scale.height)
-        this.zoomEffect = false
-        this.panEffect = false
-        this.keyC = this.input.keyboard.addKey("C")
-        this.keyP = this.input.keyboard.addKey("P")
-        this.zoomer()
-        
+        this.animationSkipped = false;
+        this.createBackground();
+        this.zoomEffect = false;
+        this.panEffect = false;
+        this.keyC = this.input.keyboard.addKey("C");
+        this.zoomer();
         this.id_6 = setTimeout(() => {
-
             if (this.panEffect === true) {
-                this.createMenu()
+                this.createMenu();
             }
         }, 38000);
     }
@@ -34,8 +30,7 @@ class StartMenu extends Phaser.Scene {
     }
 
     update() {
-        if(this.keyC.isDown && !this.animationSkipped) {
-            console.log("C")
+        if (this.keyC.isDown && !this.animationSkipped) {
             this.animationSkipped = true
             clearTimeout(this.id_1)
             clearTimeout(this.id_2)
@@ -44,6 +39,11 @@ class StartMenu extends Phaser.Scene {
             clearTimeout(this.id_5)
             this.replaceCamera()
         }
+    }
+
+    createBackground() {
+        this.Menubackground = this.add.image(0, 0, "Startmenu").setOrigin(0, 0)
+        this.Menubackground.setDisplaySize(game.scale.width, game.scale.height)
     }
 
     zoomer() {
@@ -124,19 +124,108 @@ class StartMenu extends Phaser.Scene {
         this.settingsButton = this.add.text(0, 0, "Einstellungen", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
         this.settingsButton.on("pointerover", () => { this.selectButton(this.settingsButton) });
         this.settingsButton.on("pointerout", () => { this.deselectButton(this.settingsButton) });
-        this.settingsButton.on("pointerup", () => {  this.scene.pause("StartMenu"), this.scene.start("SettingsScene") });
+        this.settingsButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.start("SettingsScene") });
         this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 50).setOrigin(0.5, 0.5)
 
         // Credits Knopf
         this.creditsButton = this.add.text(0, 0, "Credits", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
         this.creditsButton.on("pointerover", () => { this.selectButton(this.creditsButton) });
         this.creditsButton.on("pointerout", () => { this.deselectButton(this.creditsButton) });
-        this.creditsButton.on("pointerup", () => { console.log("Credits geklickt") });
+        this.creditsButton.on("pointerup", () => { /*console.log("Credits geklickt")*/ });
         this.creditsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 100).setOrigin(0.5, 0.5)
 
         // Standardauswahl
         this.selectedButton = this.startButton;
         this.selectButton(this.selectedButton);
     }
+}
 
+class SettingsScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'SettingsScene' });
+        this.initialVolume = 0.5; // Anfangswert der Lautstärke
+        this.volumeSlider = null; // Variable für den Lautstärkeregler
+        this.sliderHandleSize = 30; // Größe des Reglergriffs
+    }
+
+    create() {
+        // Hintergrundbild oder UI-Elemente für die Einstellungen erstellen
+        this.add.image(0, 0, "Startmenu").setOrigin(0, 0).setDisplaySize(game.scale.width, game.scale.height);
+      
+        // Lautstärkeregler erstellen
+        const sliderWidth = 200;
+        const sliderHeight = 20;
+        const sliderX = 400;
+        const sliderY = 300;
+      
+        // Hintergrund des Reglers zeichnen
+        this.volumeSlider = this.add.graphics();
+        this.volumeSlider.fillStyle(0x808080);
+        this.volumeSlider.fillRect(sliderX, sliderY, sliderWidth, sliderHeight);
+      
+        // Fortschrittsbalken zeichnen
+        const progressWidth = this.initialVolume * sliderWidth;
+        this.volumeSlider.fillStyle(0x00ff00);
+        this.volumeSlider.fillRect(sliderX, sliderY, progressWidth, sliderHeight);
+      
+        // Reglergriff erstellen
+        const handleX = sliderX + progressWidth - this.sliderHandleSize / 2;
+        const handleY = sliderY + sliderHeight / 2;
+        const handleRadius = this.sliderHandleSize / 2;
+        this.volumeSlider.fillStyle(0xffffff);
+        this.volumeSlider.fillCircle(handleX, handleY, handleRadius);
+      
+        // Interaktive Funktionen für den Regler hinzufügen
+        this.volumeSlider.setInteractive(new Phaser.Geom.Rectangle(sliderX, sliderY, sliderWidth, sliderHeight), Phaser.Geom.Rectangle.Contains);
+      
+        // Ereignis, das bei Änderungen des Lautstärkereglers aufgerufen wird
+        this.volumeSlider.on('pointerdown', function (pointer) {
+          const newValue = Phaser.Math.Clamp(pointer.x - sliderX, 0, sliderWidth) / sliderWidth;
+          this.updateVolume(newValue);
+        }, this);
+      
+        // Zurück-Button hinzufügen, um zur vorherigen Szene zurückzukehren
+        const backButton = this.add.text(20, 20, 'Zurück', { fill: '#ffffff' })
+          .setInteractive()
+          .setScrollFactor(0)
+          .setDepth(1)
+      
+        backButton.on('pointerup', function () {
+          this.scene.stop("SettingsScene")
+          this.scene.resume('StartMenu') // Name der vorherigen Spielszene
+          //this.scene.get("StartMenu").createBackground()
+          //this.scene.get("StartMenu").replaceCamera()
+        }, this);
+      }           
+
+    updateVolume(volume) {
+        // Hier kannst du die Aktionen ausführen, die du bei Änderungen der Lautstärke machen möchtest
+        console.log('Neue Lautstärke:', volume)
+        // Beispiel: Lautstärke auf Phaser-Soundobjekt anwenden
+        // this.sound.volume = volume
+
+        // Fortschrittsbalken des Reglers aktualisieren
+        const sliderX = 400;
+        const sliderY = 300;
+        const sliderWidth = 200;
+        const sliderHeight = 20;
+        const progressWidth = volume * sliderWidth;
+
+        this.volumeSlider.clear();
+        this.volumeSlider.fillStyle(0x808080);
+        this.volumeSlider.fillRect(sliderX, sliderY, sliderWidth, sliderHeight);
+        this.volumeSlider.fillStyle(0x00ff00);
+        this.volumeSlider.fillRect(sliderX, sliderY, progressWidth, sliderHeight);
+
+        // Reglergriff aktualisieren
+        const handleX = sliderX + progressWidth - this.sliderHandleSize / 2;
+        const handleY = sliderY + sliderHeight / 2;
+        const handleRadius = this.sliderHandleSize / 2;
+        this.volumeSlider.fillStyle(0xffffff);
+        this.volumeSlider.fillCircle(handleX, handleY, handleRadius);
+    }
+
+    update() {
+
+    }
 }
