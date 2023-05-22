@@ -31,6 +31,9 @@
 -   EINSTELLUNG VON EINER BOX, SODASS MAN SEHEN KANN IM INVENTAR
     WELCHES GEGENSTAND ZUR ZEIT AUSGEWÄHLT IST
 
+-   SPIEL STÜRTZ AB NACH DEM VERBRAUCH VOM this.healthpotion_lvl_1
+    Uncaught ReferenceError: myArray is not defined
+
 
 <-- FERTIG  -->
 
