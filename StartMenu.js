@@ -9,7 +9,8 @@ class StartMenu extends Phaser.Scene {
         this.Menubackground.setDisplaySize(game.scale.width, game.scale.height)
         this.zoomEffect = false
         this.panEffect = false
-        this.keyC = this.input.keyboard.addKey('C')
+        this.keyC = this.input.keyboard.addKey("C")
+        this.keyP = this.input.keyboard.addKey("P")
         this.zoomer()
         
         this.id_6 = setTimeout(() => {
@@ -33,7 +34,6 @@ class StartMenu extends Phaser.Scene {
     }
 
     update() {
-        
         if(this.keyC.isDown && !this.animationSkipped) {
             console.log("C")
             this.animationSkipped = true
@@ -124,7 +124,7 @@ class StartMenu extends Phaser.Scene {
         this.settingsButton = this.add.text(0, 0, "Einstellungen", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
         this.settingsButton.on("pointerover", () => { this.selectButton(this.settingsButton) });
         this.settingsButton.on("pointerout", () => { this.deselectButton(this.settingsButton) });
-        this.settingsButton.on("pointerup", () => { console.log("Einstellungen geklickt") });
+        this.settingsButton.on("pointerup", () => {  this.scene.pause("StartMenu"), this.scene.start("SettingsScene") });
         this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 50).setOrigin(0.5, 0.5)
 
         // Credits Knopf
