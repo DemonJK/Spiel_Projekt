@@ -16,7 +16,6 @@ class Trader extends Phaser.Scene {
         this.layerground = map.createLayer("ground", this.tilesetTiles, 0, 0)
         this.layerground.setCollisionByProperty({ colliders: true })
 
-
         // PLAYER
         this.player = new Player(this, 1050, 750, "PlayerIdle")
     }

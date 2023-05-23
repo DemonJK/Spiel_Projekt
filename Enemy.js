@@ -36,7 +36,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.hp.draw()
     }
 
-
     update() {
         this.update_health_bar_pos()
         this.atack_box.body.x = this.x - 100

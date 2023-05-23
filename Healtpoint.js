@@ -7,7 +7,7 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.healthpotion_lvl_1.setSize(16, 16)
         this.scene.physics.add.collider(this.healthpotion_lvl_1, this.scene.layer)
         this.healthpotion_lvl_1.setInteractive()
-        this.healthpotion_lvl_1.on("pointerup", ()=> {
+        this.healthpotion_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
                 this.scene.player.hp.decrease(-25)
                 this.scene.player.inventory.removeItem(this.healthpotion_lvl_1)
@@ -20,10 +20,6 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
             this.healthpotion_lvl_1.setPosition(0, 0)
             this.scene.player.inventory.additem(this.healthpotion_lvl_1)
         }
-    }
-
-    potion_Selected() {
-        this.scene.add.rectangle(this.scene.x_item, this.scene.y_item, 16, 16, 0xff00ff)
     }
 }
 
@@ -54,10 +50,10 @@ class Damagedecrease_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.damagedecrease_lvl_1.setSize(16, 16)
         this.scene.physics.add.collider(this.damagedecrease_lvl_1, this.scene.layer)
         this.damagedecrease_lvl_1.setInteractive()
-        this.damagedecrease_lvl_1.on("pointerup", ()=> {
+        this.damagedecrease_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
                 // EINBAU VON RESISTENZ VOMSCHADEN
-                this.scene.player.inventory.removeItem(this.damagedecrease_lvl_1)  
+                this.scene.player.inventory.removeItem(this.damagedecrease_lvl_1)
             }
         })
     }

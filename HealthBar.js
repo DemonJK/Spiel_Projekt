@@ -9,9 +9,7 @@ class HealthBar {
         this.p = 76 / 100;
         this.width = width
         this.height = height
-
         this.draw();
-
         scene.add.existing(this.bar);
     }
 
