@@ -9,19 +9,25 @@ class HealthBar {
         this.p = 76 / 100;
         this.width = width
         this.height = height
+        this.scene = scene
+
         this.draw();
+
         scene.add.existing(this.bar);
     }
+
+    setHealth(value) {
+        this.value = value;
+        this.draw();
+    }
+
+
 
     decrease(amount) {
         this.value -= amount;
 
         if (this.value < 0) {
             this.value = 0;
-        }
-
-        if (this.value >= 100) {
-            this.value = 100
         }
 
         this.draw();
@@ -38,23 +44,29 @@ class HealthBar {
     draw() {
         this.bar.clear();
 
-        //  BG
-        this.bar.fillStyle(0x000000);
-        this.bar.fillRect(this.x, this.y, this.width, this.height);
+        // Outline
 
-        //  Health
+        // BG
+
+        // Health
         this.bar.fillStyle(0xffffff);
         this.bar.fillRect(this.x + 2, this.y + 2, this.width - 4, this.height - 4);
 
+
+
         if (this.value < 30) {
             this.bar.fillStyle(0xff0000);
-        }
-        else {
+
+        } else {
             this.bar.fillStyle(0x00ff00);
+
         }
 
         var d = Math.floor(this.p * this.value);
 
         this.bar.fillRect(this.x + 2, this.y + 2, d, this.height - 4);
+
+
+
     }
 }

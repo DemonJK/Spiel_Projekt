@@ -17,6 +17,7 @@ class StartLevel extends Phaser.Scene {
         this.tileset3 = map.addTilesetImage("Props-Rocks", "Props-Rocks")
         this.tileset4 = map.addTilesetImage("Green-Tree", "Green-Tree")
         this.tileset5 = map.addTilesetImage("Background", "Background")
+        this.tileset6 = map.addTilesetImage("Interior-01", "Interior-01")
 
         // BENUTZT BACKGROUND
         this.background = map.createLayer("background", this.tileset5, 0, 0)
@@ -46,6 +47,10 @@ class StartLevel extends Phaser.Scene {
         // BENUTZT BUILDINGS
         this.buildings = map.createLayer("buildings", this.tileset2, 0, 0)
         this.buildings.setCollisionByProperty({ colliders: true })
+        // BENUTZT INTERIOR
+        this.interior = map.createLayer("interior", this.tileset6, 0, 0)
+        // BENUTZT INTERIOR
+        this.interior2 = map.createLayer("interior2", this.tileset6, 0, 0)
 
         // ENEMY
         this.enemy = new Enemy(this, 1550, 850, "enemy1")

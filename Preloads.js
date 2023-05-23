@@ -45,7 +45,7 @@ class Preloads extends Phaser.Scene {
         //PRELOAD ALL TILES
         this.load.image("Buildings", "/new_assets/Assets/Buildings.png")
         this.load.image("Hive", "/new_assets/Assets/Hive.png")
-        this.load.image("Inter ior-01", "/new_assets/Assets/Interior-01.png")
+        this.load.image("Interior-01", "/new_assets/Assets/Interior-01.png")
         this.load.image("Props-Rocks", "/new_assets/Assets/Props-Rocks.png")
         this.load.image("Tiles", "/new_assets/Assets/Tiles.png")
         this.load.image("Tree-Assets", "/new_assets/Assets/Tree-Assets.png")
