@@ -1,11 +1,36 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
-        this.inventory = new Inventory(this.scene, this.x, this.y) // INVENTAR
 
+        this.inventory = new Inventory(this.scene, this.x, this.y) // INVENTAR
         this.player_spawning_attributes() // ATTRIBUTE VOM SPIELER
         this.colliders() // FUNKTION VON COLLIDERN
-        this.hp = new HealthBar(this.scene, 720, 400, 300, 25, 390, this) // NEUE HP BAR
+
+        this.PlayerDefaultLevel = {
+            HPval: 100,
+            HPvalWidth: 80,
+            damage: 10,
+            level: 1,
+            xp: 0,
+        }
+        this.xpThresholds = []; // Beispiel-Schwellenwerte für jedes Level
+        const baseXP = 100; // Basis-XP für das erste Level
+        const increaseFactor = 1.5; // Faktor zur Erhöhung der XP-Schwelle
+
+        for (let i = 0; i < 100; i++) {
+            const threshold = Math.round(baseXP * Math.pow(increaseFactor, i));
+            this.xpThresholds.push(threshold);
+        }
+
+        this.hp = new HealthBar(
+            this.scene,
+            720, 400,
+            this.PlayerDefaultLevel.HPvalWidth,
+            25,
+            this.PlayerDefaultLevel.HPval,
+            this
+        ) // NEUE HP BAR
+
         this.hp.bar.setScrollFactor(0, 0) // HP BAR STATIC
         this.anims.play("Idle", true) // ANIMATION VOM SPIELER IM IDLE ALS DEFAULT
         this.is_jump_played = false
@@ -22,11 +47,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyN = this.scene.input.keyboard.addKey('N') //TRADER SCENE
         this.cursors = this.scene.input.keyboard.createCursorKeys() // PFEIL TASTEN
         this.regeneration = false // REGENERATION
-        this.damage = 100 // DAMAGE TO ENEMY
         this.speed = 160 // SPEED
-
-
-
     }
 
     colliders() {
@@ -51,12 +72,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
-    update_health_bar_pos() {
-        this.hp.x = this.body.position.x - 680
-        this.hp.y = this.body.position.y - 350
-        this.hp.draw()
-    }
-
     player_spawning_attributes() {
         this.scene.add.existing(this)
         this.scene.physics.world.enable(this)
@@ -73,6 +88,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+
+        this.checkLevelUp()
 
         if (this.body.touching.down) {
             this.is_jump_played = false
@@ -101,27 +118,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.looking_direction = "left"
             this.setVelocityX(-this.speed).setFlipX(-1)
             this.anims.play("MoveLeft", true)
-
         } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             this.setVelocityX(160).setFlipX(0)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
                 this.is_jumpdown_played = true
             }
-
         } else if (this.body.velocity.y >= 75) {
             if (!this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
                 this.is_jumpdown_played = true
             }
-
         } else if (this.keyD.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             console.log("RIGHT")
             this.looking_direction = "right"
             this.setVelocityX(this.speed).setFlipX(0)
             this.anims.play("MoveRight", true)
             this.setOffset(30, 0)
-
         } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking && !this.inventory.is_opened) {
             console.log("SPACEBAR IS ACTIVE")
             this.is_atacking = true
@@ -137,7 +150,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
             if (this.scene.physics.overlap(this.swing_box, this.scene.enemy)) {
                 if (!this.scene.enemy.has_hp_lose) {
-                    this.scene.enemy.hp.decrease(this.damage)
+                    this.scene.enemy.hp.decrease(this.PlayerDefaultLevel.damage)
                     this.scene.enemy.has_hp_lose = true
                 }
             }
@@ -146,7 +159,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.scene.enemy.has_hp_lose = false
             })
             this.swing_box.destroy(true)
-
         } else {
             if (this.body.touching.down) {
                 this.is_atacking = false
@@ -184,6 +196,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }, 6100);
             }, 1000);
         }
+    }
+
+    checkLevelUp() {
+        var nextLevelThreshold = this.xpThresholds[this.PlayerDefaultLevel.level - 1]
+        if (this.PlayerDefaultLevel.xp >= nextLevelThreshold) {
+            this.levelUp()
+        }
+    }
+
+    levelUp() {
+        this.PlayerDefaultLevel.level++
+        this.PlayerDefaultLevel.HPval += this.PlayerDefaultLevel.HPvalWidth
+        this.PlayerDefaultLevel.HPvalWidth += 5
+        this.PlayerDefaultLevel.damage += 5
     }
 
     passthrough() {

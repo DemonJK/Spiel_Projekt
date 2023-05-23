@@ -108,6 +108,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 this.healthpotion_lvl_1 = new Healthpotion_LVL_1(this.scene, this.x, this.y)
                 this.speedpotion_lvl_1 = new Speedpotion_LVL_1(this.scene, this.x + 50, this.y)
                 this.is_position_spawned = true
+                this.scene.player.PlayerDefaultLevel.xp += 200
                 this.scene.player.enemy_collider.destroy()
                 this.player_collider.destroy()
             }
