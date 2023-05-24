@@ -33,6 +33,12 @@ class Preloads extends Phaser.Scene {
             frameHeight: 32
         })
 
+        // PRELOAD PET MONSTER 3 RUN DUST
+        this.load.spritesheet("RunDustPet3", "/pet/3Dude_Monster/Walk_Run_Push_Dust_6.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        })
+
         //PRELOAD AUDIO SONGS
         this.load.audio("Ingame-music", ["/audio/music_zapsplat_game_music.mp3"])
         this.load.audio("action1", ["/audio/mp3/Action1.mp3"])
@@ -252,6 +258,12 @@ class Preloads extends Phaser.Scene {
             key: "RunPet3Anim",
             frames: this.anims.generateFrameNumbers("RunPet3", { start: 0, end: 5 }),
             frameRate: 10
+        })
+
+        // PET 3 RUN DUST ANIM
+        this.anims.create({
+            key: "RunDustPet3Anim",
+            frames: this.anims.generateFrameNumbers("RunDustPet3", { start: 0, end: 5 })
         })
 
         // MENU START

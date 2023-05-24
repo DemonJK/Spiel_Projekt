@@ -43,14 +43,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.atack_box2.body.x = this.x + 60
         this.atack_box2.body.y = this.y + 10
 
-        if ((Math.round(this.scene.player.y + 237) === Math.round(this.y)) && !(Math.round(this.scene.player.x) === Math.round(this.x - 145))) {
-            if (this.scene.player.cursors.left.isDown) {
-                this.scene.player.setPosition(this.x - 220, this.scene.player.y)
-            } else if (this.scene.player.cursors.right.isDown) {
-                this.scene.player.setPosition(this.x + 220, this.scene.player.y)
-            };
-        }
-
         if (!this.is_dead) {
             if (!(Math.round(this.scene.player.x) === Math.round(this.x - 197))) {
                 if (this.is_player_left() || this.is_player_right()) {

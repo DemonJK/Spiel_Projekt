@@ -104,7 +104,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened)) {
             console.log("UP")
-            this.setVelocityY(-425)
+            this.setVelocityY(-375)
             this.anims.play("PlayerUpJump", true)
 
         } else if (this.keyA.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
