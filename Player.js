@@ -49,6 +49,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.regeneration = false // REGENERATION
         this.speed = 160 // SPEED
         this.update_health_bar_width()
+        this.pet3 = new Pet3(this.scene, 1050 - 100, 850, this)
     }
 
     colliders() {
@@ -87,7 +88,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
 
     update() {
-        console.log(this.PlayerDefaultLevel.HPval);
+        //console.log(this.PlayerDefaultLevel.HPval);
+        this.pet3.update()
         this.checkLevelUp()
 
         if (this.body.touching.down) {
