@@ -52,11 +52,23 @@ class StartLevel extends Phaser.Scene {
         // BENUTZT INTERIOR
         this.interior2 = map.createLayer("interior2", this.tileset6, 0, 0)
 
+        // GROUP COLLIDER
+        this.group = this.physics.add.group();
+
         // ENEMY
         this.enemy = new Enemy(this, 1550, 850, "enemy1")
 
+        // ENEMY
+        this.enemy2 = new Enemy(this, 2000, 850, "enemy1")
+
+        // ENEMY
+        this.enemy3 = new Enemy(this, 2200, 850, "enemy1")
+
         // PLAYER
         this.player = new Player(this, 1050, 850, "PlayerIdle")
+
+        // COLLIDER PLAYER ENEMYs
+        this.physics.add.collider(this.group, this.player)
 
         // BENUTZT TILES
         this.layer2 = map.createLayer("ground2", this.tileset, 0, 0)
@@ -123,63 +135,62 @@ class StartLevel extends Phaser.Scene {
         })
 
         this.ambients = [
-            this.Ambient1, 
-            this.Ambient2, 
-            this.Ambient3, 
-            this.Ambient4, 
-            this.Ambient5, 
-            this.Ambient6, 
-            this.Ambient7, 
-            this.Ambient8, 
-            this.Ambient9, 
+            this.Ambient1,
+            this.Ambient2,
+            this.Ambient3,
+            this.Ambient4,
+            this.Ambient5,
+            this.Ambient6,
+            this.Ambient7,
+            this.Ambient8,
+            this.Ambient9,
             this.Ambient10
         ]
 
         this.random_ambient_num = Math.floor(Math.random() * 10);
 
-        this.Ambient1.on('complete', ()=>{
+        this.Ambient1.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient2.on('complete', ()=>{
+        this.Ambient2.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient3.on('complete', ()=>{
+        this.Ambient3.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient4.on('complete', ()=>{
+        this.Ambient4.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient5.on('complete', ()=>{
+        this.Ambient5.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient6.on('complete', ()=>{
+        this.Ambient6.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient7.on('complete', ()=>{
+        this.Ambient7.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient8.on('complete', ()=>{
+        this.Ambient8.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient9.on('complete', ()=>{
+        this.Ambient9.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
-        this.Ambient10.on('complete', ()=>{
+        this.Ambient10.on('complete', () => {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
         this.ambients[this.random_ambient_num].play()
         this.ambients[this.random_ambient_num].onBlur = false
-
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
@@ -207,7 +218,7 @@ class StartLevel extends Phaser.Scene {
         this.hint.visible = false
         this.textBounds = this.hint.getBounds()
 
-        this.shadowBox = this.add.rectangle(this.player.x+365, this.player.y+15,
+        this.shadowBox = this.add.rectangle(this.player.x + 365, this.player.y + 15,
             this.textBounds.width,
             this.textBounds.height
         )
@@ -219,6 +230,8 @@ class StartLevel extends Phaser.Scene {
     update() {
         this.player.update()
         this.enemy.update()
+        this.enemy2.update()
+        this.enemy3.update()
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 this.hint.visible = true
@@ -232,7 +245,7 @@ class StartLevel extends Phaser.Scene {
                     this.player.readen = true
                     if (this.player.readen = true) {
                         this.textbox.destroy(true)
-                    
+
                     }
                 }, 1000);
             }

@@ -50,10 +50,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.speed = 160 // SPEED
         this.update_health_bar_width()
         this.pet3 = new Pet3(this.scene, 1050 - 100, 850, this)
+
     }
 
     colliders() {
-        this.enemy_collider = this.scene.physics.add.collider(this, this.scene.enemy)
         this.scene.physics.add.collider(this, this.scene.platforms)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
@@ -153,6 +153,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.swing_box = this.scene.add.rectangle(this.x - 20, this.y, 40, 40).setDepth(-1)
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
             }
+            
             if (this.scene.physics.overlap(this.swing_box, this.scene.enemy)) {
                 if (!this.scene.enemy.has_hp_lose) {
                     this.scene.enemy.hp.decrease(this.PlayerDefaultLevel.damage)

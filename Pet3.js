@@ -63,11 +63,11 @@ class Pet3 extends Phaser.Physics.Arcade.Sprite {
         // MOVEMENT FOR PET 3 AFTER PLAYER
         if (this.scene.player.keyW.isDown && this.body.touching.down) {
             this.setVelocityY(-350) // JUMP VELOCITY = +Y
-        } else if (this.scene.player.keyD.isDown) {
+        } else if (this.scene.player.keyD.isDown && this.body.touching.down && this.scene.player.looking_direction === "right") {
             this.setVelocityX(this.pet_config.speedRight).setFlipX(0) // VELOCITY FOR RIGHT = +X
             //this.anims.play("RunDustPet3Anim", true).setDepth(0) // RUN DUST ANIM
             this.anims.play("RunPet3Anim", true) // RUN ANIM & DUST ANIM
-        } else if (this.scene.player.keyA.isDown) {
+        } else if (this.scene.player.keyA.isDown && this.body.touching.down && this.scene.player.looking_direction === "left") {
             this.setVelocityX(this.pet_config.speedLeft).setFlipX(-1) // VELOCITY FOR LEFT = -X
             //this.anims.play("RunDustPet3Anim", true).setDepth(0) // RUN DUST ANIM
             this.anims.play("RunPet3Anim", true) // RUN ANIM & DUST ANIM
@@ -77,7 +77,7 @@ class Pet3 extends Phaser.Physics.Arcade.Sprite {
         }
 
         if (this.if_player_is_not_in_left_area) {
-            console.log("Far away");
+            //console.log("Far away");
         }
     }
 

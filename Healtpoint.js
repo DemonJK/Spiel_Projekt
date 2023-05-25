@@ -31,6 +31,13 @@ class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.speedpotion_lvl_1.setBounce(0.3)
         this.speedpotion_lvl_1.setSize(16, 16)
         this.scene.physics.add.collider(this.speedpotion_lvl_1, this.scene.layer)
+        this.speedpotion_lvl_1.setInteractive()
+        this.speedpotion_lvl_1.on("pointerup", () => {
+            if (this.scene.player.inventory.is_opened) {
+                // EINBAU VON SPEED BONUS
+                this.scene.player.inventory.removeItem(this.speedpotion_lvl_1)
+            }
+        })
     }
 
     update() {
