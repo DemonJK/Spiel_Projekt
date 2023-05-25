@@ -5,6 +5,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.inventory = new Inventory(this.scene, this.x, this.y) // INVENTAR
         this.player_spawning_attributes() // ATTRIBUTE VOM SPIELER
         this.colliders() // FUNKTION VON COLLIDERN
+        this.player_hp = new HealthBarPlayer(this.scene, 500, 500, "healh_menu", 100)
 
         this.PlayerDefaultLevel = {
             HPval: 100,

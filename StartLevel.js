@@ -55,6 +55,9 @@ class StartLevel extends Phaser.Scene {
         // GROUP COLLIDER
         this.group = this.physics.add.group();
 
+        // PLAYER
+        this.player = new Player(this, 1050, 850, "PlayerIdle")
+
         // ENEMY
         this.enemy = new Enemy(this, 1550, 850, "enemy1")
 
@@ -64,8 +67,12 @@ class StartLevel extends Phaser.Scene {
         // ENEMY
         this.enemy3 = new Enemy(this, 2200, 850, "enemy1")
 
-        // PLAYER
-        this.player = new Player(this, 1050, 850, "PlayerIdle")
+        // ENEMY
+        this.enemy4 = new Enemy(this, 1700, 850, "enemy1")
+
+        // ENEMY
+        this.enemy5 = new Enemy(this, 1300, 850, "enemy1")
+
 
         // COLLIDER PLAYER ENEMYs
         this.physics.add.collider(this.group, this.player)
@@ -232,6 +239,8 @@ class StartLevel extends Phaser.Scene {
         this.enemy.update()
         this.enemy2.update()
         this.enemy3.update()
+        this.enemy4.update()
+        this.enemy5.update()
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 this.hint.visible = true

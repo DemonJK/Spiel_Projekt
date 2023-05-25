@@ -9,6 +9,10 @@ class Preloads extends Phaser.Scene {
         // PRELOAD INVENTAR
         this.load.image("inventory", "/assets/player_model/inventory.png")
 
+        // PRELOAD INVENTAR
+        this.load.image("healh_menu", "/assets/player_model/413-4135632_health-bar-png-video-game-health-bar-png-removebg-preview.png")
+
+
         // PRELOAD INTERFACE
         this.load.spritesheet("Interface", "/interface/GUI.png", {
             frameWidth: 16,

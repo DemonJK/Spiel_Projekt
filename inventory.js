@@ -13,7 +13,6 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
             this.display = this.scene.add.image(this.scene.player.x, this.scene.player.y - 150, "inventory").setDepth(1)
             this.x_item = this.display.x - 120
             this.y_item = this.display.y - 150
-            this.row
             this.player_image = this.scene.add.image(this.scene.player.x - 275, this.scene.player.y - 175, "PlayerIdle").setDepth(2)
             this.player_image.setScale(4, 4)
 
@@ -22,6 +21,10 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
                 this.items[index].body.destroy()
                 this.items[index].setPosition(this.x_item, this.y_item).setDepth(2).setScale(2, 2)
                 this.x_item += 60
+                if (index === 5 || index === 11 || index === 17) {
+                    this.y_item += 60
+                    this.x_item -= 360
+                }
             }
         } else {
             this.display.destroy()
