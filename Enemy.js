@@ -19,7 +19,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.is_atacking = false
         this.is_in_attack_anim = false
         this.is_position_spawned = false;
-        this.visiable_area = this.scene.add.rectangle(this.x, this.y, 600, 300)
+        this.visiable_area = this.scene.add.rectangle(this.x, this.y, 1000, 300)
         this.scene.physics.add.existing(this.visiable_area, true).setDepth(-1)
         this.is_in_visible_area = false;
         this.scene.group.add(this)
@@ -51,7 +51,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.atack_box.body.y = this.y + 10
         this.atack_box2.body.x = this.x + 60
         this.atack_box2.body.y = this.y + 10
-        this.visiable_area.body.x = this.x - 300
+        this.visiable_area.body.x = this.x - 500
         this.visiable_area.body.y = this.y - 150
 
         if (this.scene.player.cursors.space.isDown && this.scene.player.body.touching.down || this.scene.player.is_atacking && !this.scene.player.inventory.is_opened) {
