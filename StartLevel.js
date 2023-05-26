@@ -6,10 +6,10 @@ class StartLevel extends Phaser.Scene {
     create() {
 
         this.SkyBackground = this.add.image(0, 0, "SkyBackground").setOrigin(0, 0)
-        this.SkyBackground.setDisplaySize(game.scale.width + 200, game.scale.height + 200)
-        this.SkyBackground2 = this.add.image(this.SkyBackground.width, 0, "SkyBackground").setOrigin(0, 0)
-        this.SkyBackground2.setDisplaySize(game.scale.width + 200, game.scale.height + 200)
-
+        this.SkyBackground.setDisplaySize(game.scale.width, game.scale.height)
+        this.SkyBackground2 = this.add.image(game.scale.width, 0, "SkyBackground").setOrigin(0, 0)
+        this.SkyBackground2.setDisplaySize(game.scale.width, game.scale.height)
+        
         const map = this.make.tilemap({ key: "MAP", tileWidth: 16, tileHeight: 16 })
 
         this.tileset = map.addTilesetImage("Tiles", "Tiles")
