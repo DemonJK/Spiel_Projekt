@@ -8,11 +8,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.player_hp = new HealthBarPlayer(this.scene, 500, 500, "healh_menu", 100)
 
         this.PlayerDefaultLevel = {
-            HPval: 100,
-            HPvalWidth: 80,
-            damage: 100,
-            level: 1,
-            xp: 0,
+            HPval: 100,     // HEALTH VALUE
+            HPvalWidth: 80, // HEALTH WIDTH
+            damage: 100,    // DAMAGE
+            speed: 160,     // SPEED
+            idle_speed: 0,  // IDLE SPEED
+            level: 1,       // LEVEL
+            xp: 0,          // EXPERIENCE
         }
         this.xpThresholds = []; // Beispiel-Schwellenwerte für jedes Level
         const baseXP = 100; // Basis-XP für das erste Level
@@ -33,6 +35,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         ) // NEUE HP BAR
 
         this.hp.bar.setScrollFactor(0, 0) // HP BAR STATIC
+        this.player_hp.setScrollFactor(0, 0)
         this.anims.play("Idle", true) // ANIMATION VOM SPIELER IM IDLE ALS DEFAULT
         this.is_jump_played = false
         this.is_jumpdown_played = false
@@ -47,18 +50,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyD = this.scene.input.keyboard.addKey('D') // RECHTS BEWEGEN
         this.keyN = this.scene.input.keyboard.addKey('N') //TRADER SCENE
         this.cursors = this.scene.input.keyboard.createCursorKeys() // PFEIL TASTEN
-        this.regeneration = false // REGENERATION
-        this.speed = 160 // SPEED
         this.update_health_bar_width()
         this.pet3 = new Pet3(this.scene, 1050 - 100, 850, this)
-
     }
 
     colliders() {
-        this.scene.physics.add.collider(this, this.scene.platforms)
-        this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
-        this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
-        this.scene.physics.add.collider(this, this.scene.platforms4)
+        //this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
+        //this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.buildings3)
         this.scene.physics.add.collider(this, this.scene.layerground)
 
@@ -75,7 +73,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
-
     player_spawning_attributes() {
         this.scene.add.existing(this)
         this.scene.physics.world.enable(this)
@@ -86,7 +83,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
         this.scene.cameras.main.zoom = 2 // ZOOM DER KAMERA
     }
-
 
     update() {
         //console.log(this.PlayerDefaultLevel.HPval);
@@ -109,7 +105,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.anims.play("PlayerUpJump", true)
 
         } else if (this.keyA.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
-            this.setVelocityX(-160).setFlipX(-1)
+            this.setVelocityX(-this.PlayerDefaultLevel.speed).setFlipX(-1)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
                 this.is_jumpdown_played = true
@@ -118,11 +114,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else if (this.keyA.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             console.log("LEFT")
             this.looking_direction = "left"
-            this.setVelocityX(-this.speed).setFlipX(-1)
+            this.setVelocityX(-this.PlayerDefaultLevel.speed).setFlipX(-1)
             this.anims.play("MoveLeft", true)
 
         } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
-            this.setVelocityX(160).setFlipX(0)
+            this.setVelocityX(this.PlayerDefaultLevel.speed).setFlipX(0)
             if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
                 this.anims.play("Fall", true)
                 this.is_jumpdown_played = true
@@ -137,7 +133,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else if (this.keyD.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
             console.log("RIGHT")
             this.looking_direction = "right"
-            this.setVelocityX(this.speed).setFlipX(0)
+            this.setVelocityX(this.PlayerDefaultLevel.speed).setFlipX(0)
             this.anims.play("MoveRight", true)
             this.setOffset(30, 0)
 
@@ -146,7 +142,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.is_atacking = true
             this.setOffset(30, 0)
             this.anims.play("Attack", true)
-            this.setVelocityX(0)
+            this.setVelocityX(this.PlayerDefaultLevel.idle_speed)
             if (this.looking_direction === "right") {
                 this.swing_box = this.scene.add.rectangle(this.x + 20, this.y, 40, 40).setDepth(-1)
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
@@ -154,7 +150,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.swing_box = this.scene.add.rectangle(this.x - 20, this.y, 40, 40).setDepth(-1)
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
             }
-            
+
             if (this.scene.physics.overlap(this.swing_box, this.scene.enemy)) {
                 if (!this.scene.enemy.has_hp_lose) {
                     this.scene.enemy.hp.decrease(this.PlayerDefaultLevel.damage)
@@ -172,7 +168,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.is_atacking = false
                 this.anims.play("Idle", true)
                 this.setOffset(15, 0)
-                this.setVelocityX(0)
+                this.setVelocityX(this.PlayerDefaultLevel.idle_speed)
             }
             if (this.body.velocity.y >= 75) {
                 this.anims.play("Fall", true)
@@ -183,16 +179,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             console.log("DOWN CURSOR IS ACTIVE")
             // durch den Boden fallen
             // this.passthrough()
-        }
-
-        //TEST FÜR PASSIVE REGENERATION
-        //console.log(this.regeneration);
-        if (this.hp.value > 390 && (this.regeneration = false)) {
-            this.regeneration = true
-            if (this.regeneration === true) {
-                this.scene.player.hp.decrease(-15)
-                this.regeneration = false
-            }
         }
 
         if (this.keyN.isDown && this.body.touching.down && !this.is_atacking) {
@@ -220,9 +206,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.PlayerDefaultLevel.damage += 5
         this.hp.setHealth(this.PlayerDefaultLevel.HPval)
         this.hp.draw()
-
         this.update_health_bar_width()
-
     }
 
     update_health_bar_width() {
@@ -235,8 +219,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.hp.draw();
     }
-
-
 
     passthrough() {
         this.scene.passThruPlatforms.clear()

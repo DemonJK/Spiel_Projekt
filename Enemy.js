@@ -8,8 +8,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2)
         this.scene.physics.add.collider(this, this.scene.platforms4)
-
-
         this.hp = new HealthBar(this.scene, 150, 960, 80, 16, 100, this)
         this.anims.play("stand", true)
         this.setFlipX(true)
@@ -25,14 +23,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this.visiable_area, true).setDepth(-1)
         this.is_in_visible_area = false;
         this.scene.group.add(this)
-
     }
 
     create() {
         this.scene.create_collider_player_enemy(this);
-
     }
-
 
     enemy_spawning_attributes() {
         this.scene.add.existing(this)
@@ -42,7 +37,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setBounce(0.2)
         this.setPosition(this.x, this.y)
         this.setPushable(false)
-
     }
 
     update_health_bar_pos() {
@@ -50,8 +44,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.hp.y = this.y - 80
         this.hp.draw()
     }
-
-     
 
     update() {
         this.update_health_bar_pos()
@@ -75,7 +67,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 this.swing_box = this.scene.add.rectangle(this.scene.player.x - 20, this.scene.player.y, 40, 40).setDepth(-1)
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
             }
-            
             if (this.scene.physics.overlap(this.swing_box, this)) {
                 if (!this.has_hp_lose) {
                     this.hp.decrease(this.scene.player.PlayerDefaultLevel.damage)
@@ -87,9 +78,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 this.has_hp_lose = false
             })
             this.swing_box.destroy(true)
-
         }
-
+        
         if(!this.scene.physics.overlap(this.visiable_area, this.scene.player) && !this.is_dead) {
             this.setVelocity(0,0)
             this.anims.play('stand', true)
