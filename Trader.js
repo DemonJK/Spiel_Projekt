@@ -17,7 +17,11 @@ class Trader extends Phaser.Scene {
         this.layerground.setCollisionByProperty({ colliders: true })
 
         // PLAYER
-        this.player = new Player(this, 1050, 750, "PlayerIdle")
+        this.player = new Player(this, 0, 750, "PlayerIdle")
+
+        this.physics.add.collider(this.player, this.layerground, () => {
+            this.body.touching.down = true
+        })
     }
 
     update() {
