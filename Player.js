@@ -5,7 +5,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.inventory = new Inventory(this.scene, this.x, this.y) // INVENTAR
         this.player_spawning_attributes() // ATTRIBUTE VOM SPIELER
         this.colliders() // FUNKTION VON COLLIDERN
-        this.player_hp = new HealthBarPlayer(this.scene, 500, 500, "healh_menu", 100)
+        this.player_hp = new HealthBarPlayer(this.scene, this.x-300, this.y-450, "healh_menu", 100)
 
         this.PlayerDefaultLevel = {
             HPval: 100,     // HEALTH VALUE
@@ -27,7 +27,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.hp = new HealthBar(
             this.scene,
-            720, 400,
+            400, 400,
             this.PlayerDefaultLevel.HPvalWidth,
             25,
             this.PlayerDefaultLevel.HPval,
@@ -58,7 +58,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
         //this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
         this.scene.physics.add.collider(this, this.scene.buildings3)
-        this.scene.physics.add.collider(this, this.scene.layerground)
 
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
@@ -77,7 +76,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this)
         this.scene.physics.world.enable(this)
         this.body.setSize(32, 64, true)
-        this.setPosition(this.x, this.y)
         // CAMERA MOVING
         this.scene.cameras.main.startFollow(this) // VERFOLGUNG VOM SPIELER
         this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
@@ -151,15 +149,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.scene.physics.add.existing(this.swing_box).setDepth(-1)
             }
 
-            if (this.scene.physics.overlap(this.swing_box, this.scene.enemy)) {
-                if (!this.scene.enemy.has_hp_lose) {
-                    this.scene.enemy.hp.decrease(this.PlayerDefaultLevel.damage)
-                    this.scene.enemy.has_hp_lose = true
-                }
-            }
             this.on('animationcomplete', () => {
                 this.is_atacking = false
-                this.scene.enemy.has_hp_lose = false
             })
             this.swing_box.destroy(true)
 

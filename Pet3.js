@@ -26,7 +26,6 @@ class Pet3 extends Phaser.Physics.Arcade.Sprite {
     pet3_colliders() {
         this.scene.physics.add.collider(this, this.scene.platforms4)
         this.scene.physics.add.collider(this, this.scene.buildings3)
-        this.scene.physics.add.collider(this, this.scene.layerground)
 
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true

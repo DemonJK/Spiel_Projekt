@@ -1,6 +1,6 @@
 class Trader extends Phaser.Scene {
     constructor() {
-        super({ key: "Trader"})
+        super({ key: "Trader" })
     }
 
     create() {
@@ -13,18 +13,25 @@ class Trader extends Phaser.Scene {
         this.tilesetTiles = map.addTilesetImage("Tiles", "Tiles")
 
         // BENUTZT TILES
-        this.layerground = map.createLayer("ground", this.tilesetTiles, 0, 0)
+        this.layerground = map.createLayer("groundLayer1", this.tilesetTiles, 0, 0)
         this.layerground.setCollisionByProperty({ colliders: true })
 
-        // PLAYER
-        this.player = new Player(this, 0, 750, "PlayerIdle")
+        this.spawnObjects = map.getObjectLayer("spawnPoints").objects
 
-        this.physics.add.collider(this.player, this.layerground, () => {
-            this.body.touching.down = true
-        })
+        this.spawnObjects.forEach(obj => console.log(obj.properties));
+
+        // Finde den Spawn-Punkt für den Spieler
+        this.playerSpawnPoint = {x: this.spawnObjects[0].x, y: this.spawnObjects[0].y}
+
+        if (this.playerSpawnPoint) {
+            // PLAYER
+            this.player = new Player(this, this.playerSpawnPoint.x, this.playerSpawnPoint.y, "PlayerIdle")
+        }
     }
 
     update() {
-        this.player.update()
+        if (this.playerSpawnPoint && this.player) {
+            this.player.update()
+        }
     }
 }
