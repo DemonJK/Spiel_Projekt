@@ -5,7 +5,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.inventory = new Inventory(this.scene, this.x, this.y) // INVENTAR
         this.player_spawning_attributes() // ATTRIBUTE VOM SPIELER
         this.colliders() // FUNKTION VON COLLIDERN
-        this.player_hp = new HealthBarPlayer(this.scene, this.x-300, this.y-450, "healh_menu", 100)
+        this.player_hp = new HealthBarPlayer(this.scene, this.x-300, this.y-450, "healh_menu", 100) // NEUE HEALTHBAR
 
         this.PlayerDefaultLevel = {
             HPval: 100,     // HEALTH VALUE
@@ -25,16 +25,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.xpThresholds.push(threshold);
         }
 
-        this.hp = new HealthBar(
-            this.scene,
-            400, 400,
-            this.PlayerDefaultLevel.HPvalWidth,
-            25,
-            this.PlayerDefaultLevel.HPval,
-            this
-        ) // NEUE HP BAR
-
-        this.hp.bar.setScrollFactor(0, 0) // HP BAR STATIC
         this.player_hp.setScrollFactor(0, 0)
         this.anims.play("Idle", true) // ANIMATION VOM SPIELER IM IDLE ALS DEFAULT
         this.is_jump_played = false
@@ -50,7 +40,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyD = this.scene.input.keyboard.addKey('D') // RECHTS BEWEGEN
         this.keyN = this.scene.input.keyboard.addKey('N') //TRADER SCENE
         this.cursors = this.scene.input.keyboard.createCursorKeys() // PFEIL TASTEN
-        this.update_health_bar_width()
         this.pet3 = new Pet3(this.scene, 1050 - 100, 850, this)
     }
 
@@ -86,6 +75,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         //console.log(this.PlayerDefaultLevel.HPval);
         this.pet3.update()
         this.checkLevelUp()
+        this.player_hp.update()
 
         if (this.body.touching.down) {
             this.is_jump_played = false
@@ -136,7 +126,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setOffset(30, 0)
 
         } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking && !this.inventory.is_opened) {
-            console.log("SPACEBAR IS ACTIVE")
+            //console.log("SPACEBAR IS ACTIVE")
             this.is_atacking = true
             this.setOffset(30, 0)
             this.anims.play("Attack", true)
@@ -192,23 +182,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     levelUp() {
         this.PlayerDefaultLevel.level++
-        this.PlayerDefaultLevel.HPval += this.PlayerDefaultLevel.HPvalWidth
-        this.PlayerDefaultLevel.HPvalWidth += 5
+        this.PlayerDefaultLevel.HPval += 5
         this.PlayerDefaultLevel.damage += 5
-        this.hp.setHealth(this.PlayerDefaultLevel.HPval)
-        this.hp.draw()
-        this.update_health_bar_width()
-    }
+        this.player_hp.addHp(5)
+        console.log("LEVL");
 
-    update_health_bar_width() {
-        const currentLevel = this.PlayerDefaultLevel.level;
-        const maxLevel = this.xpThresholds.length;
-
-        // Berechne die neue Breite basierend auf dem Verhältnis zum maximalen Level
-        const newWidth = (this.PlayerDefaultLevel.HPvalWidth / maxLevel) * currentLevel;
-        this.hp.bar.width = newWidth;
-
-        this.hp.draw();
     }
 
     passthrough() {

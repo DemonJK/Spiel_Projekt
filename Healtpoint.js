@@ -9,7 +9,7 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.healthpotion_lvl_1.setInteractive()
         this.healthpotion_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
-                this.scene.player.hp.decrease(-25)
+                this.scene.player.player_hp.decrease(-25)
                 this.scene.player.inventory.removeItem(this.healthpotion_lvl_1)
             }
         })

@@ -55,7 +55,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.visiable_area.body.y = this.y - 150
 
         if (this.scene.player.cursors.space.isDown && this.scene.player.body.touching.down || this.scene.player.is_atacking && !this.scene.player.inventory.is_opened) {
-            console.log("SPACEBAR IS ACTIVE")
+            //console.log("SPACEBAR IS ACTIVE")
             this.scene.player.is_atacking = true
             this.scene.player.setOffset(30, 0)
             this.scene.player.anims.play("Attack", true)
@@ -98,7 +98,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                                 this.is_in_attack_anim = false
                             })
                             if (this.is_atacking && this.scene.physics.overlap(this.atack_box, this.scene.player)) {
-                                this.scene.player.hp.decrease(15)
+                                this.scene.player.player_hp.decrease(15)
+
                             }
                             this.is_atacking = false
                         } else {
@@ -118,7 +119,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                                 this.is_in_attack_anim = false
                             })
                             if (this.is_atacking && this.scene.physics.overlap(this.atack_box2, this.scene.player)) {
-                                this.scene.player.hp.decrease(15)
+                                this.scene.player.player_hp.decrease(15)
                             }
                             this.is_atacking = false
                         } else {
