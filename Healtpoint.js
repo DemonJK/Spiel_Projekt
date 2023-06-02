@@ -7,10 +7,24 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.healthpotion_lvl_1.setSize(16, 16)
         this.scene.physics.add.collider(this.healthpotion_lvl_1, this.scene.layer)
         this.healthpotion_lvl_1.setInteractive()
+
         this.healthpotion_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
                 this.scene.player.player_hp.decrease(-25)
                 this.scene.player.inventory.removeItem(this.healthpotion_lvl_1)
+            }
+        })
+        this.healthpotion_lvl_1.on("pointerover", () => {
+            if (this.scene.player.inventory.is_opened) {
+                this.interactRect = this.scene.add.rectangle(this.healthpotion_lvl_1.x, this.healthpotion_lvl_1.y, 48, 48).setDepth(3)
+                this.scene.physics.add.existing(this.interactRect, true).setDepth(3).setStrokeStyle(5, 0xFFFF00)
+            }
+        })
+        this.healthpotion_lvl_1.on("pointerout", () => {
+            if (this.scene.player.inventory.is_opened) {
+                this.interactRect.destroy()
+            } else {
+                this.interactRect.destroy()
             }
         })
     }
@@ -19,6 +33,9 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         if (this.scene.physics.overlap(this.healthpotion_lvl_1, this.scene.player)) {
             this.healthpotion_lvl_1.setPosition(0, 0)
             this.scene.player.inventory.additem(this.healthpotion_lvl_1)
+        }
+        if (this.scene.is_opened === false) {
+            this.interactRect.destroy()
         }
     }
 }
@@ -32,10 +49,24 @@ class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.speedpotion_lvl_1.setSize(16, 16)
         this.scene.physics.add.collider(this.speedpotion_lvl_1, this.scene.layer)
         this.speedpotion_lvl_1.setInteractive()
+
         this.speedpotion_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
                 // EINBAU VON SPEED BONUS
                 this.scene.player.inventory.removeItem(this.speedpotion_lvl_1)
+            }
+        })
+        this.speedpotion_lvl_1.on("pointerover", () => {
+            if (this.scene.player.inventory.is_opened) {
+                this.interactRect = this.scene.add.rectangle(this.speedpotion_lvl_1.x, this.speedpotion_lvl_1.y, 48, 48).setDepth(3)
+                this.scene.physics.add.existing(this.interactRect, true).setDepth(3).setStrokeStyle(5, 0xFFFF00)
+            }
+        })
+        this.speedpotion_lvl_1.on("pointerout", () => {
+            if (this.scene.player.inventory.is_opened) {
+                this.interactRect.destroy()
+            } else {
+                this.interactRect.destroy()
             }
         })
     }
@@ -57,10 +88,24 @@ class Damagedecrease_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.damagedecrease_lvl_1.setSize(16, 16)
         this.scene.physics.add.collider(this.damagedecrease_lvl_1, this.scene.layer)
         this.damagedecrease_lvl_1.setInteractive()
+
         this.damagedecrease_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
                 // EINBAU VON RESISTENZ VOMSCHADEN
                 this.scene.player.inventory.removeItem(this.damagedecrease_lvl_1)
+            }
+        })
+        this.damagedecrease_lvl_1.on("pointerover", () => {
+            if (this.scene.player.inventory.is_opened) {
+                this.interactRect = this.scene.add.rectangle(this.damagedecrease_lvl_1.x, this.damagedecrease_lvl_1.y, 48, 48).setDepth(3)
+                this.scene.physics.add.existing(this.interactRect, true).setDepth(3).setStrokeStyle(5, 0xFFFF00)
+            }
+        })
+        this.damagedecrease_lvl_1.on("pointerout", () => {
+            if (this.scene.player.inventory.is_opened) {
+                this.interactRect.destroy()
+            } else {
+                this.interactRect.destroy()
             }
         })
     }

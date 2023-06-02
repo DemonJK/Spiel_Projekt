@@ -4,6 +4,7 @@ class StartMenu extends Phaser.Scene {
     }
 
     create() {
+        console.clear()
         this.animationSkipped = false;
         this.createBackground();
         this.zoomEffect = false;
@@ -158,52 +159,52 @@ class SettingsScene extends Phaser.Scene {
     create() {
         // Hintergrundbild oder UI-Elemente für die Einstellungen erstellen
         this.add.image(0, 0, "Startmenu").setOrigin(0, 0).setDisplaySize(game.scale.width, game.scale.height);
-      
+
         // Lautstärkeregler erstellen
         const sliderWidth = 200;
         const sliderHeight = 20;
         const sliderX = 400;
         const sliderY = 300;
-      
+
         // Hintergrund des Reglers zeichnen
         this.volumeSlider = this.add.graphics();
         this.volumeSlider.fillStyle(0x808080);
         this.volumeSlider.fillRect(sliderX, sliderY, sliderWidth, sliderHeight);
-      
+
         // Fortschrittsbalken zeichnen
         const progressWidth = this.initialVolume * sliderWidth;
         this.volumeSlider.fillStyle(0x00ff00);
         this.volumeSlider.fillRect(sliderX, sliderY, progressWidth, sliderHeight);
-      
+
         // Reglergriff erstellen
         const handleX = sliderX + progressWidth - this.sliderHandleSize / 2;
         const handleY = sliderY + sliderHeight / 2;
         const handleRadius = this.sliderHandleSize / 2;
         this.volumeSlider.fillStyle(0xffffff);
         this.volumeSlider.fillCircle(handleX, handleY, handleRadius);
-      
+
         // Interaktive Funktionen für den Regler hinzufügen
         this.volumeSlider.setInteractive(new Phaser.Geom.Rectangle(sliderX, sliderY, sliderWidth, sliderHeight), Phaser.Geom.Rectangle.Contains);
-      
+
         // Ereignis, das bei Änderungen des Lautstärkereglers aufgerufen wird
         this.volumeSlider.on('pointerdown', function (pointer) {
-          const newValue = Phaser.Math.Clamp(pointer.x - sliderX, 0, sliderWidth) / sliderWidth;
-          this.updateVolume(newValue);
+            const newValue = Phaser.Math.Clamp(pointer.x - sliderX, 0, sliderWidth) / sliderWidth;
+            this.updateVolume(newValue);
         }, this);
-      
+
         // Zurück-Button hinzufügen, um zur vorherigen Szene zurückzukehren
         const backButton = this.add.text(20, 20, 'Zurück', { fill: '#ffffff' })
-          .setInteractive()
-          .setScrollFactor(0)
-          .setDepth(1)
-      
+            .setInteractive()
+            .setScrollFactor(0)
+            .setDepth(1)
+
         backButton.on('pointerup', function () {
-          this.scene.stop("SettingsScene")
-          this.scene.resume('StartMenu') // Name der vorherigen Spielszene
-          //this.scene.get("StartMenu").createBackground()
-          //this.scene.get("StartMenu").replaceCamera()
+            this.scene.stop("SettingsScene")
+            this.scene.resume('StartMenu') // Name der vorherigen Spielszene
+            //this.scene.get("StartMenu").createBackground()
+            //this.scene.get("StartMenu").replaceCamera()
         }, this);
-      }           
+    }
 
     updateVolume(volume) {
         // Hier kannst du die Aktionen ausführen, die du bei Änderungen der Lautstärke machen möchtest
