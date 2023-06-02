@@ -1,6 +1,4 @@
 class Enemy extends Phaser.Physics.Arcade.Sprite {
-
-
     constructor(scene, x, y, texture, animation_config) {
         super(scene, x, y, texture)
         this.enemy_spawning_attributes()
@@ -23,6 +21,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this.visiable_area, true).setDepth(-1)
         this.is_in_visible_area = false;
         this.scene.group.add(this)
+        this.damage = 15
     }
 
     create() {
@@ -98,7 +97,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                                 this.is_in_attack_anim = false
                             })
                             if (this.is_atacking && this.scene.physics.overlap(this.atack_box, this.scene.player)) {
-                                this.scene.player.player_hp.decrease(15)
+                                this.scene.player.player_hp.decrease(this.damage)
 
                             }
                             this.is_atacking = false
@@ -119,7 +118,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                                 this.is_in_attack_anim = false
                             })
                             if (this.is_atacking && this.scene.physics.overlap(this.atack_box2, this.scene.player)) {
-                                this.scene.player.player_hp.decrease(15)
+                                this.scene.player.player_hp.decrease(this.damage)
                             }
                             this.is_atacking = false
                         } else {

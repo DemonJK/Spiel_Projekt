@@ -72,11 +72,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        //console.log(this.PlayerDefaultLevel.HPval);
         this.pet3.update()
         this.checkLevelUp()
         this.player_hp.update()
-
+        //console.log(this.player_hp.hp_val);
+        //console.log(this.scene.enemy.damage);
         if (this.body.touching.down) {
             this.is_jump_played = false
             this.is_jumpdown_played = false
