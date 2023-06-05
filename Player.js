@@ -9,7 +9,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.PlayerDefaultLevel = {
             HPval: 100,     // HEALTH VALUE
-            HPvalWidth: 80, // HEALTH WIDTH
             damage: 100,    // DAMAGE
             speed: 160,     // SPEED
             idle_speed: 0,  // IDLE SPEED
@@ -182,7 +181,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     levelUp() {
         this.PlayerDefaultLevel.level++
-        this.PlayerDefaultLevel.HPval += 5
+        //this.PlayerDefaultLevel.HPval += 5
         this.PlayerDefaultLevel.damage += 5
         this.player_hp.addHp(5)
         console.log("LEVL");
