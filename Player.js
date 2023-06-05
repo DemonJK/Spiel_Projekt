@@ -5,8 +5,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.inventory = new Inventory(this.scene, this.x, this.y) // INVENTAR
         this.player_spawning_attributes() // ATTRIBUTE VOM SPIELER
         this.colliders() // FUNKTION VON COLLIDERN
-        this.player_hp = new HealthBarPlayer(this.scene, this.x-300, this.y-450, "healh_menu", 100) // NEUE HEALTHBAR
-
+        this.player_hp = new HealthBarPlayer(this.scene, this.scene.cameras.main.centerX * 0.57, this.scene.cameras.main.centerY * 0.53, "healh_menu", 100) // NEUE HEALTHBAR
+        //this.TestRect = this.scene.add.rectangle(this.x, this.y, 100, 100, 0xFF0000)
         this.PlayerDefaultLevel = {
             HPval: 100,     // HEALTH VALUE
             damage: 100,    // DAMAGE
@@ -42,6 +42,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.pet3 = new Pet3(this.scene, 1050 - 100, 850, this)
     }
 
+    getRelativePositionToCanvas(gameObject, camera) {
+        return {
+            x: (gameObject.x - camera.worldView.x) * camera.zoom,
+            y: (gameObject.y - camera.worldView.y) * camera.zoom
+        }
+    }
+
     colliders() {
         //this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
         //this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
@@ -66,7 +73,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(32, 64, true)
         // CAMERA MOVING
         this.scene.cameras.main.startFollow(this) // VERFOLGUNG VOM SPIELER
-        this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
+        //this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
         this.scene.cameras.main.zoom = 2 // ZOOM DER KAMERA
     }
 
@@ -74,8 +81,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.pet3.update()
         this.checkLevelUp()
         this.player_hp.update()
-        //console.log(this.player_hp.hp_val);
-        //console.log(this.scene.enemy.damage);
+
         if (this.body.touching.down) {
             this.is_jump_played = false
             this.is_jumpdown_played = false

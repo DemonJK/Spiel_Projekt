@@ -58,20 +58,12 @@ class StartLevel extends Phaser.Scene {
         // PLAYER
         this.player = new Player(this, 1050, 850, "PlayerIdle")
 
-        // ENEMY
-        this.enemy = new Enemy(this, 1550, 850, "enemy1")
+        // enemy configs
+        this.enemy_configs = new Config()
 
         // ENEMY
-        this.enemy2 = new Enemy(this, 2000, 850, "enemy1")
+        this.enemy = new Enemy(this, 1550, 850, "enemy1", this.enemy_configs.GreenGiantConfig)
 
-        // ENEMY
-        this.enemy3 = new Enemy(this, 2200, 850, "enemy1")
-
-        // ENEMY
-        this.enemy4 = new Enemy(this, 1700, 850, "enemy1")
-
-        // ENEMY
-        this.enemy5 = new Enemy(this, 1300, 850, "enemy1")
 
 
         // COLLIDER PLAYER ENEMYs
@@ -198,6 +190,7 @@ class StartLevel extends Phaser.Scene {
 
         this.ambients[this.random_ambient_num].play()
         this.ambients[this.random_ambient_num].onBlur = false
+        this.ambients[this.random_ambient_num].volume = 0
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
@@ -237,10 +230,6 @@ class StartLevel extends Phaser.Scene {
     update() {
         this.player.update()
         this.enemy.update()
-        this.enemy2.update()
-        this.enemy3.update()
-        this.enemy4.update()
-        this.enemy5.update()
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 this.hint.visible = true

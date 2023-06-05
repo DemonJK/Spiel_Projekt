@@ -1,3 +1,4 @@
+
 var config = {
     pixelArt: true,
     width: '100%',

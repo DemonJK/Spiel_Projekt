@@ -17,7 +17,7 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
             this.player_image.setScale(4, 4)
 
             for (let index = 0; index < this.items.length; index++) {
-                //console.log(this.items);
+                console.log(this.items);
                 this.items[index].body.destroy()
                 this.items[index].setPosition(this.x_item, this.y_item).setDepth(2).setScale(2, 2)
                 this.x_item += 60
