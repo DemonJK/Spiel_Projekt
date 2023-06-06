@@ -73,7 +73,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(32, 64, true)
         // CAMERA MOVING
         this.scene.cameras.main.startFollow(this) // VERFOLGUNG VOM SPIELER
-        //this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
+        this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
         this.scene.cameras.main.zoom = 2 // ZOOM DER KAMERA
     }
 

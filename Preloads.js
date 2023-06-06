@@ -330,9 +330,10 @@ class Preloads extends Phaser.Scene {
         })
         
         // BOD DEATH ANIM
-        this,anims.create({
+        this.anims.create({
             key: "BoDDeathAnim",
-            frames: this.anims.generateFrameNumbers("BoD_Death")
+            frames: this.anims.generateFrameNumbers("BoD_Death", { start: 30, end: 39 }),
+            frameRate: 10
         })
 
         // MENU START

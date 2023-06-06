@@ -64,6 +64,8 @@ class StartLevel extends Phaser.Scene {
         // ENEMY
         this.enemy = new Enemy(this, 1550, 850, "enemy1", this.enemy_configs.GreenGiantConfig)
 
+        // BoD_Enemy
+        this.BoD = new BoD_Enemy(this, 1700, 850, "BoDIdleAnim", this.enemy_configs.BoD_Config)
 
 
         // COLLIDER PLAYER ENEMYs
@@ -230,6 +232,8 @@ class StartLevel extends Phaser.Scene {
     update() {
         this.player.update()
         this.enemy.update()
+        this.BoD.update()
+
         if (this.physics.overlap(this.textbox, this.player)) {
             if (!this.player.readen) {
                 this.hint.visible = true

@@ -41,7 +41,6 @@ class StartMenu extends Phaser.Scene {
             clearTimeout(this.id_5)
             this.replaceCamera()
         }
-        console.log("hello");
     }
 
     createBackground() {
