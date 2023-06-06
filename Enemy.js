@@ -1,4 +1,5 @@
 class Enemy extends Phaser.Physics.Arcade.Sprite {
+
     constructor(scene, x, y, texture, config) {
         super(scene, x, y, texture)
         this.enemy_spawning_attributes()
@@ -6,7 +7,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms)
         this.scene.physics.add.collider(this, this.scene.passThruPlatforms2)
         this.scene.physics.add.collider(this, this.scene.platforms4)
-        this.hp = new HealthBar(this.scene, 150, 960, 80, 16, config.hp_val, this)
+        this.hp = new HealthBar(this.scene, 150, 960, 80, 16, config.hp_val, this, config)
         this.anims.play(config.AnimationConfig.idle, true)
         this.setFlipX(true)
         this.has_hp_lose = false
@@ -138,6 +139,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             //CHECK WENN TOT FÜR ITEM SPAWN
         } else if (this.is_dead === true) {
             if (!this.is_position_spawned) {
+                this.anims.play(config.AnimationConfig.death, true)
                 this.healthpotion_lvl_1 = new Healthpotion_LVL_1(this.scene, this.x, this.y)
                 this.speedpotion_lvl_1 = new Speedpotion_LVL_1(this.scene, this.x + 25, this.y)
                 this.damagedecrease_lvl_1 = new Damagedecrease_LVL_1(this.scene, this.x + 50, this.y)

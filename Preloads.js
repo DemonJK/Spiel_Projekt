@@ -156,6 +156,36 @@ class Preloads extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
+
+        // PRELOAD BOD IDLE
+        this.load.spritesheet("BoD_Idle", "/new_assets/Mob/Bringer-Of-Death/SpriteSheet/Bringer-of-Death-SpritSheet.png", {
+            frameWidth: 140,
+            frameHeight: 93
+        })
+
+        // PRELOAD BOD WALK
+        this.load.spritesheet("BoD_Walk", "/new_assets/Mob/Bringer-Of-Death/SpriteSheet/Bringer-of-Death-SpritSheet.png", {
+            frameWidth: 140,
+            frameHeight: 93
+        })
+
+        // PRELOAD BOD ATTACK
+        this.load.spritesheet("BoD_Attack", "/new_assets/Mob/Bringer-Of-Death/SpriteSheet/Bringer-of-Death-SpritSheet.png", {
+            frameWidth: 140,
+            frameHeight: 93
+        })
+
+        // PRELOAD BOD HURT
+        this.load.spritesheet("BoD_Hurt", "/new_assets/Mob/Bringer-Of-Death/SpriteSheet/Bringer-of-Death-SpritSheet.png", {
+            frameWidth: 140,
+            frameHeight: 93
+        })
+
+        // PRELOAD BOD DEATH
+        this.load.spritesheet("BoD_Death", "/new_assets/Mob/Bringer-Of-Death/SpriteSheet/Bringer-of-Death-SpritSheet.png", {
+            frameWidth: 140,
+            frameHeight: 93
+        })
     }
 
     create() {
@@ -268,6 +298,41 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "RunDustPet3Anim",
             frames: this.anims.generateFrameNumbers("RunDustPet3", { start: 0, end: 5 })
+        })
+
+        // BOD IDLE ANIM
+        this.anims.create({
+            key: "BoDIdleAnim",
+            frames: this.anims.generateFrameNumbers("BoD_Idle", { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        })
+
+        // BOD WALK ANIM
+        this.anims.create({
+            key: "BoDWalkAnim",
+            frames: this.anims.generateFrameNumbers("BoD_Walk", { start: 8, end: 15 }),
+            frameRate: 10
+        })
+
+        // BOD ATTACK ANIM
+        this.anims.create({
+            key: "BoDAttackAnim",
+            frames: this.anims.generateFrameNumbers("BoD_Attack", { start: 16, end: 26 }),
+            frameRate: 10
+        })
+
+        // BOD HURT ANIM
+        this.anims.create({
+            key: "BoDHurtAnim",
+            frames: this.anims.generateFrameNumbers("BoD_Hurt", { start: 27, end: 29 }),
+            frameRate: 10
+        })
+        
+        // BOD DEATH ANIM
+        this,anims.create({
+            key: "BoDDeathAnim",
+            frames: this.anims.generateFrameNumbers("BoD_Death")
         })
 
         // MENU START

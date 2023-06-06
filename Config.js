@@ -13,19 +13,24 @@ class Config {
             visible_area_height: 300,
             speed: 55,
         
-        
             AnimationConfig: {
                 idle: "stand",
                 attack: "enemyatt",
-                run: "run-left"
-        
-        
+                run: "run-left",
+                death: "death-anim"
             }
-            
         }
 
-    }
+        this.BoDC = {
 
+
+            AnimationConfig: {
+                ilde: 0,
+                attack: 0,
+                run: 0,
+            }
+        }
+    }
 }
 
 
