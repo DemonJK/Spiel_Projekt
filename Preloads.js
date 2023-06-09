@@ -186,6 +186,13 @@ class Preloads extends Phaser.Scene {
             frameWidth: 140,
             frameHeight: 93
         })
+
+        // PRELOAD SKELETON ATTACK
+        this.load.spritesheet("Skeleton", "/new_assets/Mob/Skeleton enemy/Skeleton enemy.png", {
+            frameWidth: 64,
+            frameHeight: 64
+        })
+
     }
 
     create() {
@@ -328,11 +335,47 @@ class Preloads extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers("BoD_Hurt", { start: 27, end: 29 }),
             frameRate: 10
         })
-        
+
         // BOD DEATH ANIM
         this.anims.create({
             key: "BoDDeathAnim",
             frames: this.anims.generateFrameNumbers("BoD_Death", { start: 30, end: 39 }),
+            frameRate: 10
+        })
+
+        // SKELETON ATTACK ANIM
+        this.anims.create({
+            key: "SAttack",
+            frames: this.anims.generateFrameNumbers("Skeleton", { start: 0, end: 12 }),
+            frameRate: 10
+        })
+
+        // SKELETON DEATH ANIM
+        this.anims.create({
+            key: "SDeath",
+            frames: this.anims.generateFrameNumbers("Skeleton", { start: 13, end: 25 }),
+            frameRate: 10
+        })
+
+        // SKELETON RUN ANIM
+        this.anims.create({
+            key: "SRun",
+            frames: this.anims.generateFrameNumbers("Skeleton", { start: 26, end: 37 }),
+            frameRate: 10
+        })
+
+        // SKELETON IDLE ANIM
+        this.anims.create({
+            key: "SIdle",
+            frames: this.anims.generateFrameNumbers("Skeleton", { start: 39, end: 42 }),
+            frameRate: 10,
+            repeat: -1
+        })
+
+        // SKELETON HURT ANIM
+        this.anims.create({
+            key: "SHurt",
+            frames: this.anims.generateFrameNumbers("Skeleton", { start: 52, end: 54 }),
             frameRate: 10
         })
 

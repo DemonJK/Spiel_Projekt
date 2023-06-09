@@ -2,11 +2,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y, texture, config) {
         super(scene, x, y, texture)
+        this.config = config
         this.enemy_spawning_attributes()
         this.scene.physics.add.collider(this, this.scene.layer, () => { this.body.touching.down = true })
-        this.scene.physics.add.collider(this, this.scene.passThruPlatforms)
-        this.scene.physics.add.collider(this, this.scene.passThruPlatforms2)
-        this.scene.physics.add.collider(this, this.scene.platforms4)
         this.hp = new HealthBar(this.scene, 150, 960, 80, 16, config.hp_val, this)
         this.anims.play(config.AnimationConfig.idle, true)
         this.setFlipX(true)
@@ -34,10 +32,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this)
         this.is_dead = false
         this.scene.physics.world.enable(this)
-        this.body.setSize(90, 137, true)
-        this.setBounce(0.2)
+        this.body.setSize(this.config.body_size_width, this.config.body_size_height, true)
+        this.setBounce(this.config.bounce)
         this.setPosition(this.x, this.y)
         this.setPushable(false)
+        this.setOffset(this.config.offsetX, this.config.offsetY)
     }
 
     update_health_bar_pos() {
@@ -48,17 +47,16 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         this.update_health_bar_pos()
-        this.atack_box.body.x = this.x - 100
-        this.atack_box.body.y = this.y + 10
-        this.atack_box2.body.x = this.x + 60
-        this.atack_box2.body.y = this.y + 10
+        this.atack_box.body.x = this.x - this.config.atack_box_left_margin
+        this.atack_box.body.y = this.y + this.config.atack_box_top_margin
+        this.atack_box2.body.x = this.x + this.config.atack_box_right_margin
+        this.atack_box2.body.y = this.y + this.config.atack_box_top_margin
         this.visiable_area.body.x = this.x - 500
         this.visiable_area.body.y = this.y - 150
 
         if (this.scene.player.cursors.space.isDown && this.scene.player.body.touching.down || this.scene.player.is_atacking && !this.scene.player.inventory.is_opened) {
             //console.log("SPACEBAR IS ACTIVE")
             this.scene.player.is_atacking = true
-            //this.scene.player.setOffset(30, 0)
             this.scene.player.anims.play("Attack", true)
             this.scene.player.setVelocityX(0)
             if (this.scene.player.looking_direction === "right") {
@@ -80,10 +78,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             })
             this.swing_box.destroy(true)
         }
-        
-        if(!this.scene.physics.overlap(this.visiable_area, this.scene.player) && !this.is_dead) {
-            this.setVelocity(0,0)
-            this.anims.play('stand', true)
+
+        if (!this.scene.physics.overlap(this.visiable_area, this.scene.player) && !this.is_dead) {
+            this.setVelocityX(0)
+            this.anims.play(this.config.AnimationConfig.idle, true)
         }
 
         if (!this.is_dead && this.scene.physics.overlap(this.visiable_area, this.scene.player)) {
@@ -93,7 +91,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                         if (this.is_hitting_from_left() && this.is_player_over_enemy()) {
                             this.setVelocityX(0)
                             this.is_in_attack_anim = true
-                            this.anims.play("enemyatt", true)
+                            this.anims.play(this.config.AnimationConfig.attack, true)
                             this.on("animationcomplete", () => {
                                 this.is_atacking = true
                                 this.is_in_attack_anim = false
@@ -105,8 +103,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                             this.is_atacking = false
                         } else {
                             if (this.player_is_not_in_left_area()) {
-                                this.setVelocityX(-55).setFlipX(-1)
-                                this.anims.play("run-left", true)
+                                this.setVelocityX(-this.config.speed).setFlipX(-1)
+                                this.anims.play(this.config.AnimationConfig.run, true)
                             }
                             this.is_atacking = false
                         }
@@ -114,7 +112,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                         if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
                             this.setVelocityX(0)
                             this.is_in_attack_anim = true
-                            this.anims.play("enemyatt", true)
+                            this.anims.play(this.config.AnimationConfig.attack, true)
                             this.on("animationcomplete", () => {
                                 this.is_atacking = true
                                 this.is_in_attack_anim = false
@@ -125,8 +123,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                             this.is_atacking = false
                         } else {
                             if (this.player_is_not_in_right_area() && !this.is_in_attack_anim) {
-                                this.setVelocityX(55).setFlipX(0)
-                                this.anims.play("run-left", true)
+                                this.setVelocityX(this.config.speed).setFlipX(0)
+                                this.anims.play(this.config.AnimationConfig.run, true)
                             }
                             this.is_atacking = false
                         }
@@ -134,13 +132,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 }
             } else {
                 if (this.velocity === 0) {
-                    this.anims.play("stand", true)
+                    this.anims.play(this.config.AnimationConfig.idle, true)
                 }
             }
             //CHECK WENN TOT FÜR ITEM SPAWN
         } else if (this.is_dead === true) {
             if (!this.is_position_spawned) {
-                this.anims.play("death-anim", true)
+                this.anims.play(this.config.AnimationConfig.death, true)
                 this.healthpotion_lvl_1 = new Healthpotion_LVL_1(this.scene, this.x, this.y)
                 this.speedpotion_lvl_1 = new Speedpotion_LVL_1(this.scene, this.x + 25, this.y)
                 this.damagedecrease_lvl_1 = new Damagedecrease_LVL_1(this.scene, this.x + 50, this.y)
@@ -165,20 +163,20 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         return this.scene.player.x > this.x && this.body.touching.down
     }
     is_hitting_from_left() {
-        return (this.scene.player.x + 25) > (this.x - 70)
+        return (this.scene.player.x + this.config.attack_range_ot) > (this.x - this.config.attack_range)
     }
     is_hitting_from_right() {
-        return (this.scene.player.x - 25) < (this.x + 70)
+        return (this.scene.player.x - this.config.attack_range_ot) < (this.x + this.config.attack_range)
     }
     is_player_over_enemy() {
         return this.scene.player.y < this.y + 500
     }
     player_is_not_in_left_area() {
-        this.left_point = this.body.x - 70
-        return this.scene.player.x < this.left_point 
+        this.left_point = this.body.x - this.config.attack_range
+        return this.scene.player.x < this.left_point
     }
     player_is_not_in_right_area() {
-        this.left_point = this.body.x + 70
+        this.left_point = this.body.x + this.config.attack_range
         return this.scene.player.x > this.left_point
     }
 }

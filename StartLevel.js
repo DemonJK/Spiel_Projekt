@@ -62,10 +62,10 @@ class StartLevel extends Phaser.Scene {
         this.enemy_configs = new Config()
 
         // ENEMY
-        this.enemy = new Enemy(this, 1550, 850, "enemy1", this.enemy_configs.GreenGiantConfig)
+        this.enemy = new Enemy(this, 1950, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
 
         // BoD_Enemy
-        this.BoD = new BoD_Enemy(this, 1700, 850, "BoDIdleAnim", this.enemy_configs.BoD_Config)
+        this.BoD = new Enemy(this, 1700, 750, "SIdle", this.enemy_configs.Skeleton_Config)
 
 
         // COLLIDER PLAYER ENEMYs
