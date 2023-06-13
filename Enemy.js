@@ -89,7 +89,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 if (this.is_player_left() || this.is_player_right()) {
                     if (this.is_player_left()) {
                         if (this.is_hitting_from_left() && this.is_player_over_enemy()) {
-                            this.setVelocityX(0)
+                            this.setVelocityX(this.config.idle_speed)
                             this.is_in_attack_anim = true
                             this.anims.play(this.config.AnimationConfig.attack, true)
                             this.on("animationcomplete", () => {
@@ -110,7 +110,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                         }
                     } else if (this.is_player_right()) {
                         if (this.is_hitting_from_right() && this.is_player_over_enemy()) {
-                            this.setVelocityX(0)
+                            this.setVelocityX(this.config.idle_speed)
                             this.is_in_attack_anim = true
                             this.anims.play(this.config.AnimationConfig.attack, true)
                             this.on("animationcomplete", () => {
@@ -131,7 +131,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     }
                 }
             } else {
-                if (this.velocity === 0) {
+                if (this.velocity === this.config.idle_speed) {
                     this.anims.play(this.config.AnimationConfig.idle, true)
                 }
             }
