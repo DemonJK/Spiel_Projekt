@@ -11,11 +11,22 @@ class Trader extends Phaser.Scene {
         const map = this.make.tilemap({ key: "TRADER", tileWidth: 16, tileHeight: 16 })
 
         this.tilesetTiles = map.addTilesetImage("Tiles", "Tiles")
+        this.tilesetGreenTree = map.addTilesetImage("Green-Tree", "Green-Tree")
+        this.tilesetBuildings = map.addTilesetImage("Buildings", "Buildings")
 
+        // BENUTZT GREEN-TREE
+        this.greentreeLayer = map.createLayer("greenTreeLayer1", this.tilesetGreenTree, 0, 0)
         // BENUTZT TILES
-        this.layerground = map.createLayer("groundLayer1", this.tilesetTiles, 0, 0)
-        this.layerground.setCollisionByProperty({ colliders: true })
-
+        this.layerground1 = map.createLayer("groundLayer1", this.tilesetTiles, 0, 0)
+        this.layerground1.setCollisionByProperty({ colliders: true })
+        // BENUTZT BUILDINGS
+        this.layerbuildings1 = map.createLayer("buildingsLayer1", this.tilesetBuildings, 0, 0)
+        this.layerbuildings1.setCollisionByProperty({ colliders: true })
+        // BENUTZT BUILDINGS
+        this.layerbuildings3 = map.createLayer("buildingsLayer3", this.tilesetBuildings, 0, 0)
+        // BENUTZT BUILDINGS
+        this.layerbuildings2 = map.createLayer("buildingsLayer2", this.tilesetBuildings, 0, 0)
+        
         this.spawnObjects = map.getObjectLayer("spawnPoints").objects
 
         this.spawnObjects.forEach(obj => console.log(obj.properties));

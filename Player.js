@@ -62,7 +62,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.body.touching.down = true
         })
 
-        this.scene.physics.add.collider(this, this.scene.layerground, () => {
+        this.scene.physics.add.collider(this, this.scene.layerground1, () => {
+            this.body.touching.down = true
+        })
+
+        this.scene.physics.add.collider(this, this.scene.layerbuildings1, () => {
             this.body.touching.down = true
         })
     }
