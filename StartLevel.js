@@ -63,6 +63,13 @@ class StartLevel extends Phaser.Scene {
 
         // ENEMY
         this.enemy = new Enemy(this, 1950, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
+        this.enemy2 = new Enemy(this, 2000, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
+        this.enemy3 = new Enemy(this, 2050, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
+        this.enemy4 = new Enemy(this, 2100, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
+        this.enemy5 = new Enemy(this, 2150, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
+        this.enemy6 = new Enemy(this, 2200, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
+        this.enemy7 = new Enemy(this, 2250, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
+
 
         // BoD_Enemy
         this.BoD = new Enemy(this, 1700, 750, "SIdle", this.enemy_configs.Skeleton_Config)
@@ -192,7 +199,8 @@ class StartLevel extends Phaser.Scene {
 
         this.ambients[this.random_ambient_num].play()
         this.ambients[this.random_ambient_num].onBlur = false
-        this.ambients[this.random_ambient_num].volume = 0
+        this.ambients[this.random_ambient_num].volume = 0.10
+        this.ambients[this.random_ambient_num].setRate(5.0)
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
@@ -232,6 +240,12 @@ class StartLevel extends Phaser.Scene {
     update() {
         this.player.update()
         this.enemy.update()
+        this.enemy2.update()
+        this.enemy3.update()
+        this.enemy4.update()
+        this.enemy5.update()
+        this.enemy6.update()
+        this.enemy7.update()
         this.BoD.update()
 
         if (this.physics.overlap(this.textbox, this.player)) {

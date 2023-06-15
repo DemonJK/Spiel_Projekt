@@ -119,7 +119,7 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.scene.physics.overlap(this.healthpotion_lvl_1, this.scene.player)) {
+        if (this.scene.physics.overlap(this.healthpotion_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.healthpotion_lvl_1.setPosition(0, 0)
             this.scene.player.inventory.additem(this.healthpotion_lvl_1)
         }
@@ -255,7 +255,7 @@ class Healthpotion_LVL_2 extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.scene.physics.overlap(this.healthpotion_lvl_2, this.scene.player)) {
+        if (this.scene.physics.overlap(this.healthpotion_lvl_2, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.healthpotion_lvl_2.setPosition(0, 0)
             this.scene.player.inventory.additem(this.healthpotion_lvl_2)
         }
@@ -400,7 +400,7 @@ class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.scene.physics.overlap(this.speedpotion_lvl_1, this.scene.player)) {
+        if (this.scene.physics.overlap(this.speedpotion_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.speedpotion_lvl_1.setPosition(0, 0)
             this.scene.player.inventory.additem(this.speedpotion_lvl_1)
         }
@@ -434,12 +434,11 @@ class Damagedecrease_LVL_1 extends Phaser.Physics.Arcade.Sprite {
 
         this.damagedecrease_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
-                this.scene.player.player_hp.decrease(-2)
                 this.InformationPotionDestroy()
                 this.scene.player.inventory.removeItem(this.damagedecrease_lvl_1)
-                /*setTimeout(() => {
+                setTimeout(() => {
                     this.scene.enemy.damage += 15
-                }, 50000);*/
+                }, 50000);
             }
         })
         this.damagedecrease_lvl_1.on("pointerover", () => {
@@ -545,7 +544,7 @@ class Damagedecrease_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.scene.physics.overlap(this.damagedecrease_lvl_1, this.scene.player)) {
+        if (this.scene.physics.overlap(this.damagedecrease_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.damagedecrease_lvl_1.setPosition(0, 0)
             this.scene.player.inventory.additem(this.damagedecrease_lvl_1)
         }
@@ -576,16 +575,26 @@ class Regeneration_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this.regeneration_lvl_1, this.scene.layer)
         this.regeneration_lvl_1.setInteractive()
         this.onItem = false
+        this.start_regenerate = true
 
         this.regeneration_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
-                // REGENERATIONS EFFEKT ERSTELLEN
-                this.scene.player.player_hp.decrease(-2)
+                this.scene.time.addEvent({
+                    delay: 1000,
+                    startAt: 1000,
+                    loop: true,
+                    callback: () => {
+                        if (this.start_regenerate) {
+                            this.scene.player.player_hp.decrease(-2)
+                        }
+                        setTimeout(() => {
+                            this.start_regenerate = false
+                        }, 5000);
+                    },
+                    callbackContext: this
+                });
                 this.InformationPotionDestroy()
                 this.scene.player.inventory.removeItem(this.regeneration_lvl_1)
-                /*setTimeout(() => {
-                    this.scene.enemy.damage += 15
-                }, 50000);*/
             }
         })
         this.regeneration_lvl_1.on("pointerover", () => {
@@ -691,7 +700,7 @@ class Regeneration_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.scene.physics.overlap(this.regeneration_lvl_1, this.scene.player)) {
+        if (this.scene.physics.overlap(this.regeneration_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.regeneration_lvl_1.setPosition(0, 0)
             this.scene.player.inventory.additem(this.regeneration_lvl_1)
         }

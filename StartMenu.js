@@ -2,7 +2,9 @@
 class StartMenu extends Phaser.Scene {
     constructor() {
         super("StartMenu")
+        this.volume = 0
     }
+
 
     create() {
         console.clear()
@@ -32,6 +34,8 @@ class StartMenu extends Phaser.Scene {
     }
 
     update() {
+        console.log(this.volume);
+
         if (this.keyC.isDown && !this.animationSkipped) {
             this.animationSkipped = true
             clearTimeout(this.id_1)
@@ -126,7 +130,7 @@ class StartMenu extends Phaser.Scene {
         this.settingsButton = this.add.text(0, 0, "Einstellungen", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
         this.settingsButton.on("pointerover", () => { this.selectButton(this.settingsButton) });
         this.settingsButton.on("pointerout", () => { this.deselectButton(this.settingsButton) });
-        this.settingsButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.start("SettingsScene") });
+        this.settingsButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.launch("SettingsScene") });
         this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 50).setOrigin(0.5, 0.5)
 
         // Credits Knopf
@@ -147,6 +151,7 @@ class StartMenu extends Phaser.Scene {
         this.selectedButton = this.startButton;
         this.selectButton(this.selectedButton);
     }
+
 }
 
 class SettingsScene extends Phaser.Scene {
@@ -155,6 +160,7 @@ class SettingsScene extends Phaser.Scene {
         this.initialVolume = 0.5; // Anfangswert der Lautstärke
         this.volumeSlider = null; // Variable für den Lautstärkeregler
         this.sliderHandleSize = 30; // Größe des Reglergriffs
+        this.volume = 0
     }
 
     create() {
@@ -166,6 +172,7 @@ class SettingsScene extends Phaser.Scene {
         const sliderHeight = 20;
         const sliderX = 400;
         const sliderY = 300;
+    
 
         // Hintergrund des Reglers zeichnen
         this.volumeSlider = this.add.graphics();
@@ -173,12 +180,12 @@ class SettingsScene extends Phaser.Scene {
         this.volumeSlider.fillRect(sliderX, sliderY, sliderWidth, sliderHeight);
 
         // Fortschrittsbalken zeichnen
-        const progressWidth = this.initialVolume * sliderWidth;
+        this.progressWidth = this.initialVolume * sliderWidth;
         this.volumeSlider.fillStyle(0x00ff00);
-        this.volumeSlider.fillRect(sliderX, sliderY, progressWidth, sliderHeight);
+        this.volumeSlider.fillRect(sliderX, sliderY, this.progressWidth, sliderHeight);
 
         // Reglergriff erstellen
-        const handleX = sliderX + progressWidth - this.sliderHandleSize / 2;
+        const handleX = sliderX + this.progressWidth - this.sliderHandleSize / 2;
         const handleY = sliderY + sliderHeight / 2;
         const handleRadius = this.sliderHandleSize / 2;
         this.volumeSlider.fillStyle(0xffffff);
@@ -200,14 +207,19 @@ class SettingsScene extends Phaser.Scene {
             .setDepth(1)
 
         backButton.on('pointerup', function () {
-            this.scene.stop("SettingsScene")
+            console.log()
+            this.scene.get('StartMenu').volume = this.volume
             this.scene.resume('StartMenu') // Name der vorherigen Spielszene
+            this.scene.stop()
+
             //this.scene.get("StartMenu").createBackground()
             //this.scene.get("StartMenu").replaceCamera()
         }, this);
     }
 
     updateVolume(volume) {
+        this.volume = volume
+
         // Hier kannst du die Aktionen ausführen, die du bei Änderungen der Lautstärke machen möchtest
         console.log('Neue Lautstärke:', volume)
         // Beispiel: Lautstärke auf Phaser-Soundobjekt anwenden
@@ -218,16 +230,16 @@ class SettingsScene extends Phaser.Scene {
         const sliderY = 300;
         const sliderWidth = 200;
         const sliderHeight = 20;
-        const progressWidth = volume * sliderWidth;
+        this.progressWidth = volume * sliderWidth;
 
         this.volumeSlider.clear();
         this.volumeSlider.fillStyle(0x808080);
         this.volumeSlider.fillRect(sliderX, sliderY, sliderWidth, sliderHeight);
         this.volumeSlider.fillStyle(0x00ff00);
-        this.volumeSlider.fillRect(sliderX, sliderY, progressWidth, sliderHeight);
+        this.volumeSlider.fillRect(sliderX, sliderY, this.progressWidth, sliderHeight);
 
         // Reglergriff aktualisieren
-        const handleX = sliderX + progressWidth - this.sliderHandleSize / 2;
+        const handleX = sliderX + this.progressWidth - this.sliderHandleSize / 2;
         const handleY = sliderY + sliderHeight / 2;
         const handleRadius = this.sliderHandleSize / 2;
         this.volumeSlider.fillStyle(0xffffff);

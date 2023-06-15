@@ -121,6 +121,12 @@ class Preloads extends Phaser.Scene {
             frameHeight: 64
         })
 
+        // PRELOAD PLAYER DEATH
+        this.load.spritesheet("PlayerDeath", "/new_assets/Character/Dead/Dead-Sheet.png", {
+            frameWidth: 80,
+            frameHeight: 64
+        })
+
         // PRELOAD ENEMY IDLE
         this.load.spritesheet("enemy1", "/assets/enemy/idle/Idle.png", {
             frameWidth: 256,
@@ -197,6 +203,12 @@ class Preloads extends Phaser.Scene {
 
     create() {
 
+        // PLAYER DEATH ANIM
+        this.anims.create({
+            key: "Death",
+            frames: this.anims.generateFrameNumbers("PlayerDeath", { start: 0, end: 7 }),
+            frameRate: 10
+        })
         // PLAYER ATTACK ANIM
         this.anims.create({
             key: "Attack",

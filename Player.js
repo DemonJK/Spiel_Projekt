@@ -40,6 +40,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyN = this.scene.input.keyboard.addKey('N') //TRADER SCENE
         this.cursors = this.scene.input.keyboard.createCursorKeys() // PFEIL TASTEN
         this.pet3 = new Pet3(this.scene, 1050 - 100, 850, this)
+        this.isAlive = true
+        this.is_death_anim_played = false
+
+        this.scene.time.addEvent({
+            delay: 3750,
+            startAt: 5000,
+            loop: true,
+            callback: () => {
+                this.player_hp.decrease(-1)
+            },
+            callbackContext: this
+        });
     }
 
     getRelativePositionToCanvas(gameObject, camera) {
@@ -92,94 +104,109 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.is_jumpdown_played = false
         }
 
-        // INVENTORY OPENING
-        if (Phaser.Input.Keyboard.JustDown(this.keyI) && this.body.touching.down) {
-            this.inventory.openInventory()
+        if (this.player_hp.hp_val <= 0) {
+            this.isAlive = false
         }
 
-        if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened)) {
-            console.log("UP")
-            this.setVelocityY(-375)
-            this.anims.play("PlayerUpJump", true)
+        if (this.isAlive) {
 
-        } else if (this.keyA.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
-            this.setVelocityX(-this.PlayerDefaultLevel.speed).setFlipX(-1)
-            if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
-                this.anims.play("Fall", true)
-                this.is_jumpdown_played = true
+            // INVENTORY OPENING
+            if (Phaser.Input.Keyboard.JustDown(this.keyI) && this.body.touching.down) {
+                this.inventory.openInventory()
             }
 
-        } else if (this.keyA.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
-            console.log("LEFT")
-            this.looking_direction = "left"
-            this.setVelocityX(-this.PlayerDefaultLevel.speed).setFlipX(-1)
-            this.anims.play("MoveLeft", true)
+            if ((this.keyW.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened)) {
+                console.log("UP")
+                this.setVelocityY(-375)
+                this.anims.play("PlayerUpJump", true)
 
-        } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
-            this.setVelocityX(this.PlayerDefaultLevel.speed).setFlipX(0)
-            if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
-                this.anims.play("Fall", true)
-                this.is_jumpdown_played = true
-            }
+            } else if (this.keyA.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
+                this.setVelocityX(-this.PlayerDefaultLevel.speed).setFlipX(-1)
+                if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
+                    this.anims.play("Fall", true)
+                    this.is_jumpdown_played = true
+                }
 
-        } else if (this.body.velocity.y >= 75) {
-            if (!this.is_jumpdown_played) {
-                this.anims.play("Fall", true)
-                this.is_jumpdown_played = true
-            }
+            } else if (this.keyA.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
+                console.log("LEFT")
+                this.looking_direction = "left"
+                this.setVelocityX(-this.PlayerDefaultLevel.speed).setFlipX(-1)
+                this.anims.play("MoveLeft", true)
 
-        } else if (this.keyD.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
-            console.log("RIGHT")
-            this.looking_direction = "right"
-            this.setVelocityX(this.PlayerDefaultLevel.speed).setFlipX(0)
-            this.anims.play("MoveRight", true)
-            this.setOffset(30, 0)
+            } else if (this.keyD.isDown && !this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
+                this.setVelocityX(this.PlayerDefaultLevel.speed).setFlipX(0)
+                if (this.body.velocity.y >= 75 && !this.is_jumpdown_played) {
+                    this.anims.play("Fall", true)
+                    this.is_jumpdown_played = true
+                }
 
-        } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking && !this.inventory.is_opened) {
-            //console.log("SPACEBAR IS ACTIVE")
-            this.is_atacking = true
-            this.setOffset(30, 0)
-            this.anims.play("Attack", true)
-            this.setVelocityX(this.PlayerDefaultLevel.idle_speed)
-            if (this.looking_direction === "right") {
-                this.swing_box = this.scene.add.rectangle(this.x + 20, this.y, 40, 40).setDepth(-1)
-                this.scene.physics.add.existing(this.swing_box).setDepth(-1)
-            } else {
-                this.swing_box = this.scene.add.rectangle(this.x - 20, this.y, 40, 40).setDepth(-1)
-                this.scene.physics.add.existing(this.swing_box).setDepth(-1)
-            }
+            } else if (this.body.velocity.y >= 75) {
+                if (!this.is_jumpdown_played) {
+                    this.anims.play("Fall", true)
+                    this.is_jumpdown_played = true
+                }
 
-            this.on('animationcomplete', () => {
-                this.is_atacking = false
-            })
-            this.swing_box.destroy(true)
+            } else if (this.keyD.isDown && this.body.touching.down && !this.is_atacking && !this.inventory.is_opened) {
+                console.log("RIGHT")
+                this.looking_direction = "right"
+                this.setVelocityX(this.PlayerDefaultLevel.speed).setFlipX(0)
+                this.anims.play("MoveRight", true)
+                this.setOffset(30, 0)
 
-        } else {
-            if (this.body.touching.down) {
-                this.is_atacking = false
-                this.anims.play("Idle", true)
-                this.setOffset(15, 0)
+            } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking && !this.inventory.is_opened) {
+                //console.log("SPACEBAR IS ACTIVE")
+                this.is_atacking = true
+                this.setOffset(30, 0)
+                this.anims.play("Attack", true)
                 this.setVelocityX(this.PlayerDefaultLevel.idle_speed)
-            }
-            if (this.body.velocity.y >= 75) {
-                this.anims.play("Fall", true)
-            }
-        }
+                if (this.looking_direction === "right") {
+                    this.swing_box = this.scene.add.rectangle(this.x + 20, this.y, 40, 40).setDepth(-1)
+                    this.scene.physics.add.existing(this.swing_box).setDepth(-1)
+                } else {
+                    this.swing_box = this.scene.add.rectangle(this.x - 20, this.y, 40, 40).setDepth(-1)
+                    this.scene.physics.add.existing(this.swing_box).setDepth(-1)
+                }
 
-        if ((this.cursors.down.isDown)) {
-            console.log("DOWN CURSOR IS ACTIVE")
-            // durch den Boden fallen
-            // this.passthrough()
-        }
+                this.on('animationcomplete', () => {
+                    this.is_atacking = false
+                })
+                this.swing_box.destroy(true)
 
-        if (this.keyN.isDown && this.body.touching.down && !this.is_atacking) {
-            console.log("KeyN isDown");
-            setTimeout(() => {
-                this.scene.cameras.main.fadeOut(6000)
+            } else {
+                if (this.body.touching.down) {
+                    this.is_atacking = false
+                    this.anims.play("Idle", true)
+                    this.setOffset(15, 0)
+                    this.setVelocityX(this.PlayerDefaultLevel.idle_speed)
+                }
+                if (this.body.velocity.y >= 75) {
+                    this.anims.play("Fall", true)
+                }
+            }
+
+            if ((this.cursors.down.isDown)) {
+                console.log("DOWN CURSOR IS ACTIVE")
+                // durch den Boden fallen
+                // this.passthrough()
+            }
+
+            if (this.keyN.isDown && this.body.touching.down && !this.is_atacking) {
+                console.log("KeyN isDown");
                 setTimeout(() => {
-                    this.scene.scene.start("Trader")
-                }, 6100);
-            }, 1000);
+                    this.scene.cameras.main.fadeOut(6000)
+                    setTimeout(() => {
+                        this.scene.scene.start("Trader")
+                    }, 6100);
+                }, 1000);
+            }
+        } else {
+            if (!this.is_death_anim_played) {
+                this.anims.play("Death", true)
+                console.log(this.body.offset);
+                this.setOffset(15, -13)
+                console.log("YOU SUCK");
+                this.is_death_anim_played = true
+            }
         }
     }
 

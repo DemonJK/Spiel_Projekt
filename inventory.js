@@ -17,14 +17,17 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
             this.player_image.setScale(4, 4)
 
             for (let index = 0; index < this.items.length; index++) {
-                console.log(this.items);
-                this.items[index].body.destroy()
-                this.items[index].setPosition(this.x_item, this.y_item).setDepth(2).setScale(2, 2)
-                this.x_item += 60
-                if (index === 5 || index === 11 || index === 17 || index === 23) {
-                    this.y_item += 60
-                    this.x_item -= 360
+                if (index <= 29) {
+                    console.log(this.items);
+                    this.items[index].body.destroy()
+                    this.items[index].setPosition(this.x_item, this.y_item).setDepth(2).setScale(2, 2)
+                    this.x_item += 60
+                    if (index === 5 || index === 11 || index === 17 || index === 23) {
+                        this.y_item += 60
+                        this.x_item -= 360
+                    }
                 }
+
             }
         } else {
             this.display.destroy()
@@ -42,9 +45,9 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
 
     removeItem(item) {
         this.openInventory()
-        
+
         const index = this.items.indexOf(item);
-    
+
         this.items.splice(index, 1);
         //console.log(this.items);
         this.openInventory()
