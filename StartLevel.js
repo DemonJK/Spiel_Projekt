@@ -70,10 +70,8 @@ class StartLevel extends Phaser.Scene {
         this.enemy6 = new Enemy(this, 2200, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
         this.enemy7 = new Enemy(this, 2250, 750, "enemy1", this.enemy_configs.GreenGiantConfig)
 
-
         // BoD_Enemy
         this.BoD = new Enemy(this, 1700, 750, "SIdle", this.enemy_configs.Skeleton_Config)
-
 
         // COLLIDER PLAYER ENEMYs
         this.physics.add.collider(this.group, this.player)
@@ -200,7 +198,6 @@ class StartLevel extends Phaser.Scene {
         this.ambients[this.random_ambient_num].play()
         this.ambients[this.random_ambient_num].onBlur = false
         this.ambients[this.random_ambient_num].volume = 0.10
-        this.ambients[this.random_ambient_num].setRate(5.0)
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)

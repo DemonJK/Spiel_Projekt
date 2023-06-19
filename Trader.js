@@ -26,23 +26,26 @@ class Trader extends Phaser.Scene {
         this.layerbuildings3 = map.createLayer("buildingsLayer3", this.tilesetBuildings, 0, 0)
         // BENUTZT BUILDINGS
         this.layerbuildings2 = map.createLayer("buildingsLayer2", this.tilesetBuildings, 0, 0)
-        
+
         this.spawnObjects = map.getObjectLayer("spawnPoints").objects
 
         this.spawnObjects.forEach(obj => console.log(obj.properties));
 
         // Finde den Spawn-Punkt für den Spieler
-        this.playerSpawnPoint = {x: this.spawnObjects[0].x, y: this.spawnObjects[0].y}
+        this.playerSpawnPoint = { x: this.spawnObjects[0].x, y: this.spawnObjects[0].y }
 
         if (this.playerSpawnPoint) {
             // PLAYER
             this.player = new Player(this, this.playerSpawnPoint.x, this.playerSpawnPoint.y, "PlayerIdle")
         }
+
+        this.trader1 = new TraderNPC1(this, this.playerSpawnPoint.x, this.playerSpawnPoint.y, "TraderIdleAnim")
     }
 
     update() {
         if (this.playerSpawnPoint && this.player) {
             this.player.update()
         }
+        this.trader1.update()
     }
 }

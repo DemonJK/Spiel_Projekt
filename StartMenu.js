@@ -5,7 +5,6 @@ class StartMenu extends Phaser.Scene {
         this.volume = 0
     }
 
-
     create() {
         console.clear()
         this.animationSkipped = false;
@@ -151,7 +150,6 @@ class StartMenu extends Phaser.Scene {
         this.selectedButton = this.startButton;
         this.selectButton(this.selectedButton);
     }
-
 }
 
 class SettingsScene extends Phaser.Scene {
@@ -172,7 +170,6 @@ class SettingsScene extends Phaser.Scene {
         const sliderHeight = 20;
         const sliderX = 400;
         const sliderY = 300;
-    
 
         // Hintergrund des Reglers zeichnen
         this.volumeSlider = this.add.graphics();

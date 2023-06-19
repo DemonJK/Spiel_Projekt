@@ -27,7 +27,6 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
                         this.x_item -= 360
                     }
                 }
-
             }
         } else {
             this.display.destroy()

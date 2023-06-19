@@ -64,7 +64,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     colliders() {
         //this.scene.physics.add.collider(this, this.scene.passThruPlatforms, this.onPlatform)
         //this.scene.physics.add.collider(this, this.scene.passThruPlatforms2, this.onPlatform)
-        this.scene.physics.add.collider(this, this.scene.buildings3)
+        this.scene.physics.add.collider(this, this.scene.buildings3, () => {
+            this.body.touching.down = true
+        })
 
         this.scene.physics.add.collider(this, this.scene.buildings, () => {
             this.body.touching.down = true
@@ -90,7 +92,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // CAMERA MOVING
         this.scene.cameras.main.startFollow(this) // VERFOLGUNG VOM SPIELER
         this.scene.cameras.main.followOffset.set(0, 150) // OFFSET DER KAMERA
-        this.scene.cameras.main.zoom = 2 // ZOOM DER KAMERA
+        this.zoomVal = 2 // DEFAULT ZOOM 2
+        this.scene.cameras.main.zoom = this.zoomVal // ZOOM DER KAMERA
+        if (this.scene.scene.key === "Trader") {
+            this.scene.cameras.main.zoom = this.zoomVal + 1
+        }
         this.setPushable(false)
     }
 
@@ -202,7 +208,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         } else {
             if (!this.is_death_anim_played) {
                 this.anims.play("Death", true)
-                console.log(this.body.offset);
                 this.setOffset(15, -13)
                 console.log("YOU SUCK");
                 this.is_death_anim_played = true

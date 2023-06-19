@@ -74,7 +74,6 @@ class Pet3 extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(0) // IDLE VELOCITY = 0
             this.anims.play("IdlePet3Anim", true) // IDLE ANIM
         }
-
         if (this.if_player_is_not_in_left_area) {
             //console.log("Far away");
         }

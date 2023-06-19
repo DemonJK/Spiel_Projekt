@@ -199,6 +199,11 @@ class Preloads extends Phaser.Scene {
             frameHeight: 64
         })
 
+        //PRELOAD TRADER IDLE
+        this.load.spritesheet("TraderIdle", "/NPC/NPCs/Idle1/spritesheet.png", {
+            frameWidth: 94,
+            frameHeight: 91
+        })
     }
 
     create() {
@@ -389,6 +394,14 @@ class Preloads extends Phaser.Scene {
             key: "SHurt",
             frames: this.anims.generateFrameNumbers("Skeleton", { start: 52, end: 54 }),
             frameRate: 10
+        })
+
+        // TRADER IDLE ANIM
+        this.anims.create({
+            key: "TraderIdleAnim",
+            frames: this.anims.generateFrameNumbers("TraderIdle", { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
         })
 
         // MENU START
