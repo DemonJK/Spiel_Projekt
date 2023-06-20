@@ -17,7 +17,6 @@ class TraderNPC1 extends Phaser.Physics.Arcade.Sprite {
 
         this.TraderCheckInteract = this.TraderCheckInteract
         this.TraderInteract = this.TraderInteract
-        this.Checked = false
 
         this.SpawnAttributes()
         this.CollisionBoxes()
@@ -75,41 +74,22 @@ class TraderNPC1 extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this.TraderInteract, true).setDepth(-1)
     }
 
-    TraderSpeechBoxDestroy() {
-        this.BackgroundBox.destroy()
-        this.TraderSaying1.destroy()
-    }
-
     update() {
-        this.TraderCheckInteract.body.x = this.x + this.TraderNPC1_Config.interactionCheckRectX
+        this.TraderCheckInteract.body.x = this.x + this.TraderNPC1_Config.interactionCheckRectX + this.TraderInteract.width
         this.TraderCheckInteract.body.y = this.y + this.TraderNPC1_Config.interactionCheckRectY
         this.TraderInteract.body.x = this.x + this.TraderNPC1_Config.interactionRectX
         this.TraderInteract.body.y = this.y + this.TraderNPC1_Config.interactionRectY
+        
         this.overlapCheck = this.scene.physics.overlap(this.TraderCheckInteract, this.scene.player)
         if (this.overlapCheck === true) {
-            this.Checked = true
-            this.CheckCreated = false
-            if (!this.CheckCreated) {
-                this.BackgroundBox = this.scene.add.rectangle(this.x, this.y, 250, 50, 0xBBBBBB, 0.655).setDepth(4)
-                this.TraderSaying1 = this.scene.add.text(this.BackgroundBox.x, this.BackgroundBox.y, "Welcome, dear Traveler.", {
-                    fontSize: 18,
-                    fontFamily: "cursive",
-                    fill: 0xffffff
-                }).setDepth(5).setOrigin(0.5, 0.5).setResolution(16)
-                this.CheckCreated = true
-            }
             console.log("In Check");
-
             ///// ---------
             if (this.scene.physics.overlap(this.TraderInteract, this.scene.player)) {
                 console.log("In Interact"); // AFTER CHECK
             }
             ///// ---------
         } else {
-            if ((this.Checked === true) && (!this.overlapCheck) && (this.CheckCreated === true)) {
-                this.TraderSpeechBoxDestroy()
-                console.log("Not in Check");
-            }
+            console.log("Not in Check");
         }
     }
 }
