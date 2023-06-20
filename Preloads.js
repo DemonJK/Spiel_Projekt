@@ -400,7 +400,7 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "TraderIdleAnim",
             frames: this.anims.generateFrameNumbers("TraderIdle", { start: 0, end: 3 }),
-            frameRate: 10,
+            frameRate: 5,
             repeat: -1
         })
 

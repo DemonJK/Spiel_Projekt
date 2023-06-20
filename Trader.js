@@ -39,7 +39,7 @@ class Trader extends Phaser.Scene {
             this.player = new Player(this, this.playerSpawnPoint.x, this.playerSpawnPoint.y, "PlayerIdle")
         }
 
-        this.trader1 = new TraderNPC1(this, this.playerSpawnPoint.x, this.playerSpawnPoint.y, "TraderIdleAnim")
+        this.trader1 = new TraderNPC1(this, this.playerSpawnPoint.x - 150, this.playerSpawnPoint.y, "TraderIdleAnim")
     }
 
     update() {
