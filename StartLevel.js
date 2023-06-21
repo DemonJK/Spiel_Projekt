@@ -58,7 +58,7 @@ class StartLevel extends Phaser.Scene {
         // PLAYER
         this.player = new Player(this, 1050, 850, "PlayerIdle")
 
-        // enemy configs
+        // ENEMY CONFIG
         this.enemy_configs = new Config()
 
         // ENEMY

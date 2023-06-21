@@ -199,10 +199,16 @@ class Preloads extends Phaser.Scene {
             frameHeight: 64
         })
 
-        //PRELOAD TRADER IDLE
+        // PRELOAD TRADER IDLE
         this.load.spritesheet("TraderIdle", "/NPC/NPCs/Idle1/spritesheet.png", {
             frameWidth: 94,
             frameHeight: 91
+        })
+
+        // PRELOAD COINS
+        this.load.spritesheet("Coins", "/new_assets/Coin/coins_animation.png", {
+            frameWidth: 16,
+            frameHeight: 16
         })
     }
 
@@ -400,6 +406,30 @@ class Preloads extends Phaser.Scene {
         this.anims.create({
             key: "TraderIdleAnim",
             frames: this.anims.generateFrameNumbers("TraderIdle", { start: 0, end: 3 }),
+            frameRate: 5,
+            repeat: -1
+        })
+
+        // GOLDEN COIN ANIM
+        this.anims.create({
+            key: "GCoin",
+            frames: this.anims.generateFrameNumbers("Coins", { start: 0, end: 7 }),
+            frameRate: 5,
+            repeat: -1
+        })
+
+        // SILVER COIN ANIM
+        this.anims.create({
+            key: "SCoin",
+            frames: this.anims.generateFrameNumbers("Coins", { start: 8, end: 15 }),
+            frameRate: 5,
+            repeat: -1
+        })
+
+        // BRONZE COIN ANIM
+        this.anims.create({
+            key: "BCoin",
+            frames: this.anims.generateFrameNumbers("Coins", { start: 16, end: 23 }),
             frameRate: 5,
             repeat: -1
         })
