@@ -22,7 +22,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.group.add(this)
         this.damage = config.damage
         this.xp_drop = config.xp_drop
-        this.CoinConfig = new CoinConfig()
     }
 
     create() {
@@ -145,7 +144,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 this.damagedecrease_lvl_1 = new Damagedecrease_LVL_1(this.scene, this.x + 50, this.y)
                 this.healthpotion_lvl_2 = new Healthpotion_LVL_2(this.scene, this.x + 75, this.y)
                 this.regeneration_lvl_1 = new Regeneration_LVL_1(this.scene, this.x + 100, this.y)
-                this.BronzeCoin = new Coins(this.scene, this.x + 125, this.y, )
+                this.BCoin = new Coins(this.scene, this.x + 125, this.y)
                 this.is_position_spawned = true
                 this.scene.player.PlayerDefaultLevel.xp += this.xp_drop
                 this.scene.group.remove(this)
@@ -155,6 +154,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.damagedecrease_lvl_1.update()
             this.healthpotion_lvl_2.update()
             this.regeneration_lvl_1.update()
+            this.BCoin.update()
         }
     }
 
