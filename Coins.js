@@ -2,6 +2,10 @@ class Coins extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
 
+        this.coinConfig = {
+            val: 10
+        }
+
         this.CoinSpawnAttributes()
         this.CoinCollisions()
     }
@@ -28,7 +32,8 @@ class Coins extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         if (this.scene.physics.overlap(this, this.scene.player)) {
-            console.log("IN OVERLAP"); // SOLL IN DENN COIN COUNTER HINZUFÜGEN
+            this.setPosition(0, 0)
+            this.scene.player.coinCounter.increaseCoin(this.coinConfig.val)
         }
     }
 }
