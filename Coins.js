@@ -32,8 +32,8 @@ class Coins extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         if (this.scene.physics.overlap(this, this.scene.player)) {
-            this.setPosition(0, 0)
-            this.scene.player.coinCounter.increaseCoin(this.coinConfig.val)
+            //this.setPosition(0, 0)
+            this.scene.player.coinCounter.increaseCoin(/*this.coinConfig.val*/ 50)
         }
     }
 }

@@ -46,6 +46,11 @@ class Trader extends Phaser.Scene {
         if (this.playerSpawnPoint && this.player) {
             this.player.update()
         }
+        if (!this.coinCheck) {
+            console.log("CHECK");
+            this.coinCount = this.player.coinCounter.increaseCoin(parseInt(localStorage.getItem("COINS")))
+            this.coinCheck = true
+        }
         this.trader1.update()
     }
 }

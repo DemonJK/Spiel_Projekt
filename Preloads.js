@@ -13,7 +13,7 @@ class Preloads extends Phaser.Scene {
         this.load.image("healh_menu", "/assets/player_model/413-4135632_health-bar-png-video-game-health-bar-png-removebg-preview.png")
 
         //PRELOAD COINCOUNTER
-        this.load.image("CoinCouner", "/new_assets/Coin/CoinComplete.png")
+        this.load.image("CoinCounter", "new_assets/Coin/CoinComplete.png")
 
         // PRELOAD INTERFACE
         this.load.spritesheet("Interface", "/interface/GUI.png", {

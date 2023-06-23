@@ -6,7 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.player_spawning_attributes() // ATTRIBUTE VOM SPIELER
         this.colliders() // FUNKTION VON COLLIDERN
         this.player_hp = new HealthBarPlayer(this.scene, this.scene.cameras.main.centerX * 0.57, this.scene.cameras.main.centerY * 0.53, "healh_menu", 100) // NEUE HEALTHBAR
-        this.coinCounter = new CoinCounter(this.scene, this.scene.cameras.main.centerX, this.scene.cameras.main.centerY)
+        this.coinCounter = new CoinCounter(this.scene, this.scene.cameras.main.centerX * 1.435, this.scene.cameras.main.centerY * 0.542)
         //this.TestRect = this.scene.add.rectangle(this.x, this.y, 100, 100, 0xFF0000)
         this.PlayerDefaultLevel = {
             HPval: 100,     // HEALTH VALUE
@@ -96,7 +96,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.zoomVal = 2 // DEFAULT ZOOM 2
         this.scene.cameras.main.zoom = this.zoomVal // ZOOM DER KAMERA
         if (this.scene.scene.key === "Trader") {
-            this.scene.cameras.main.zoom = this.zoomVal + 1
+            //this.scene.cameras.main.zoom = this.zoomVal + 1
         }
         this.setPushable(false)
     }
@@ -200,6 +200,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
             if (this.keyN.isDown && this.body.touching.down && !this.is_atacking) {
                 console.log("KeyN isDown");
+                localStorage.setItem("COINS", this.coinCounter.coinCount)
                 setTimeout(() => {
                     this.scene.cameras.main.fadeOut(6000)
                     setTimeout(() => {
