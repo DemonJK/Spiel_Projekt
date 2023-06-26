@@ -2,6 +2,11 @@ class Trader extends Phaser.Scene {
     constructor() {
         super({ key: "Trader" })
     }
+    init(data) {
+        this.items = data.items
+        this.hp = data.hp
+        this.xp = data.xp
+    }
 
     create() {
 
@@ -37,6 +42,9 @@ class Trader extends Phaser.Scene {
         if (this.playerSpawnPoint) {
             // PLAYER
             this.player = new Player(this, this.playerSpawnPoint.x, this.playerSpawnPoint.y, "PlayerIdle")
+            this.player.inventory.items = this.items
+            this.player.player_hp.hp_val = this.hp
+            this.player.PlayerDefaultLevel.xp = this.xp
         }
 
         this.trader1 = new TraderNPC1(this, this.playerSpawnPoint.x - 150, this.playerSpawnPoint.y, "TraderIdleAnim")
@@ -47,8 +55,8 @@ class Trader extends Phaser.Scene {
             this.player.update()
         }
         if (!this.coinCheck) {
-            console.log("CHECK");
             this.coinCount = this.player.coinCounter.increaseCoin(parseInt(localStorage.getItem("COINS")))
+            this.coinText = this.player.coinCounter.coinText.setX(localStorage.getItem("X-COIN"))
             this.coinCheck = true
         }
         this.trader1.update()

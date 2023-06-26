@@ -119,32 +119,32 @@ class StartMenu extends Phaser.Scene {
 
     createMenu() {
         // Start Knopf
-        this.startButton = this.add.text(0, 0, "Start", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+        this.startButton = this.add.text(0, 0, "Start", { fontSize: 40, fontFamily: "cursive", fill: "#fff" }).setResolution(16).setInteractive();
         this.startButton.on("pointerover", () => { this.selectButton(this.startButton) });
         this.startButton.on("pointerout", () => { this.deselectButton(this.startButton) });
-        this.startButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.start("StartLevel") });
+        this.startButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.launch("StartLevel") });
         this.startButton.setPosition(game.scale.width / 2, game.scale.height / 2).setOrigin(0.5, 0.5)
 
         // Einstellungen Knopf
-        this.settingsButton = this.add.text(0, 0, "Einstellungen", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+        this.settingsButton = this.add.text(0, 0, "Settings", { fontSize: 40, fontFamily: "cursive", fill: "#fff" }).setResolution(16).setInteractive();
         this.settingsButton.on("pointerover", () => { this.selectButton(this.settingsButton) });
         this.settingsButton.on("pointerout", () => { this.deselectButton(this.settingsButton) });
         this.settingsButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.launch("SettingsScene") });
-        this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 50).setOrigin(0.5, 0.5)
+        this.settingsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 60).setOrigin(0.5, 0.5)
 
         // Credits Knopf
-        this.creditsButton = this.add.text(0, 0, "Credits", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+        this.creditsButton = this.add.text(0, 0, "Credits", { fontSize: 40, fontFamily: "cursive", fill: "#fff" }).setResolution(16).setInteractive();
         this.creditsButton.on("pointerover", () => { this.selectButton(this.creditsButton) });
         this.creditsButton.on("pointerout", () => { this.deselectButton(this.creditsButton) });
         this.creditsButton.on("pointerup", () => { console.log("Credits geklickt") });
-        this.creditsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 100).setOrigin(0.5, 0.5)
+        this.creditsButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 120).setOrigin(0.5, 0.5)
 
         // Exit Knopf
-        this.exitButton = this.add.text(0, 0, "Exit Game", { fontFamily: "Arial", fontSize: "32px", fill: "#fff" }).setInteractive();
+        this.exitButton = this.add.text(0, 0, "Exit Game", { fontSize: 40, fontFamily: "cursive", fill: "#fff" }).setResolution(16).setInteractive();
         this.exitButton.on("pointerover", () => { this.selectButton(this.exitButton) });
         this.exitButton.on("pointerout", () => { this.deselectButton(this.exitButton) });
         this.exitButton.on("pointerup", () => { console.log("Exit Game geklickt") });
-        this.exitButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 150).setOrigin(0.5, 0.5)
+        this.exitButton.setPosition(game.scale.width / 2, game.scale.height / 2 + 180).setOrigin(0.5, 0.5)
 
         // Standardauswahl
         this.selectedButton = this.startButton;
@@ -204,7 +204,6 @@ class SettingsScene extends Phaser.Scene {
             .setDepth(1)
 
         backButton.on('pointerup', function () {
-            console.log()
             this.scene.get('StartMenu').volume = this.volume
             this.scene.resume('StartMenu') // Name der vorherigen Spielszene
             this.scene.stop()

@@ -35,8 +35,32 @@ class CoinCounter extends Phaser.GameObjects.Sprite {
 
     updateCoinText() {
         this.coinText.setText(this.coinCount)
-        if (this.coinCount === 100 || this.coinCount === 1000 || this.coinCount === 10000 || this.coinCount === 100000 || this.coinCount === 1000000 || this.coinCount === 10000000 || this.coinCount === 100000000) {
+        if (this.coinCount === 100) {
             this.coinText.x += 5
+        }
+        if (this.coinCount === 1000) {
+            this.coinText.x -= 5
+            this.coinText.x += 10
+        }
+        if (this.coinCount === 10000) {
+            this.coinText.x -= 10
+            this.coinText.x += 15
+        }
+        if (this.coinCount === 100000) {
+            this.coinText.x -= 15
+            this.coinText.x += 20
+        }
+        if (this.coinCount === 1000000) {
+            this.coinText.x -= 20
+            this.coinText.x += 25
+        }
+        if (this.coinCount === 10000000) {
+            this.coinText.x -= 25
+            this.coinText.x += 30
+        }
+        if (this.coinCount === 100000000) {
+            this.coinText.x -= 30
+            this.coinText.x += 35
         }
     }
 

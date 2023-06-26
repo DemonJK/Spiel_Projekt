@@ -39,10 +39,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyI = this.scene.input.keyboard.addKey('I') // INVENTAR
         this.keyD = this.scene.input.keyboard.addKey('D') // RECHTS BEWEGEN
         this.keyN = this.scene.input.keyboard.addKey('N') //TRADER SCENE
+        this.keyESC = this.scene.input.keyboard.addKey('ESC') // MENÜ SCENE
         this.cursors = this.scene.input.keyboard.createCursorKeys() // PFEIL TASTEN
         this.pet3 = new Pet3(this.scene, 1050 - 100, 850, this)
         this.isAlive = true
         this.is_death_anim_played = false
+        this.isOpenedMenu = false
 
         this.scene.time.addEvent({
             delay: 3750,
@@ -162,7 +164,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.setOffset(30, 0)
 
             } else if (this.cursors.space.isDown && this.body.touching.down || this.is_atacking && !this.inventory.is_opened) {
-                //console.log("SPACEBAR IS ACTIVE")
+                console.log("SPACEBAR")
                 this.is_atacking = true
                 this.setOffset(30, 0)
                 this.anims.play("Attack", true)
@@ -193,7 +195,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
 
             if ((this.cursors.down.isDown)) {
-                console.log("DOWN CURSOR IS ACTIVE")
+                console.log("DOWN CURSOR")
                 // durch den Boden fallen
                 // this.passthrough()
             }
@@ -201,10 +203,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if (this.keyN.isDown && this.body.touching.down && !this.is_atacking) {
                 console.log("KeyN isDown");
                 localStorage.setItem("COINS", this.coinCounter.coinCount)
+                localStorage.setItem("X-COIN", this.coinCounter.coinText.x)
                 setTimeout(() => {
                     this.scene.cameras.main.fadeOut(6000)
                     setTimeout(() => {
-                        this.scene.scene.start("Trader")
+                        this.scene.scene.start("Trader", { items: this.inventory.items, hp: this.player_hp.hp_val, xp: this.PlayerDefaultLevel.xp })
                     }, 6100);
                 }, 1000);
             }
@@ -215,6 +218,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 console.log("YOU SUCK");
                 this.is_death_anim_played = true
             }
+        }
+
+        if (this.keyESC.isDown && !this.isOpenedMenu) {
+            console.log("KeyESC isDown");
+            //this.scene.cameras.main.fadeOut(2500)
+            this.MenuStart = this.keyESC.on("down", () => { /*this.scene.pause("StartLevel"), this.scene.launch("StartMenu")*/ this.scene.start("Startmenu")})
+            console.log(this.MenuStart);
+            this.isOpenedMenu = true
         }
     }
 

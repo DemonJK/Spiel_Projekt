@@ -32,7 +32,7 @@ class Config {
 
         this.Skeleton_Config = {
             hp_val: 150,
-            damage: 100,
+            damage: 25,
             attack_range: 30,
             attack_range_ot: 20,
             bounce: 5.2,

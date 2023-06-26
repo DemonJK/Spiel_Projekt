@@ -17,6 +17,8 @@ class TraderNPC1 extends Phaser.Physics.Arcade.Sprite {
 
         this.TraderCheckInteract = this.TraderCheckInteract // VAR FÜR TRADER-CHECK-INTERACT
         this.TraderInteract = this.TraderInteract           // VAR FÜR TRADER-INTERACT
+        this.notCreated = false
+        this.TraderMenuOpen = false
 
         this.keyE = this.scene.input.keyboard.addKey("E") // INTERAGIEREN TASTE E
         this.keyS = this.scene.input.keyboard.addKey("S") // ITEMS VERKAUFEN
@@ -98,12 +100,30 @@ class TraderNPC1 extends Phaser.Physics.Arcade.Sprite {
             //console.log("In Check");
             ///// ---------
             if (this.scene.physics.overlap(this.TraderInteract, this.scene.player)) {
-                if (this.keyE.isDown && this.scene.player.body.touching.down) {
+                this.setInteractive()
+                this.on("pointerover", () => {
+                    if (!this.notCreated) {
+                        this.TraderIntText1 = this.scene.add.text(this.x, this.y, "Right-Mouse ClickInteract")
+                        this.TraderIntText2 = this.scene.add.text(this.x, this.y + 25, "to Interact")
+                        this.notCreated = true
+                    }
+                })
+                this.on("pointerout", () => {
+                    this.TraderIntText1.destroy()
+                    this.TraderIntText2.destroy()
+                    this.notCreated = false
+                })
+                this.on("pointerup", () => {
                     this.scene.player.setVelocityX(0)
-                    this.TraderMenuFunction()
-                    console.log("KEY E PRESSED");
-                }
+                    if (!this.TraderMenuOpen) {
+                        this.TraderMenuFunction()
+                        this.TraderMenuOpen = true
+                    }
+                    
+                })
                 //console.log("In Interact"); // AFTER CHECK
+            } else {
+                this.disableInteractive()
             }
             ///// ---------
         } else {

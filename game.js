@@ -4,9 +4,10 @@ var config = {
     width: '100%',
     height: '100%',
     scale: {
-        mode: Phaser.Scale.RESIZE,
+        mode: Phaser.Scale.FIT,
         parent: 'game-container',
-        autoCenter: Phaser.Scale.CENTER_BOTH
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        fullscreenTarget: document.getElementById('game-container')
     },
     backgroundColor: 0x000000,
     physics: {
