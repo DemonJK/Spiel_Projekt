@@ -1,0 +1,14 @@
+{ "columns":84,
+ "image":"..\/..\/Spiel_Projekt\/new_assets\/Trees\/Golden-Tree.png",
+ "imageheight":1200,
+ "imagewidth":1344,
+ "margin":0,
+ "name":"Golden-Tree",
+ "spacing":0,
+ "tilecount":6300,
+ "tiledversion":"1.10.0",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

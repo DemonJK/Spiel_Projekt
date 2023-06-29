@@ -1,0 +1,14 @@
+{ "columns":21,
+ "image":"..\/..\/Spiel_Projekt\/new_assets\/Assets\/Tree-Assets.png",
+ "imageheight":400,
+ "imagewidth":336,
+ "margin":0,
+ "name":"Tree-Assets",
+ "spacing":0,
+ "tilecount":525,
+ "tiledversion":"1.10.0",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

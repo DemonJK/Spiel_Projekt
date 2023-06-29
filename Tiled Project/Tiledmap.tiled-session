@@ -1,0 +1,260 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "TiledMapGameStartLevel.tmx",
+    "expandedProjectPaths": [
+        "Trees",
+        "Assets",
+        ".",
+        "Interface"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "Assets/Buildings.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Assets/Hive.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Assets/Interior-01.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Assets/Props-Rocks.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Assets/Tiles.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Assets/Tree-Assets.json": {
+            "scaleInDock": 1
+        },
+        "StartMenu.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 2364.6666666666665,
+                "y": 517.3333333333333
+            }
+        },
+        "StartMenu.tmx#GUI": {
+            "scaleInDock": 3
+        },
+        "StartMenu.tmx#startmenu": {
+            "scaleInDock": 1
+        },
+        "Tiled Map Game Start Level.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -95,
+                "y": -56
+            }
+        },
+        "Tiled Map Game Start Level.tmx#Background": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled Map Game Start Level.tmx#Buildings": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "Tiled Map Game Start Level.tmx#Dark-Tree": {
+            "scaleInDock": 1
+        },
+        "Tiled Map Game Start Level.tmx#Golden-Tree": {
+            "scaleInDock": 1
+        },
+        "Tiled Map Game Start Level.tmx#Green-Tree": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled Map Game Start Level.tmx#Hive": {
+            "scaleInDock": 1
+        },
+        "Tiled Map Game Start Level.tmx#Interior-01": {
+            "scaleInDock": 2
+        },
+        "Tiled Map Game Start Level.tmx#Props-Rocks": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled Map Game Start Level.tmx#Red-Tree": {
+            "scaleInDock": 1
+        },
+        "Tiled Map Game Start Level.tmx#Tiles": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "Tiled Map Game Start Level.tmx#Tree-Assets": {
+            "scaleInDock": 1
+        },
+        "Tiled Map Game Start Level.tmx#Yellow-Tree": {
+            "scaleInDock": 1
+        },
+        "TiledMapGameFirstLevel.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 256.5,
+                "y": 893
+            }
+        },
+        "TiledMapGameFirstLevel.tmx#Tiles": {
+            "scaleInDock": 3
+        },
+        "TiledMapGameStartLevel.tmx": {
+            "expandedGroupLayers": [
+                7
+            ],
+            "scale": 1,
+            "selectedLayer": 10,
+            "viewCenter": {
+                "x": 3219.5,
+                "y": 860.5
+            }
+        },
+        "TiledMapGameStartLevel.tmx#Background": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TiledMapGameStartLevel.tmx#Buildings": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 3
+        },
+        "TiledMapGameStartLevel.tmx#Dark-Tree": {
+            "scaleInDock": 1
+        },
+        "TiledMapGameStartLevel.tmx#Golden-Tree": {
+            "scaleInDock": 1
+        },
+        "TiledMapGameStartLevel.tmx#Green-Tree": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TiledMapGameStartLevel.tmx#Hive": {
+            "scaleInDock": 1
+        },
+        "TiledMapGameStartLevel.tmx#Interior-01": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "TiledMapGameStartLevel.tmx#Props-Rocks": {
+            "scaleInDock": 1
+        },
+        "TiledMapGameStartLevel.tmx#Red-Tree": {
+            "scaleInDock": 1
+        },
+        "TiledMapGameStartLevel.tmx#Tiles": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        },
+        "TiledMapGameStartLevel.tmx#Tree-Assets": {
+            "scaleInDock": 1
+        },
+        "TiledMapGameStartLevel.tmx#Yellow-Tree": {
+            "scaleInDock": 1
+        },
+        "Trader.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 2432,
+                "y": 512
+            }
+        },
+        "Trader.tmx#Buildings": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Trader.tmx#Green-Tree": {
+            "scaleInDock": 1
+        },
+        "Trader.tmx#Tiles": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Trees/Background.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Trees/Background.tsj": {
+            "scaleInDock": 1
+        },
+        "Trees/Buildings.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Trees/Dark-Tree.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Trees/Golden-Tree.json": {
+            "scaleInDock": 1
+        },
+        "Trees/Green-Tree.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Trees/Green-Tree.tsj": {
+            "scaleInDock": 1
+        },
+        "Trees/Red-Tree.json": {
+            "scaleInDock": 1
+        },
+        "Trees/Yellow-Tree.json": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "/Users/dja/Desktop/Spiel_Projekt/TiledLevels",
+    "last.externalTilesetPath": "/Users/dja/Desktop/Tiled Project/Assets",
+    "last.imagePath": "/Users/dja/Desktop/Tiled Project/Assets",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": null,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "TiledMapGameStartLevel.tmx",
+        "Trader.tmx"
+    ],
+    "project": "Tiledmap.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "Trader.tmx",
+        "TiledMapGameStartLevel.tmx",
+        "Assets/Tiles.json",
+        "TiledMapGameFirstLevel.tmx",
+        "Assets/Buildings.json",
+        "Assets/Hive.json",
+        "Assets/Interior-01.json",
+        "Assets/Props-Rocks.json",
+        "Trees/Dark-Tree.json",
+        "StartMenu.tmx",
+        "Trees/Green-Tree.json",
+        "Tiled Map Game Start Level.tmx"
+    ],
+    "resizeMap.removeObjects": true,
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

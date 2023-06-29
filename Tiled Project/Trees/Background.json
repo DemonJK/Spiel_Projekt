@@ -1,0 +1,14 @@
+{ "columns":56,
+ "image":"..\/..\/Spiel_Projekt\/new_assets\/Trees\/Background.png",
+ "imageheight":256,
+ "imagewidth":896,
+ "margin":0,
+ "name":"Background",
+ "spacing":0,
+ "tilecount":896,
+ "tiledversion":"1.10.0",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}
