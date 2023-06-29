@@ -2,6 +2,7 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
 
+        this.item_name = "Healthpotion_LVL_1"
         this.healthpotion_lvl_1 = this.scene.physics.add.sprite(this.x, this.y, "potion", 276).setDepth(0)
         this.healthpotion_lvl_1.setBounce(0.3)
         this.healthpotion_lvl_1.setSize(16, 16)
@@ -9,6 +10,7 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this.healthpotion_lvl_1, this.scene.layerground1)
         this.healthpotion_lvl_1.setInteractive()
         this.onItem = false
+        this.setName("HEALTPOINTLVL 1")
 
         this.healthpotion_lvl_1.on("pointerup", () => {
             if (this.scene.player.inventory.is_opened) {
@@ -122,6 +124,7 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     update() {
         if (this.scene.physics.overlap(this.healthpotion_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.healthpotion_lvl_1.setPosition(0, 0)
+            this.healthpotion_lvl_1.setName("Healthpotion_LVL_1")
             this.scene.player.inventory.additem(this.healthpotion_lvl_1)
         }
 
@@ -133,12 +136,12 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
             }
         }
     }
+
 }
 
 class Healthpotion_LVL_2 extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
-
         this.healthpotion_lvl_2 = this.scene.physics.add.sprite(this.x, this.y, "potion", 299).setDepth(0)
         this.healthpotion_lvl_2.setBounce(0.3)
         this.healthpotion_lvl_2.setSize(16, 16)
@@ -258,6 +261,7 @@ class Healthpotion_LVL_2 extends Phaser.Physics.Arcade.Sprite {
     update() {
         if (this.scene.physics.overlap(this.healthpotion_lvl_2, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.healthpotion_lvl_2.setPosition(0, 0)
+            this.healthpotion_lvl_2.setName("Healthpotion_LVL_2")
             this.scene.player.inventory.additem(this.healthpotion_lvl_2)
         }
 
@@ -269,6 +273,7 @@ class Healthpotion_LVL_2 extends Phaser.Physics.Arcade.Sprite {
             }
         }
     }
+
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------ HEALTH INCREASE POTION
@@ -280,6 +285,7 @@ class Healthpotion_LVL_2 extends Phaser.Physics.Arcade.Sprite {
 class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
+        this.item_name = "Speedpotion_LVL_1"
 
         this.speedpotion_lvl_1 = this.scene.physics.add.sprite(this.x, this.y, "potion", 285).setDepth(0)
         this.speedpotion_lvl_1.setBounce(0.3)
@@ -403,6 +409,8 @@ class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     update() {
         if (this.scene.physics.overlap(this.speedpotion_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.speedpotion_lvl_1.setPosition(0, 0)
+            this.speedpotion_lvl_1.setName("speedpotion_lvl_1")
+
             this.scene.player.inventory.additem(this.speedpotion_lvl_1)
         }
 
@@ -425,6 +433,8 @@ class Speedpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
 class Damagedecrease_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
+
+        this.item_name = "Damagedecrease_LVL_1"
 
         this.damagedecrease_lvl_1 = this.scene.physics.add.sprite(this.x, this.y, "potion", 275).setDepth(0)
         this.damagedecrease_lvl_1.setBounce(0.3)
@@ -547,6 +557,8 @@ class Damagedecrease_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     update() {
         if (this.scene.physics.overlap(this.damagedecrease_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.damagedecrease_lvl_1.setPosition(0, 0)
+            this.damagedecrease_lvl_1.setName("damagedecrease_lvl_1")
+
             this.scene.player.inventory.additem(this.damagedecrease_lvl_1)
         }
 
@@ -569,6 +581,7 @@ class Damagedecrease_LVL_1 extends Phaser.Physics.Arcade.Sprite {
 class Regeneration_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
+        this.item_name = "Regeneration_LVL_1"
 
         this.regeneration_lvl_1 = this.scene.physics.add.sprite(this.x, this.y, "potion", 289).setDepth(0)
         this.regeneration_lvl_1.setBounce(0.3)
@@ -703,6 +716,7 @@ class Regeneration_LVL_1 extends Phaser.Physics.Arcade.Sprite {
     update() {
         if (this.scene.physics.overlap(this.regeneration_lvl_1, this.scene.player) && this.scene.player.inventory.items.length <= 29) {
             this.regeneration_lvl_1.setPosition(0, 0)
+            this.regeneration_lvl_1.setName("regeneration_lvl_1")
             this.scene.player.inventory.additem(this.regeneration_lvl_1)
         }
 
@@ -714,5 +728,10 @@ class Regeneration_LVL_1 extends Phaser.Physics.Arcade.Sprite {
             }
         }
     }
+
+    
+
+    
+
 }
 

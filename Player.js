@@ -207,7 +207,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 setTimeout(() => {
                     this.scene.cameras.main.fadeOut(6000)
                     setTimeout(() => {
-                        this.scene.scene.start("Trader", { items: this.inventory.items, hp: this.player_hp.hp_val, xp: this.PlayerDefaultLevel.xp })
+                        this.item_names = [];
+                        for (let index = 0; index < this.inventory.items.length; index++) {
+                            this.item_names.push(this.inventory.items[index].name)
+                            
+                        }
+                        this.scene.scene.start("Trader", { items: this.item_names, hp: this.player_hp.hp_val, xp: this.PlayerDefaultLevel.xp })
                     }, 6100);
                 }, 1000);
             }

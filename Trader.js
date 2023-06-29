@@ -43,6 +43,41 @@ class Trader extends Phaser.Scene {
         if (this.playerSpawnPoint) {
             // PLAYER
             this.player = new Player(this, this.playerSpawnPoint.x, this.playerSpawnPoint.y, "PlayerIdle")
+
+            for (let index = 0; index < this.items.length; index++) {
+                if (this.items[index] == "Healthpotion_LVL_1") {
+                    this.items[index] = new Healthpotion_LVL_1(this, this.player.x, this.player.y).setTexture("potion")
+                    this.physics.add.existing(this.items[index])
+
+                } else if (this.items[index] == "speedpotion_lvl_1") {
+                    this.items[index] = new Speedpotion_LVL_1(this, this.player.x, this.player.y).setTexture("potion")
+                    this.physics.add.existing(this.items[index])
+
+
+
+                } else if (this.items[index] == "damagedecrease_lvl_1") {
+                    this.items[index] = new Damagedecrease_LVL_1(this, this.player.x, this.player.y).setTexture("potion")
+                    this.physics.add.existing(this.items[index])
+
+
+                } else if (this.items[index] == "Healthpotion_LVL_2") {
+                    this.items[index] = new Healthpotion_LVL_2(this, this.player.x, this.player.y).setTexture("potion")
+                    this.physics.add.existing(this.items[index])
+
+
+                } else if (this.items[index] == "regeneration_lvl_1") {
+                    this.items[index] = new Regeneration_LVL_1(this, this.player.x, this.player.y).setTexture("potion")
+                    this.physics.add.existing(this.items[index])
+
+
+                }
+
+
+            }
+
+
+        
+
             this.player.inventory.items = this.items
             this.player.player_hp.hp_val = this.hp
             this.player.PlayerDefaultLevel.xp = this.xp
@@ -54,6 +89,12 @@ class Trader extends Phaser.Scene {
     }
 
     update() {
+
+        for (let index = 0; index < this.items.length; index++) {
+           this.items[index].update()
+            
+        }
+
         if (this.playerSpawnPoint && this.player) {
             this.player.update()
         }

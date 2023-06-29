@@ -5,6 +5,7 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
         this.display;
         this.player_image;
         this.is_opened = false
+        
     }
 
     openInventory() {
@@ -18,9 +19,8 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
 
             for (let index = 0; index < this.items.length; index++) {
                 if (index <= 29) {
-                    console.log(this.items);
                     this.items[index].body.destroy()
-                    this.items[index].setPosition(this.x_item, this.y_item).setDepth(2).setScale(2, 2)
+                    this.items[index].setPosition(this.x_item, this.y_item).setDepth(3).setScale(2, 2)
                     this.x_item += 60
                     if (index === 5 || index === 11 || index === 17 || index === 23) {
                         this.y_item += 60
