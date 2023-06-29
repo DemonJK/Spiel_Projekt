@@ -33,7 +33,6 @@ class StartMenu extends Phaser.Scene {
     }
 
     update() {
-        console.log(this.volume);
 
         if (this.keyC.isDown && !this.animationSkipped) {
             this.animationSkipped = true
@@ -122,7 +121,7 @@ class StartMenu extends Phaser.Scene {
         this.startButton = this.add.text(0, 0, "Start", { fontSize: 40, fontFamily: "cursive", fill: "#fff" }).setResolution(16).setInteractive();
         this.startButton.on("pointerover", () => { this.selectButton(this.startButton) });
         this.startButton.on("pointerout", () => { this.deselectButton(this.startButton) });
-        this.startButton.on("pointerup", () => { this.scene.pause("StartMenu"), this.scene.launch("StartLevel") });
+        this.startButton.on("pointerup", () => { localStorage.setItem("VolumeGenerall", this.volume), this.scene.pause("StartMenu"), this.scene.launch("StartLevel") });
         this.startButton.setPosition(game.scale.width / 2, game.scale.height / 2).setOrigin(0.5, 0.5)
 
         // Einstellungen Knopf
@@ -204,12 +203,8 @@ class SettingsScene extends Phaser.Scene {
             .setDepth(1)
 
         backButton.on('pointerup', function () {
-            this.scene.get('StartMenu').volume = this.volume
             this.scene.resume('StartMenu') // Name der vorherigen Spielszene
             this.scene.stop()
-
-            //this.scene.get("StartMenu").createBackground()
-            //this.scene.get("StartMenu").replaceCamera()
         }, this);
     }
 

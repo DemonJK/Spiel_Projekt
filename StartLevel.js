@@ -195,9 +195,11 @@ class StartLevel extends Phaser.Scene {
             this.ambients[Math.floor(Math.random() * 10)].play()
         })
 
+        this.VolGen = 0
+        this.VolGen = localStorage.getItem("VolumeGenerall")
         this.ambients[this.random_ambient_num].play()
         this.ambients[this.random_ambient_num].onBlur = false
-        this.ambients[this.random_ambient_num].volume = 0.10
+        this.ambients[this.random_ambient_num].volume = this.VolGen
 
         // BORDERS
         this.border = this.add.rectangle(900, 750, 20, 1000)
