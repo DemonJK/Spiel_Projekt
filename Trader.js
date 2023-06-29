@@ -2,6 +2,7 @@ class Trader extends Phaser.Scene {
     constructor() {
         super({ key: "Trader" })
     }
+
     init(data) {
         this.items = data.items
         this.hp = data.hp
@@ -48,6 +49,8 @@ class Trader extends Phaser.Scene {
         }
 
         this.trader1 = new TraderNPC1(this, this.playerSpawnPoint.x - 150, this.playerSpawnPoint.y, "TraderIdleAnim")
+
+        this.healthpotion_lvl_1 = new Healthpotion_LVL_1(this, this.trader1.x, this.trader1.y)
     }
 
     update() {
@@ -60,5 +63,6 @@ class Trader extends Phaser.Scene {
             this.coinCheck = true
         }
         this.trader1.update()
+        this.healthpotion_lvl_1.update()
     }
 }

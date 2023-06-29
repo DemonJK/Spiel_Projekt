@@ -47,7 +47,10 @@ class Inventory extends Phaser.Physics.Arcade.Sprite {
 
         const index = this.items.indexOf(item);
 
-        this.items.splice(index, 1);
+        if (index !== -1) {
+            const removedItem = this.items.splice(index, 1)[0];
+            removedItem.destroy();
+        }
         //console.log(this.items);
         this.openInventory()
     }

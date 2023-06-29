@@ -6,6 +6,7 @@ class Healthpotion_LVL_1 extends Phaser.Physics.Arcade.Sprite {
         this.healthpotion_lvl_1.setBounce(0.3)
         this.healthpotion_lvl_1.setSize(16, 16)
         this.scene.physics.add.collider(this.healthpotion_lvl_1, this.scene.layer)
+        this.scene.physics.add.collider(this.healthpotion_lvl_1, this.scene.layerground1)
         this.healthpotion_lvl_1.setInteractive()
         this.onItem = false
 
